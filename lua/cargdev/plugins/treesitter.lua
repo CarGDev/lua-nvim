@@ -13,6 +13,10 @@ return {
     treesitter.setup({ -- enable syntax highlighting
       highlight = {
         enable = true,
+        disable = function(lang, buf)
+          -- Prevent Treesitter from parsing Copilot files
+          return lang == "copilot" or vim.api.nvim_buf_get_name(buf):match("copilot.lua")
+        end,
       },
       -- enable indentation
       indent = { enable = true },
