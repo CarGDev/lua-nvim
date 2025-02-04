@@ -37,3 +37,12 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- turn off swapfile
 opt.swapfile = false
+
+-- Enable soft wrapping of long lines
+opt.wrap = true
+
+-- Break lines at convenient points (e.g. after whitespace) rather than in the middle of a word
+opt.linebreak = true
+
+-- Optionally, add a prefix to wrapped lines to visually indicate a wrap
+opt.showbreak = "↪ "
