@@ -8,48 +8,69 @@ return {
   config = function()
     require("noice").setup({
       cmdline = {
-        enabled = true, -- Enables floating command-line window
-        view = "cmdline_popup", -- Use floating popup instead of bottom bar
+        enabled = true,
+        view = "cmdline_popup",
         format = {
-          cmdline = { icon = ">" }, -- Custom icon for `:`
-          search_down = { icon = "🔍 " }, -- Custom icon for `/`
-          search_up = { icon = "🔍 " }, -- Custom icon for `?`
+          cmdline = { icon = ">" },
+          search_down = { icon = "🔍 " },
+          search_up = { icon = "🔍 " },
           filter = { icon = "$" },
           lua = { icon = "" },
           help = { icon = "?" },
         },
       },
       messages = {
-        enabled = true, -- Show messages in floating windows
-        view = "notify", -- Use floating popup instead of bottom bar
+        enabled = true,
+        view = "mini", -- Mini popup for messages
+        view_error = "mini", -- Ensure errors also use mini
+        view_warn = "mini",
+        view_history = "messages",
+        view_search = "virtualtext",
       },
       popupmenu = {
-        enabled = true, -- Floating completion menu
+        enabled = true,
         backend = "nui",
       },
       lsp = {
         progress = {
           enabled = false,
         },
+        message = {
+          enabled = true,
+          view = "mini", -- Show LSP messages in mini popup
+        },
       },
       views = {
-        notify = {
-          position = "top", -- Moves notifications to the bottom
-          win_options = { winblend = 10 }, -- Optional transparency
-          max_height = 2, -- Max height of the notification window
-          max_width = 50, -- Max width of the notification window
-        },
         mini = {
           position = {
-            row = -2, -- Positions it closer to the bottom
+            row = "100%", -- Place it at the bottom of the screen
+            col = "50%", -- Center it horizontally
+          },
+          border = {
+            style = "rounded",
+          },
+          win_options = {
+            winblend = 10, -- Slight transparency
+          },
+          max_height = 2, -- Small window size
+          max_width = 60,
+        },
+        notify = {
+          position = {
+            row = "100%", -- Bottom of the screen
             col = "50%",
           },
+          win_options = {
+            winblend = 10,
+          },
+          max_height = 2,
+          max_width = 60,
         },
       },
       presets = {
-        bottom_search = false, -- Disable default bottom search bar
-        command_palette = true, -- Make commands appear in the center
-        long_message_to_split = true, -- Long messages go to a split
+        bottom_search = false,
+        command_palette = true,
+        long_message_to_split = false,
       },
     })
   end,

@@ -4,25 +4,25 @@ return {
   config = function()
     local transparent = false -- set to true if you would like to enable transparency
 
-    -- local bg = "#011628"
-    -- local bg_dark = "#011423"
-    -- local bg_highlight = "#143652"
-    -- local bg_search = "#0A64AC"
-    -- local bg_visual = "#275378"
-    -- local fg = "#CBE0F0"
-    -- local fg_dark = "#B4D0E9"
-    -- local fg_gutter = "#627E97"
-    -- local border = "#547998"
-
-    local bg = "#1A1A2E"
-    local bg_dark = "#29294B"
-    local bg_highlight = "#4E4E50"
-    local bg_search = "#1A1743"
-    local bg_visual = "#70707E"
-    local fg = "#BFC5D2"
+    local bg = "#011628"
+    local bg_dark = "#011423"
+    local bg_highlight = "#143652"
+    local bg_search = "#0A64AC"
+    local bg_visual = "#275378"
+    local fg = "#CBE0F0"
     local fg_dark = "#B4D0E9"
     local fg_gutter = "#627E97"
-    local border = "#687494"
+    local border = "#547998"
+
+    -- local bg = "#1A1A2E"
+    -- local bg_dark = "#29294B"
+    -- local bg_highlight = "#4E4E50"
+    -- local bg_search = "#1A1743"
+    -- local bg_visual = "#70707E"
+    -- local fg = "#BFC5D2"
+    -- local fg_dark = "#B4D0E9"
+    -- local fg_gutter = "#627E97"
+    -- local border = "#687494"
 
     require("tokyonight").setup({
       style = "night",
