@@ -61,7 +61,7 @@ keymap.set("n", "<leader>x", ":!node %<CR>", { desc = "Running current project u
 
 -- Resize splits using Ctrl + Arrow keys
 
-keymap.set("n", "<C-Right>", ":vertical resize -5<CR>", { noremap = true, silent = true })
-keymap.set("n", "<C-Left>", ":vertical resize +5<CR>", { noremap = true, silent = true })
-keymap.set("n", "<C-Up>", ":resize +5<CR>", { noremap = true, silent = true })
-keymap.set("n", "<C-Down>", ":resize -5<CR>", { noremap = true, silent = true })
+keymap.set("n", "<C-l>", ":vertical resize -5<CR>", { noremap = true, silent = true })
+keymap.set("n", "<C-h>", ":vertical resize +5<CR>", { noremap = true, silent = true })
+keymap.set("n", "<C-k>", ":resize +5<CR>", { noremap = true, silent = true })
+keymap.set("n", "<C-j>", ":resize -5<CR>", { noremap = true, silent = true })
