@@ -79,16 +79,24 @@ return {
     end
 
     mason_lspconfig.setup_handlers({
-      -- default handler for installed servers
       ["eslint"] = function()
         lspconfig["eslint"].setup({
+          experimental = {
+            useFlatConfig = true,
+          },
           capabilities = capabilities,
           settings = {
-            experimental = { useFlatConfig = true }, -- ✅ Enables Flat Config Support
             codeActionOnSave = { enable = true },
             format = { enable = true },
           },
-          root_dir = lspconfig.util.root_pattern("eslint.config.js", "package.json"),
+          root_dir = lspconfig.util.root_pattern(
+            "eslint.config.js",
+            ".eslintrc.js",
+            ".eslintrc.json",
+            ".eslintrc.yaml",
+            ".eslintrc.yml",
+            "package.json"
+          ),
         })
       end,
       ["svelte"] = function()
