@@ -58,3 +58,10 @@ keymap.set("n", "<leader>x", ":!node %<CR>", { desc = "Running current project u
 -- keymap.set("n", "<A-j>", ":TmuxNavigateDown<CR>", { noremap = true, silent = true })
 -- keymap.set("n", "<A-k>", ":TmuxNavigateUp<CR>", { noremap = true, silent = true })
 -- keymap.set("n", "<A-l>", ":TmuxNavigateRight<CR>", { noremap = true, silent = true })
+
+-- Resize splits using Ctrl + Arrow keys
+
+keymap.set("n", "<C-Right>", ":vertical resize -5<CR>", { noremap = true, silent = true })
+keymap.set("n", "<C-Left>", ":vertical resize +5<CR>", { noremap = true, silent = true })
+keymap.set("n", "<C-Up>", ":resize +5<CR>", { noremap = true, silent = true })
+keymap.set("n", "<C-Down>", ":resize -5<CR>", { noremap = true, silent = true })
