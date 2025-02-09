@@ -56,6 +56,13 @@ return {
 
         -- Open file in the current window
         vim.keymap.set("n", "o", api.node.open.edit, opts)
+
+        -- Navigate Up (Back One Folder Level)
+        vim.keymap.set("n", "u", api.tree.change_root_to_parent, opts)
+
+        -- Navigate Forward (Enter a Folder)
+        vim.keymap.set("n", "<leader>f", api.tree.change_root_to_node, opts)
+
         -- File Management keybindings
         vim.keymap.set("n", "a", function() -- Add a new file
           vim.cmd("set modifiable") -- Ensure modifiable mode is on
