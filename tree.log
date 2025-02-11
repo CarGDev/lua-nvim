@@ -1,0 +1,59 @@
+.
+├── README.md
+├── ftplugin
+│   └── java.lua
+├── init.lua
+├── keyboard_mappings.md
+├── kkk
+├── lazigitconfig.log
+├── lazy-lock.json
+├── lua
+│   ├── cargdev
+│   │   ├── core
+│   │   │   ├── function
+│   │   │   │   └── openTerminal.lua
+│   │   │   ├── init.lua
+│   │   │   ├── keymaps.lua
+│   │   │   └── options.lua
+│   │   ├── lazy.lua
+│   │   └── plugins
+│   │       ├── alpha.lua
+│   │       ├── auto-session.lua
+│   │       ├── autopairs.lua
+│   │       ├── bufferline.lua
+│   │       ├── buffertabs.lua
+│   │       ├── colorscheme.lua
+│   │       ├── comments.lua
+│   │       ├── copilot.lua
+│   │       ├── dap.lua
+│   │       ├── dressing.lua
+│   │       ├── formatting.lua
+│   │       ├── gitsigns.lua
+│   │       ├── indent-blankline.lua
+│   │       ├── init.lua
+│   │       ├── lazygit.lua
+│   │       ├── linting.lua
+│   │       ├── lsp
+│   │       │   ├── jdtls.lua
+│   │       │   ├── lspconfig.lua
+│   │       │   └── mason.lua
+│   │       ├── lualine.lua
+│   │       ├── noice.lua
+│   │       ├── nvim-cmp.lua
+│   │       ├── nvim-jdtls.lua
+│   │       ├── nvim-tree.lua
+│   │       ├── nvim-treesitter-text-objects.lua
+│   │       ├── substitute.lua
+│   │       ├── surround.lua
+│   │       ├── telescope.lua
+│   │       ├── tmux.lua
+│   │       ├── todo-comments.lua
+│   │       ├── treesitter.lua
+│   │       ├── trouble.lua
+│   │       ├── vim-maximizer.lua
+│   │       ├── wakatime.lua
+│   │       └── which-key.lua
+│   └── myconfig
+└── tree.log
+
+9 directories, 48 files
