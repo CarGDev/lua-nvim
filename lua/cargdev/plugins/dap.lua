@@ -144,48 +144,48 @@ return {
     --   },
     -- }
 
-    dap.adapters.chrome = {
-      type = "executable",
-      command = "node",
-      args = { os.getenv("HOME") .. "/.local/share/nvim/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js" },
-    }
-
-    dap.configurations.typescriptreact = {
-      {
-        name = "Attach to Chrome",
-        type = "chrome",
-        request = "attach",
-        program = "${file}",
-        cwd = vim.fn.getcwd(),
-        port = 9222, -- 🚀 Chrome debugging port
-        webRoot = "${workspaceFolder}",
-        sourceMaps = true,
-        skipFiles = { "<node_internals>/**", "webpack://_N_E/./node_modules/**" },
-      },
-      {
-        name = "Launch Chrome with DevTools",
-        type = "chrome",
-        request = "launch",
-        url = "http://localhost:4000", -- Your React app runs on this port
-        webRoot = "${workspaceFolder}",
-        runtimeArgs = { "--remote-debugging-port=9222" },
-        sourceMaps = true,
-        skipFiles = { "<node_internals>/**", "webpack://_N_E/./node_modules/**" },
-      },
-    }
-
-    dap.configurations.javascript = {
-      {
-        name = "Attach to Chrome",
-        type = "chrome",
-        request = "attach",
-        program = "${file}",
-        cwd = vim.fn.getcwd(),
-        port = 9222, -- 🚀 Default Chrome Debug Port
-        webRoot = "${workspaceFolder}",
-        sourceMaps = true,
-        skipFiles = { "<node_internals>/**", "webpack://_N_E/./node_modules/**" },
-      },
-    }
+    -- dap.adapters.chrome = {
+    --   type = "executable",
+    --   command = "node",
+    --   args = { os.getenv("HOME") .. "/.local/share/nvim/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js" },
+    -- }
+    --
+    -- dap.configurations.typescript = {
+    --   {
+    --     name = "Attach to Chrome",
+    --     type = "chrome",
+    --     request = "attach",
+    --     program = "${file}",
+    --     cwd = vim.fn.getcwd(),
+    --     port = 9222, -- 🚀 Chrome debugging port
+    --     webRoot = "${workspaceFolder}",
+    --     sourceMaps = true,
+    --     skipFiles = { "<node_internals>/**", "webpack://_N_E/./node_modules/**" },
+    --   },
+    --   {
+    --     name = "Launch Chrome with DevTools",
+    --     type = "chrome",
+    --     request = "launch",
+    --     url = "http://localhost:4000", -- Your React app runs on this port
+    --     webRoot = "${workspaceFolder}",
+    --     runtimeArgs = { "--remote-debugging-port=9222" },
+    --     sourceMaps = true,
+    --     skipFiles = { "<node_internals>/**", "webpack://_N_E/./node_modules/**" },
+    --   },
+    -- }
+    --
+    -- dap.configurations.javascript = {
+    --   {
+    --     name = "Attach to Chrome",
+    --     type = "chrome",
+    --     request = "attach",
+    --     program = "${file}",
+    --     cwd = vim.fn.getcwd(),
+    --     port = 9222, -- 🚀 Default Chrome Debug Port
+    --     webRoot = "${workspaceFolder}",
+    --     sourceMaps = true,
+    --     skipFiles = { "<node_internals>/**", "webpack://_N_E/./node_modules/**" },
+    --   },
+    -- }
   end,
 }
