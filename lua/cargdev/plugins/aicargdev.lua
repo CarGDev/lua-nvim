@@ -9,9 +9,9 @@ return {
       vendors = {
         cargdev = {
           name = "cargdev",  -- Optional
-          endpoint = "http://api.ai.cargdev.io/api/generate",
+          endpoint = "https://api-ai.cargdev.io/api/generate",
           api_key_name = "CARGDEV_API_KEY", -- reference the ENV VAR below
-          model = "deepseek-r1:latest",
+          model = "deepseek-coder:6.7b",
           __inherited_from = "ollama", -- ensures compatibility
           max_tokens = 8192,
         },

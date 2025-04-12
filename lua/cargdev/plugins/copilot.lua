@@ -1,12 +1,41 @@
 return {
-  "github/copilot.vim",
-  lazy = false, -- Force load on startup
-  enabled = false,
+  "zbirenbaum/copilot.lua",
+  lazy = false, -- Load at startup
+  enabled = true,
   config = function()
-    vim.g.copilot_no_tab_map = true -- Disable default Tab mapping
-    vim.api.nvim_set_keymap("i", "<C-l>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
-    vim.api.nvim_set_keymap("i", "<C-j>", "copilot#Next()", { expr = true, silent = true })
-    vim.api.nvim_set_keymap("i", "<C-k>", "copilot#Previous()", { expr = true, silent = true })
-    vim.api.nvim_set_keymap("i", "<C-x>", "copilot#Dismiss()", { expr = true, silent = true })
+    require("copilot").setup({
+      panel = {
+        enabled = true,
+        auto_refresh = false,
+        keymap = {
+          jump_prev = "[[",
+          jump_next = "]]",
+          accept = "<CR>",
+          refresh = "gr",
+          open = "<M-CR>",
+        },
+        layout = {
+          position = "bottom", -- | top | left | right | horizontal | vertical
+          ratio = 0.4,
+        },
+      },
+      suggestion = {
+        enabled = true,
+        auto_trigger = true,
+        debounce = 75,
+        trigger_on_accept = true,
+        keymap = {
+          accept = "<C-l>", -- Accept suggestion
+          next = "<C-j>", -- Next suggestion
+          prev = "<C-k>", -- Previous suggestion
+          dismiss = "<C-x>", -- Dismiss suggestion
+        },
+      },
+      filetypes = {
+        markdown = true,
+        ["*"] = true, -- Enable for all filetypes
+      },
+      copilot_node_command = "node", -- Ensure your system's Node.js is v20+
+    })
   end,
 }
