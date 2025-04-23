@@ -1,6 +1,6 @@
 return {
   {
-    "yetone/avante.nvim",
+    "CarGDev/avante.nvim",
     event = "VeryLazy",
     lazy = false,
     version = false, -- Always pull the latest change
@@ -11,7 +11,7 @@ return {
           name = "cargdev",  -- Optional
           endpoint = "https://api-ai.cargdev.io/api/generate",
           api_key_name = "CARGDEV_API_KEY", -- reference the ENV VAR below
-          model = "deepseek-coder:6.7b",
+          model = "qwen2.5-coder:7b",
           __inherited_from = "ollama", -- ensures compatibility
           max_tokens = 8192,
         },
