@@ -5,6 +5,7 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
     { "folke/neodev.nvim", opts = {} },
+    { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim" } }, -- <- CORRECT HERE
   },
   config = function()
     -- import lspconfig plugin
@@ -64,6 +65,27 @@ return {
 
         opts.desc = "Restart LSP"
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+        vim.api.nvim_create_autocmd("CursorHold", {
+          buffer = ev.buf,
+          callback = function()
+            vim.diagnostic.open_float(nil, { focusable = false })
+          end,
+        })
+        vim.o.updatetime = 250
+        vim.diagnostic.config({
+          float = {
+            border = "rounded",
+            source = "always", -- Or "if_many"
+            header = "",
+            prefix = "",
+          },
+          virtual_text = {
+            spacing = 4,
+            prefix = "●", -- Could be '●', '■', '▎', or empty ""
+            severity = { min = vim.diagnostic.severity.WARN }, -- only show Warn or higher
+          },
+          severity_sort = true,
+        })
       end,
     })
 
@@ -81,6 +103,7 @@ return {
     mason_lspconfig.setup_handlers({
       ["tsserver"] = function()
         lspconfig["tsserver"].setup({
+          cmd = { "typescript-language-server", "--stdio" },
           capabilities = capabilities,
           root_dir = lspconfig.util.root_pattern("package.json"),
           settings = {
@@ -164,6 +187,18 @@ return {
           },
         })
       end,
+    })
+    require("typescript-tools").setup({
+      settings = {
+        expose_as_code_action = "all",
+        tsserver_file_preferences = {
+          importModuleSpecifierPreference = "relative",
+          quotePreference = "single",
+        },
+        tsserver_format_options = {
+          allowIncompleteCompletions = true,
+        },
+      },
     })
   end,
 }

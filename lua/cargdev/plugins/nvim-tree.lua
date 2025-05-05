@@ -8,6 +8,14 @@ return {
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
 
+    -- 🧼 Remove invalid autocommand (FileExplorer) if it exists
+    vim.api.nvim_create_autocmd("VimEnter", {
+      once = true,
+      callback = function()
+        pcall(vim.cmd, "autocmd! FileExplorer *")
+      end,
+    })
+
     nvimtree.setup({
       view = {
         width = 35,

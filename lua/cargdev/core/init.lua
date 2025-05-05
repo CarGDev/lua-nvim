@@ -16,4 +16,12 @@ local function load_functions()
   end
 end
 
+
+--[[ vim.api.nvim_create_autocmd("BufReadPost", {
+  once = true,
+  callback = function()
+    require("cargdev.core.project_config").bootstrap_config()
+  end
+})
+ ]]
 load_functions()

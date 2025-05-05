@@ -65,3 +65,7 @@ keymap.set("n", "<C-l>", ":vertical resize -5<CR>", { noremap = true, silent = t
 keymap.set("n", "<C-h>", ":vertical resize +5<CR>", { noremap = true, silent = true })
 keymap.set("n", "<C-k>", ":resize +5<CR>", { noremap = true, silent = true })
 keymap.set("n", "<C-j>", ":resize -5<CR>", { noremap = true, silent = true })
+
+-- Run and Debug Project
+keymap.set("n", "<leader>pr", ":RunProject<CR>", { desc = "Run Project" })
+keymap.set("n", "<leader>pd", ":DebugProject<CR>", { desc = "Debug Project" })

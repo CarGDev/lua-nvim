@@ -1,27 +1,108 @@
 return {
   "mfussenegger/nvim-dap",
   dependencies = {
-    { "nvim-neotest/nvim-nio", lazy = false }, -- Ensure `nvim-nio` loads first
+    { "nvim-neotest/nvim-nio", lazy = false },
     "rcarriga/nvim-dap-ui",
     "jay-babu/mason-nvim-dap.nvim",
     "mfussenegger/nvim-dap-python",
     "theHamsta/nvim-dap-virtual-text",
     "nvim-telescope/telescope-dap.nvim",
+    "Weissle/persistent-breakpoints.nvim",
+    {
+      "nvim-neotest/neotest",
+      dependencies = {
+        "nvim-neotest/neotest-jest",
+        "nvim-neotest/neotest-python",
+        "nvim-lua/plenary.nvim",
+        "antoinemadec/FixCursorHold.nvim",
+      },
+      config = function()
+        require("neotest").setup({
+          adapters = {
+            require("neotest-jest")({}),
+            require("neotest-python")({}),
+          },
+        })
+      end,
+    },
   },
   config = function()
     local dap = require("dap")
     local dapui = require("dapui")
+    local widgets = require("dap.ui.widgets")
+    local api, fn = vim.api, vim.fn
+    local keymap = vim.keymap.set
 
-    -- UI Setup
-    dapui.setup()
+    -- 🎯 Fixed Layout UI (no floating)
+    dapui.setup({
+      layouts = {
+        {
+          elements = {
+            { id = "scopes", size = 0.25 },
+            { id = "breakpoints", size = 0.25 },
+            { id = "stacks", size = 0.25 },
+            { id = "watches", size = 0.25 },
+          },
+          size = 40, -- width (left)
+          position = "left",
+        },
+        {
+          elements = {
+            { id = "repl", size = 0.5 },
+            { id = "console", size = 0.5 },
+          },
+          size = 10, -- height (bottom)
+          position = "bottom",
+        },
+      },
+      controls = {
+        enabled = true,
+        element = "repl",
+        icons = {
+          pause = "⏸",
+          play = "▶",
+          step_into = "⤵",
+          step_over = "⏭",
+          step_out = "⤴",
+          step_back = "⏮",
+          run_last = "🔁",
+          terminate = "⏹",
+        },
+      },
+      floating = { border = "rounded", mappings = { close = { "q", "<Esc>" } } },
+      windows = { indent = 1 },
+    })
 
-    -- Mason Debugger Installer
+    -- 🧠 Mason DAP
     require("mason-nvim-dap").setup({
       ensure_installed = { "node2", "chrome", "firefox" },
       automatic_setup = true,
     })
 
-    -- Automatically open DAP UI when debugging starts
+    -- 🔍 Virtual Text
+    require("nvim-dap-virtual-text").setup({
+      commented = true,
+      highlight_changed_variables = true,
+      highlight_new_as_changed = true,
+      virt_text_pos = "eol",
+      all_frames = true,
+    })
+
+    -- 💾 Persistent Breakpoints
+    require("persistent-breakpoints").setup({
+      load_breakpoints_event = { "BufReadPost" },
+    })
+    
+    api.nvim_create_autocmd("VimLeavePre", {
+      callback = function()
+        local ok, pb = pcall(require, "persistent-breakpoints.api")
+        if ok and type(pb.save_breakpoints) == "function" then
+          pb.save_breakpoints()
+        end
+      end,
+    })
+
+    -- 🔁 Auto-open/close UI on debug events
     dap.listeners.after.event_initialized["dapui_config"] = function()
       dapui.open()
     end
@@ -32,56 +113,63 @@ return {
       dapui.close()
     end
 
-    -- Enable virtual text for debugging
-    require("nvim-dap-virtual-text").setup({})
-
-    -- Keymaps for debugging
-    local keymap = vim.keymap.set
-    keymap("n", "<leader>dc", "<Cmd>lua require'dap'.continue()<CR>", { desc = "Start Debugging" })
-
-    keymap("n", "<leader>do", function()
-      dap.step_over()
-    end, { desc = "Step Over" })
-
-    keymap("n", "<leader>di", function()
-      dap.step_into()
-    end, { desc = "Step Into" })
-
-    keymap("n", "<leader>dot", function()
-      dap.step_out()
-    end, { desc = "Step Out" })
-
-    keymap("n", "<leader>db", function()
-      dap.toggle_breakpoint()
-    end, { desc = "Toggle Breakpoint" })
-
+    -- 🎮 Keymaps
+    keymap("n", "<leader>dc", dap.continue, { desc = "▶ Start Debugging" })
+    keymap("n", "<leader>do", dap.step_over, { desc = "⏭ Step Over" })
+    keymap("n", "<leader>di", dap.step_into, { desc = "⤵ Step Into" })
+    keymap("n", "<leader>dot", dap.step_out, { desc = "⤴ Step Out" })
+    keymap("n", "<leader>db", dap.toggle_breakpoint, { desc = "🔴 Toggle Breakpoint" })
     keymap("n", "<leader>dB", function()
-      dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-    end, { desc = "Conditional Breakpoint" })
+      dap.set_breakpoint(fn.input("Breakpoint condition: "))
+    end, { desc = "⚠ Conditional Breakpoint" })
+    keymap("n", "<leader>dr", dap.repl.open, { desc = "💬 Open REPL" })
+    keymap("n", "<leader>dl", dap.run_last, { desc = "🔁 Run Last Debug" })
+    keymap("n", "<leader>du", dapui.toggle, { desc = "🧩 Toggle DAP UI" })
+    keymap("n", "<leader>dq", dap.terminate, { desc = "⛔ Stop Debugging" })
 
-    keymap("n", "<leader>dr", function()
-      dap.repl.open()
-    end, { desc = "Open REPL" })
+    -- 🧼 Reset UI
+    keymap("n", "<leader>drt", function()
+      dap.terminate()
+      dapui.close()
+      vim.defer_fn(function()
+        dapui.open()
+      end, 200)
+    end, { desc = "🧼 Reset DAP UI Layout" })
 
-    keymap("n", "<leader>dl", function()
-      dap.run_last()
-    end, { desc = "Run Last Debug Session" })
+    -- 🔭 Telescope Integration
+    require("telescope").load_extension("dap")
+    keymap("n", "<leader>dcf", "<cmd>Telescope dap configurations<cr>", { desc = "🔭 DAP Configs" })
+    keymap("n", "<leader>dcb", "<cmd>Telescope dap list_breakpoints<cr>", { desc = "🧷 List Breakpoints" })
+    keymap("n", "<leader>dco", "<cmd>Telescope dap commands<cr>", { desc = "⚙️ DAP Commands" })
 
-    keymap("n", "<leader>du", function()
-      dapui.toggle()
-    end, { desc = "Toggle DAP UI" })
-
-    keymap("n", "<leader>dq", "<Cmd>lua require'dap'.terminate()<CR>", { desc = "Stop Debugging" })
-
-    -- Java DAP Configuration
-    dap.adapters.java = function(callback)
-      callback({
-        type = "server",
-        host = "127.0.0.1",
-        port = { port }, -- Port JDTLS uses for debugging
-      })
+    -- 🧿 Sign Icons
+    for name, icon in pairs({
+      DapBreakpoint = "🔴",
+      DapBreakpointCondition = "⚠️",
+      DapBreakpointRejected = "🚫",
+      DapLogPoint = "💬",
+      DapStopped = "▶",
+    }) do
+      fn.sign_define(name, { text = icon, texthl = "DiagnosticSignInfo", linehl = "", numhl = "" })
     end
 
+    -- 🔁 NestJS Smart Watcher (optional)
+    api.nvim_create_autocmd("BufWritePost", {
+      pattern = "*.ts",
+      callback = function()
+        if fn.filereadable(".nvim/project.lua") == 1 then
+          local config = loadfile(".nvim/project.lua")()
+          if config and config.run and config.run:match("nest") then
+            -- Your custom logic here
+          end
+        end
+      end,
+    })
+
+    -- ☕ Java Debug Adapter
+    dap.adapters.java = function(callback)
+      callback({ type = "server", host = "127.0.0.1", port = { port } })
+    end
     dap.configurations.java = {
       {
         name = "Attach to running Java process",
@@ -92,11 +180,13 @@ return {
       },
     }
 
-    -- Node.js Adapter Configuration for NestJS
+    -- 🧠 Node.js (NestJS / TypeScript)
     dap.adapters.node2 = {
       type = "executable",
       command = "node",
-      args = { os.getenv("HOME") .. "/.local/share/nvim/mason/packages/node-debug2-adapter/out/src/nodedebug.js" },
+      args = {
+        os.getenv("HOME") .. "/.local/share/nvim/mason/packages/node-debug2-adapter/out/src/nodedebug.js",
+      },
     }
 
     dap.configurations.typescript = {
@@ -110,82 +200,21 @@ return {
         outFiles = { "${workspaceFolder}/dist/**/*.js" },
         sourceMaps = true,
         protocol = "inspector",
-        cwd = vim.fn.getcwd(),
-        runtimeArgs = { "--inspect-brk" }, -- 🚀 Ensures debugging starts properly
+        cwd = fn.getcwd(),
+        runtimeArgs = { "--inspect-brk" },
         restart = true,
       },
       {
-        name = "Attach to Process",
+        name = "Attach to NestJS (start:debug)",
         type = "node2",
         request = "attach",
-        processId = require("dap.utils").pick_process,
+        port = 9229,
+        protocol = "inspector",
+        cwd = fn.getcwd(),
+        sourceMaps = true,
+        outFiles = { "${workspaceFolder}/dist/**/*.js" },
+        skipFiles = { "<node_internals>/**" },
       },
     }
-
-    -- dap.configurations.typescript = {
-    --   {
-    --     name = "Launch NestJS",
-    --     type = "node2",
-    --     request = "launch",
-    --     program = "${workspaceFolder}/dist/main.js", -- ⚠️ Ensure this is correct!
-    --     args = {},
-    --     console = "integratedTerminal",
-    --     outFiles = { "${workspaceFolder}/dist/**/*.js" },
-    --     sourceMaps = true,
-    --     protocol = "inspector",
-    --     cwd = vim.fn.getcwd(),
-    --     runtimeArgs = { "--nolazy" },
-    --   },
-    --   {
-    --     name = "Attach to Process",
-    --     type = "node2",
-    --     request = "attach",
-    --     processId = require("dap.utils").pick_process,
-    --   },
-    -- }
-
-    -- dap.adapters.chrome = {
-    --   type = "executable",
-    --   command = "node",
-    --   args = { os.getenv("HOME") .. "/.local/share/nvim/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js" },
-    -- }
-    --
-    -- dap.configurations.typescript = {
-    --   {
-    --     name = "Attach to Chrome",
-    --     type = "chrome",
-    --     request = "attach",
-    --     program = "${file}",
-    --     cwd = vim.fn.getcwd(),
-    --     port = 9222, -- 🚀 Chrome debugging port
-    --     webRoot = "${workspaceFolder}",
-    --     sourceMaps = true,
-    --     skipFiles = { "<node_internals>/**", "webpack://_N_E/./node_modules/**" },
-    --   },
-    --   {
-    --     name = "Launch Chrome with DevTools",
-    --     type = "chrome",
-    --     request = "launch",
-    --     url = "http://localhost:4000", -- Your React app runs on this port
-    --     webRoot = "${workspaceFolder}",
-    --     runtimeArgs = { "--remote-debugging-port=9222" },
-    --     sourceMaps = true,
-    --     skipFiles = { "<node_internals>/**", "webpack://_N_E/./node_modules/**" },
-    --   },
-    -- }
-    --
-    -- dap.configurations.javascript = {
-    --   {
-    --     name = "Attach to Chrome",
-    --     type = "chrome",
-    --     request = "attach",
-    --     program = "${file}",
-    --     cwd = vim.fn.getcwd(),
-    --     port = 9222, -- 🚀 Default Chrome Debug Port
-    --     webRoot = "${workspaceFolder}",
-    --     sourceMaps = true,
-    --     skipFiles = { "<node_internals>/**", "webpack://_N_E/./node_modules/**" },
-    --   },
-    -- }
   end,
 }
