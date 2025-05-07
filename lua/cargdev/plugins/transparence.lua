@@ -17,6 +17,7 @@ return {
         "Todo",
         "String",
         "Function",
+        "Conditional",
         "Repeat",
         "Operator",
         "Structure",
@@ -30,11 +31,12 @@ return {
         "EndOfBuffer",
       },
       extra_groups = {
+        -- Plugin-specific groups
         "NormalFloat", -- Floating windows
         "NvimTreeNormal", -- NvimTree
         "TelescopeNormal", -- Telescope
         "WhichKeyFloat", -- WhichKey
-        "BufferLineFill", -- Bufferline
+        "BufferLineFill", -- BufferLine
         "BufferLineBackground",
         "BufferLineSeparator",
         "BufferLineTab",
@@ -44,28 +46,36 @@ return {
         "LspSagaHoverBorder",
         "LspSagaRenameBorder",
         "LspSagaSignatureHelpBorder",
+        "NeoTreeNormal", -- NeoTree
+        -- Lualine
+        "lualine_a_normal",
+        "lualine_b_normal",
+        "lualine_c_normal",
+        "lualine_x_normal",
+        "lualine_y_normal",
+        "lualine_z_normal",
       },
       exclude_groups = {}, -- Groups you don't want to clear
       on_clear = function()
-        print("💡 Transparent Mode Enabled")
+--[[         print("💡 Transparent Mode Enabled") ]]
       end,
     })
 
-    -- Clear specific plugin prefixes dynamically
+    -- 🔄 **Clear Prefixes Dynamically**
     require("transparent").clear_prefix("BufferLine")
     require("transparent").clear_prefix("NeoTree")
     require("transparent").clear_prefix("lualine")
 
-    -- Custom Commands
-    vim.api.nvim_create_user_command("TransparentEnable", function()
-      require("transparent").enable()
-      print("🌟 Transparency Enabled")
-    end, {})
+    -- 🔄 **Custom Commands**
+    -- vim.api.nvim_create_user_command("TransparentEnable", function()
+    --   require("transparent").enable()
+    --   print("🌟 Transparency Enabled")
+    -- end, {})
 
-    vim.api.nvim_create_user_command("TransparentDisable", function()
-      require("transparent").disable()
-      print("🚫 Transparency Disabled")
-    end, {})
+    -- vim.api.nvim_create_user_command("TransparentDisable", function()
+    --   require("transparent").disable()
+    --   print("🚫 Transparency Disabled")
+    -- end, {})
 
     vim.api.nvim_create_user_command("TransparentToggle", function()
       require("transparent").toggle()
