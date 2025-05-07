@@ -92,7 +92,7 @@ return {
       },
     }
 
-    -- Node.js Adapter Configuration for NestJS
+    -- Node.js Adapter Configuration
     dap.adapters.node2 = {
       type = "executable",
       command = "node",
