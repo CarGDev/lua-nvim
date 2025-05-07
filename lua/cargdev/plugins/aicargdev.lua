@@ -1,6 +1,6 @@
 return {
   {
-    "CarGDev/avante.nvim",
+    "yetone/avante.nvim",
     event = "VeryLazy",
     lazy = false,
     version = false, -- Always pull the latest change
