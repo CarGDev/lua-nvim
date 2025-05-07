@@ -5,200 +5,113 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
     { "folke/neodev.nvim", opts = {} },
-    { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim" } }, -- <- CORRECT HERE
+    { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim" } }
   },
   config = function()
-    -- import lspconfig plugin
     local lspconfig = require("lspconfig")
-
-    -- import mason_lspconfig plugin
     local mason_lspconfig = require("mason-lspconfig")
-
-    -- import cmp-nvim-lsp plugin
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    local keymap = vim.keymap
 
-    local keymap = vim.keymap -- for conciseness
+    mason_lspconfig.setup({
+      ensure_installed = {
+        "cssls",
+        "emmet_ls",
+        "eslint",
+        "gopls",
+        "graphql",
+        "html",
+        "jdtls",
+        "lua_ls",
+        "prismals",
+        "pyright",
+        "svelte",
+        "tailwindcss",
+        "ts_ls"
+      }
+    })
+
+    local capabilities = cmp_nvim_lsp.default_capabilities()
+
+    -- Define signs for diagnostics
+    vim.diagnostic.config({
+      signs = {
+        severity = {
+          min = vim.diagnostic.severity.WARN
+        },
+        icons = {
+          Error = " ",
+          Warn = " ",
+          Hint = "󰠠 ",
+          Info = " "
+        }
+      }
+    })
+
+    local servers = {
+      cssls = {},
+      emmet_ls = {},
+      eslint = {},
+      gopls = {},
+      graphql = {},
+      html = {},
+      jdtls = {},
+      lua_ls = {
+        settings = {
+          Lua = {
+            diagnostics = { globals = { "vim" } },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false
+            }
+          }
+        }
+      },
+      prismals = {},
+      pyright = {},
+      svelte = {},
+      tailwindcss = {},
+      ts_ls = {}
+    }
+
+    for server, config in pairs(servers) do
+      config.capabilities = capabilities
+      lspconfig[server].setup(config)
+    end
 
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("UserLspConfig", {}),
       callback = function(ev)
-        -- Buffer local mappings.
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
         local opts = { buffer = ev.buf, silent = true }
+        local mappings = {
+          ["gR"] = { "<cmd>Telescope lsp_references<CR>", "Show LSP references" },
+          ["gD"] = { vim.lsp.buf.declaration, "Go to declaration" },
+          ["gd"] = { "<cmd>Telescope lsp_definitions<CR>", "Show LSP definitions" },
+          ["gi"] = { "<cmd>Telescope lsp_implementations<CR>", "Show LSP implementations" },
+          ["gt"] = { "<cmd>Telescope lsp_type_definitions<CR>", "Show LSP type definitions" },
+          ["<leader>ca"] = { vim.lsp.buf.code_action, "See available code actions" },
+          ["<leader>rn"] = { vim.lsp.buf.rename, "Smart rename" },
+          ["<leader>D"] = { "<cmd>Telescope diagnostics bufnr=0<CR>", "Show buffer diagnostics" },
+          ["<leader>dd"] = { vim.diagnostic.open_float, "Show line diagnostics" },
+          ["[d"] = { vim.diagnostic.goto_prev, "Go to previous diagnostic" },
+          ["]d"] = { vim.diagnostic.goto_next, "Go to next diagnostic" },
+          ["K"] = { vim.lsp.buf.hover, "Show documentation for cursor" },
+          ["<leader>rs"] = { ":LspRestart<CR>", "Restart LSP" }
+        }
 
-        -- set keybinds
-        opts.desc = "Show LSP references"
-        keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+        for key, map in pairs(mappings) do
+          keymap.set("n", key, map[1], { desc = map[2], silent = true })
+        end
 
-        opts.desc = "Go to declaration"
-        keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
-
-        opts.desc = "Show LSP definitions"
-        keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
-
-        opts.desc = "Show LSP implementations"
-        keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
-
-        opts.desc = "Show LSP type definitions"
-        keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
-
-        opts.desc = "See available code actions"
-        keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
-
-        opts.desc = "Smart rename"
-        keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
-
-        opts.desc = "Show buffer diagnostics"
-        keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
-
-        opts.desc = "Show line diagnostics"
-        keymap.set("n", "<leader>dd", vim.diagnostic.open_float, opts) -- show diagnostics for line
-
-        opts.desc = "Go to previous diagnostic"
-        keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
-
-        opts.desc = "Go to next diagnostic"
-        keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
-
-        opts.desc = "Show documentation for what is under cursor"
-        keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
-
-        opts.desc = "Restart LSP"
-        keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
         vim.api.nvim_create_autocmd("CursorHold", {
           buffer = ev.buf,
           callback = function()
             vim.diagnostic.open_float(nil, { focusable = false })
-          end,
+          end
         })
+
         vim.o.updatetime = 250
-        vim.diagnostic.config({
-          float = {
-            border = "rounded",
-            source = "always", -- Or "if_many"
-            header = "",
-            prefix = "",
-          },
-          virtual_text = {
-            spacing = 4,
-            prefix = "●", -- Could be '●', '■', '▎', or empty ""
-            severity = { min = vim.diagnostic.severity.WARN }, -- only show Warn or higher
-          },
-          severity_sort = true,
-        })
-      end,
+      end
     })
-
-    -- used to enable autocompletion (assign to every lsp server config)
-    local capabilities = cmp_nvim_lsp.default_capabilities()
-
-    -- Change the Diagnostic symbols in the sign column (gutter)
-    -- (not in youtube nvim video)
-    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-    for type, icon in pairs(signs) do
-      local hl = "DiagnosticSign" .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-    end
-
-    mason_lspconfig.setup_handlers({
-      ["tsserver"] = function()
-        lspconfig["tsserver"].setup({
-          cmd = { "typescript-language-server", "--stdio" },
-          capabilities = capabilities,
-          root_dir = lspconfig.util.root_pattern("package.json"),
-          settings = {
-            typescript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = false,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-          },
-        })
-      end,
-      ["eslint"] = function()
-        lspconfig["eslint"].setup({
-          experimental = {
-            useFlatConfig = true,
-          },
-          capabilities = capabilities,
-          settings = {
-            codeActionOnSave = { enable = true },
-            format = { enable = true },
-          },
-          root_dir = lspconfig.util.root_pattern(
-            "eslint.config.js",
-            ".eslintrc.js",
-            ".eslintrc.json",
-            ".eslintrc.yaml",
-            ".eslintrc.yml",
-            "package.json"
-          ),
-        })
-      end,
-      ["svelte"] = function()
-        -- configure svelte server
-        lspconfig["svelte"].setup({
-          capabilities = capabilities,
-          on_attach = function(client, bufnr)
-            vim.api.nvim_create_autocmd("BufWritePost", {
-              pattern = { "*.js", "*.ts" },
-              callback = function(ctx)
-                -- Here use ctx.match instead of ctx.file
-                client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-              end,
-            })
-          end,
-        })
-      end,
-      ["graphql"] = function()
-        -- configure graphql language server
-        lspconfig["graphql"].setup({
-          capabilities = capabilities,
-          filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-        })
-      end,
-      ["emmet_ls"] = function()
-        -- configure emmet language server
-        lspconfig["emmet_ls"].setup({
-          capabilities = capabilities,
-          filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-        })
-      end,
-      ["lua_ls"] = function()
-        -- configure lua server (with special settings)
-        lspconfig["lua_ls"].setup({
-          capabilities = capabilities,
-          settings = {
-            Lua = {
-              -- make the language server recognize "vim" global
-              diagnostics = {
-                globals = { "vim" },
-              },
-              completion = {
-                callSnippet = "Replace",
-              },
-            },
-          },
-        })
-      end,
-    })
-    require("typescript-tools").setup({
-      settings = {
-        expose_as_code_action = "all",
-        tsserver_file_preferences = {
-          importModuleSpecifierPreference = "relative",
-          quotePreference = "single",
-        },
-        tsserver_format_options = {
-          allowIncompleteCompletions = true,
-        },
-      },
-    })
-  end,
+  end
 }
