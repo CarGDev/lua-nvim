@@ -9,7 +9,7 @@ return {
       vendors = {
         cargdev = {
           name = "cargdev", -- Optional
-          endpoint = "https://api-ai.cargdev.io/api/generate",
+          endpoint = "https://api-ai.cargdev.io/api/generate", -- API endpoint
           api_key_name = "CARGDEV_API_KEY", -- reference the ENV VAR below
           model = "codellama:7b",
           __inherited_from = "ollama", -- ensures compatibility
