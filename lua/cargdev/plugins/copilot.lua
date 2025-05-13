@@ -27,7 +27,7 @@ return {
           debounce = 75,
           trigger_on_accept = true,
           keymap = {
-            accept = "<C-l>", -- Accept suggestion
+            accept = "<Tab>", -- Accept suggestion
             next = "<C-j>", -- Next suggestion
             prev = "<C-k>", -- Previous suggestion
             dismiss = "<C-x>", -- Dismiss suggestion
