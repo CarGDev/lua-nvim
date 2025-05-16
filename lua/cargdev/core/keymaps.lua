@@ -77,3 +77,12 @@ keymap.set("v", "<leader>zr", ":CopilotChatReview<CR>", { desc = "Review code (C
 keymap.set("v", "<leader>zf", ":CopilotChatFix<CR>", { desc = "Fix code issues (Copilot Chat)" })
 keymap.set("v", "<leader>zo", ":CopilotChatOptimize<CR>", { desc = "Optimize code (Copilot Chat)" })
 keymap.set("v", "<leader>zd", ":CopilotChatDocs<CR>", { desc = "Generate docs (Copilot Chat)" })
+
+-- Git Conflict Mappings
+keymap.set("n", "]x", "<Plug>(git-conflict-next-conflict)", { desc = "Go to next git conflict" })
+keymap.set("n", "[x", "<Plug>(git-conflict-prev-conflict)", { desc = "Go to previous git conflict" })
+keymap.set("n", "<leader>co", "<Plug>(git-conflict-ours)", { desc = "Choose ours (git conflict)" })
+keymap.set("n", "<leader>ct", "<Plug>(git-conflict-theirs)", { desc = "Choose theirs (git conflict)" })
+keymap.set("n", "<leader>cb", "<Plug>(git-conflict-both)", { desc = "Choose both (git conflict)" })
+keymap.set("n", "<leader>c0", "<Plug>(git-conflict-none)", { desc = "Choose none (git conflict)" })
+keymap.set("n", "<leader>cq", "<Plug>(git-conflict-list)", { desc = "List all git conflicts" })
