@@ -27,7 +27,7 @@ return {
         "pyright",
         "svelte",
         "tailwindcss",
-        "tsserver"
+        "ts_ls"
       }
     })
 
@@ -71,7 +71,7 @@ return {
       pyright = {},
       svelte = {},
       tailwindcss = {},
-      tsserver = {}
+      ts_ls = {}
     }
 
     for server, config in pairs(servers) do
