@@ -6,7 +6,7 @@ return {
     version = false, -- Always pull the latest change
     opts = {
       provider = "cargdev", -- API provider configuration
-      vendors = {
+      providers = {
         cargdev = {
           name = "cargdev", -- Optional
           endpoint = "https://api-ai.cargdev.io", -- API endpoint
