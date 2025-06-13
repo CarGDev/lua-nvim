@@ -71,12 +71,6 @@ return {
         -- Navigate Forward (Enter a Folder)
         vim.keymap.set("n", "<leader>f", api.tree.change_root_to_node, opts)
 
-        -- Reload the tree (useful when files are added/removed)
-        vim.keymap.set("n", "l", function()
-          api.tree.reload() -- Reload the tree
-          print("NvimTree reloaded!") -- Optional confirmation message
-        end, opts)
-
         -- File Management keybindings
         vim.keymap.set("n", "a", function() -- Add a new file
           vim.cmd("set modifiable") -- Ensure modifiable mode is on

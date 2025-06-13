@@ -6,6 +6,7 @@ return {
     enabled = true,
     config = function()
       require("copilot").setup({
+        -- General settings
         panel = {
           enabled = true,
           auto_refresh = false,
@@ -14,7 +15,6 @@ return {
             jump_next = "]]",
             accept = "<CR>",
             refresh = "gr",
-            open = "<M-CR>",
           },
           layout = {
             position = "bottom", -- | top | left | right | horizontal | vertical
@@ -22,12 +22,12 @@ return {
           },
         },
         suggestion = {
-          enabled = false,
+          enabled = true,
           auto_trigger = false,
           debounce = 75,
-          trigger_on_accept = true,
+          trigger_on_accept = false,
           keymap = {
-            accept = "<Tab>", -- Accept suggestion
+            accept = "<C-l>", -- Accept suggestion
             next = "<C-j>", -- Next suggestion
             prev = "<C-k>", -- Previous suggestion
             dismiss = "<C-x>", -- Dismiss suggestion
@@ -45,7 +45,7 @@ return {
     -- Copilot Chat plugin
     "CopilotC-Nvim/CopilotChat.nvim",
     dependencies = {
-      { "github/copilot.vim" }, -- Or zbirenbaum/copilot.lua
+      { "zbirenbaum/copilot.lua" },
       { "nvim-lua/plenary.nvim", branch = "master" }, -- For curl, log and async functions
     },
     build = "make tiktoken", -- Only on MacOS or Linux

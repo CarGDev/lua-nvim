@@ -86,3 +86,18 @@ keymap.set("n", "<leader>ct", "<Plug>(git-conflict-theirs)", { desc = "Choose th
 keymap.set("n", "<leader>cb", "<Plug>(git-conflict-both)", { desc = "Choose both (git conflict)" })
 keymap.set("n", "<leader>c0", "<Plug>(git-conflict-none)", { desc = "Choose none (git conflict)" })
 keymap.set("n", "<leader>cq", "<Plug>(git-conflict-list)", { desc = "List all git conflicts" })
+
+-- LeetCode Mappings
+keymap.set("n", "<leader>lr", "<cmd>Leet run<CR>", { desc = "LeetCode: Run Code" })
+keymap.set("n", "<leader>ls", "<cmd>Leet submit<CR>", { desc = "LeetCode: Submit Code" })
+keymap.set("n", "<leader>ld", "<cmd>Leet daily<CR>", { desc = "LeetCode: Daily Challenge" })
+keymap.set("n", "<leader>ll", "<cmd>Leet list<CR>", { desc = "LeetCode: List Problems" })
+keymap.set("n", "<leader>lc", "<cmd>Leet console<CR>", { desc = "LeetCode: Open Console" })
+keymap.set("n", "<leader>lu", "<cmd>Leet cookie update<CR>", { desc = "LeetCode: Update Cookie" })
+
+-- Copilot
+-- Add key map on normal mode to open copilot panel on c + tab
+keymap.set("n", "<leader>cp", ":Copilot panel<CR>", { desc = "Copilot: Open copilot panel" })
+
+-- Add key map on normal mode to open copilot chat explain on c + shift + e
+keymap.set("n", "<leader>ce", ":CopilotChatExplain<CR>", { desc = "Copilot Chat: Explain code" })
