@@ -5,7 +5,10 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
     { "folke/neodev.nvim", opts = {} },
-    { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim" } }
+    {
+      "pmizio/typescript-tools.nvim",
+      dependencies = { "nvim-lua/plenary.nvim" },
+    },
   },
   config = function()
     local lspconfig = require("lspconfig")
@@ -21,31 +24,29 @@ return {
         "gopls",
         "graphql",
         "html",
-        "jdtls",
+        -- "jdtls", -- uncomment if you’re actively doing Java
         "lua_ls",
         "prismals",
         "pyright",
         "svelte",
         "tailwindcss",
-        "ts_ls"
-      }
+      },
     })
 
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
-    -- Define signs for diagnostics
     vim.diagnostic.config({
       signs = {
         severity = {
-          min = vim.diagnostic.severity.WARN
+          min = vim.diagnostic.severity.WARN,
         },
         icons = {
           Error = " ",
           Warn = " ",
           Hint = "󰠠 ",
-          Info = " "
-        }
-      }
+          Info = " ",
+        },
+      },
     })
 
     local servers = {
@@ -55,29 +56,38 @@ return {
       gopls = {},
       graphql = {},
       html = {},
-      jdtls = {},
+      -- jdtls = {}, -- same here
       lua_ls = {
         settings = {
           Lua = {
             diagnostics = { globals = { "vim" } },
             workspace = {
               library = vim.api.nvim_get_runtime_file("", true),
-              checkThirdParty = false
-            }
-          }
-        }
+              checkThirdParty = false,
+            },
+          },
+        },
       },
       prismals = {},
       pyright = {},
       svelte = {},
       tailwindcss = {},
-      ts_ls = {}
     }
 
     for server, config in pairs(servers) do
       config.capabilities = capabilities
       lspconfig[server].setup(config)
     end
+
+    -- ✅ Correct way to setup typescript-tools
+    require("typescript-tools").setup({
+      capabilities = capabilities,
+      -- optional settings:
+      -- settings = {
+      --   tsserver_plugins = {},
+      --   tsserver_max_memory = 4096,
+      -- }
+    })
 
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -96,7 +106,7 @@ return {
           ["[d"] = { vim.diagnostic.goto_prev, "Go to previous diagnostic" },
           ["]d"] = { vim.diagnostic.goto_next, "Go to next diagnostic" },
           ["K"] = { vim.lsp.buf.hover, "Show documentation for cursor" },
-          ["<leader>rs"] = { ":LspRestart<CR>", "Restart LSP" }
+          ["<leader>rs"] = { ":LspRestart<CR>", "Restart LSP" },
         }
 
         for key, map in pairs(mappings) do
@@ -107,11 +117,11 @@ return {
           buffer = ev.buf,
           callback = function()
             vim.diagnostic.open_float(nil, { focusable = false })
-          end
+          end,
         })
 
         vim.o.updatetime = 250
-      end
+      end,
     })
-  end
+  end,
 }

@@ -5,28 +5,32 @@ return {
     lazy = false,
     version = false, -- Always pull the latest change
     opts = {
-      provider = "cargdev", -- API provider configuration
+      provider = "claude", -- API provider configuration
       providers = {
-        cargdev = {
-          name = "cargdev", -- Optional
-          endpoint = "https://api-ai.cargdev.io", -- API endpoint
-          api_key_name = "CARGDEV_API_KEY", -- reference the ENV VAR below
-          model = "deepseek-r1:latest",
-          __inherited_from = "ollama", -- ensures compatibility
-          max_tokens = 8192,
+        claude = {
+          endpoint = "https://api.anthropic.com",
+          model = "claude-3-haiku-20240307",
+          timeout = 30000, -- Timeout in milliseconds
+          extra_request_body = {
+            temperature = 0.75,
+            max_tokens = 4096,
+          },
         },
       },
     },
     -- Optional: Build from source if required
     build = "make",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter", -- Syntax highlighting support
-      "stevearc/dressing.nvim", -- UI elements
-      "nvim-lua/plenary.nvim", -- Utility library
-      "MunifTanjim/nui.nvim", -- UI library for modal components
-      -- Optional dependencies:
-      "nvim-tree/nvim-web-devicons", -- Icons support
-      "zbirenbaum/copilot.lua", -- Copilot integration
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "echasnovski/mini.pick", -- for file_selector provider mini.pick
+      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      "ibhagwan/fzf-lua", -- for file_selector provider fzf
+      "stevearc/dressing.nvim", -- for input provider dressing
+      "folke/snacks.nvim", -- for input provider snacks
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
       {
         "HakonHarnes/img-clip.nvim", -- Image pasting support
         event = "VeryLazy",

@@ -23,7 +23,7 @@ return {
         },
         suggestion = {
           enabled = true,
-          auto_trigger = false,
+          auto_trigger = true,
           debounce = 75,
           trigger_on_accept = false,
           keymap = {
@@ -53,6 +53,9 @@ return {
       layout = {
         position = "right", -- Position of the chat window
         ratio = 0.5,
+      },
+      tiktoken = {
+        enabled = false, -- Enable token counting
       },
       floating = {
         enabled = true,

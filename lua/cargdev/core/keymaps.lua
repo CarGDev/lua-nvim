@@ -94,6 +94,7 @@ keymap.set("n", "<leader>ld", "<cmd>Leet daily<CR>", { desc = "LeetCode: Daily C
 keymap.set("n", "<leader>ll", "<cmd>Leet list<CR>", { desc = "LeetCode: List Problems" })
 keymap.set("n", "<leader>lc", "<cmd>Leet console<CR>", { desc = "LeetCode: Open Console" })
 keymap.set("n", "<leader>lu", "<cmd>Leet cookie update<CR>", { desc = "LeetCode: Update Cookie" })
+keymap.set("n", "<leader>lls", "<cmd>Leet last_submit<CR>", { desc = "LeetCode: Get latest submition" })
 
 -- Copilot
 -- Add key map on normal mode to open copilot panel on c + tab
