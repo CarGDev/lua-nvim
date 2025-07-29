@@ -29,7 +29,31 @@ return {
       "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
       "ibhagwan/fzf-lua", -- for file_selector provider fzf
       "stevearc/dressing.nvim", -- for input provider dressing
-      "folke/snacks.nvim", -- for input provider snacks
+      {
+        "folke/snacks.nvim", -- for input provider snacks
+        lazy = false,
+        priority = 1000,
+        config = function()
+          require("snacks").setup({
+            -- Enable all snacks modules
+            bigfile = { enabled = true },
+            dashboard = { enabled = true },
+            explorer = { enabled = true },
+            image = { enabled = true },
+            input = { enabled = true },
+            lazygit = { enabled = true },
+            notifier = { enabled = true },
+            picker = { enabled = true },
+            quickfile = { enabled = true },
+            scope = { enabled = true },
+            scroll = { enabled = true },
+            statuscolumn = { enabled = true },
+            terminal = { enabled = true },
+            toggle = { enabled = true },
+            words = { enabled = true },
+          })
+        end,
+      },
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
       {
         "HakonHarnes/img-clip.nvim", -- Image pasting support
@@ -52,6 +76,7 @@ return {
         config = function()
           require("render-markdown").setup({
             file_types = { "markdown", "Avante" },
+            latex = { enabled = false }, -- Disable latex to avoid warning
           })
         end,
       },

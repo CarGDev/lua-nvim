@@ -1,3 +1,6 @@
+-- Load compatibility layer first
+require("cargdev.core.compatibility").setup()
+
 require("cargdev.core.options")
 require("cargdev.core.keymaps")
 

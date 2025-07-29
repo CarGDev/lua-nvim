@@ -1,0 +1,1092 @@
+
+==============================================================================
+CopilotChat:                                                                ✅
+
+CopilotChat.nvim [core] ~
+- ✅ OK nvim: NVIM v0.11.3
+  Build type: Release
+  LuaJIT 2.1.1753364724
+  Run ":verbose version" for more info
+- ✅ OK setup: called
+
+CopilotChat.nvim [commands] ~
+- ✅ OK curl: curl 8.7.1 (x86_64-apple-darwin24.0) libcurl/8.7.1 (SecureTransport) LibreSSL/3.3.6 zlib/1.2.12 nghttp2/1.64.0
+  Release-Date: 2024-03-27
+  Protocols: dict file ftp ftps gopher gophers http https imap imaps ipfs ipns ldap ldaps mqtt pop3 pop3s rtsp smb smbs smtp smtps telnet tftp
+  Features: alt-svc AsynchDNS GSS-API HSTS HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz MultiSSL NTLM SPNEGO SSL threadsafe UnixSockets
+- ✅ OK git: git version 2.50.1
+- ✅ OK rg: ripgrep 14.1.1
+
+  features:+pcre2
+  simd(compile):+NEON
+  simd(runtime):+NEON
+
+  PCRE2 10.43 is available (JIT is available)
+- ✅ OK lynx: Lynx Version 2.9.2 (31 May 2024)
+  libwww-FM 2.14, SSL-MM 1.4.1, OpenSSL 3.5.1, ncurses 6.5.20240427
+  Built on darwin24.2.0 (May 31 2024 23:03:20).
+
+  Copyrights held by the Lynx Developers Group,
+  the University of Kansas, CERN, and other contributors.
+  Distributed under the GNU General Public License (Version 2).
+  See https://lynx.invisible-island.net/ and the online help for more information.
+
+  See http://www.openssl.org/ for information about OpenSSL.
+
+CopilotChat.nvim [dependencies] ~
+- ✅ OK plenary: installed
+- ✅ OK copilot: copilot.lua
+- ✅ OK vim.ui.select: overridden by `@/Users/carlos/.local/share/nvim/lazy/dressing.nvim/lua/dressing/patch.lua`
+- ✅ OK tiktoken_core: installed
+- ✅ OK treesitter[markdown]: installed
+- ✅ OK treesitter[diff]: installed
+
+==============================================================================
+auto-session:                                                               ✅
+
+Setup ~
+- ✅ OK setup() called
+
+Lazy.nvim settings ~
+- ✅ OK Lazy.nvim support is enabled
+- ✅ OK auto-session is not lazy loaded
+
+Config ~
+- ✅ OK No config issues detected
+
+Current Config ~
+- {
+    auto_restore = false,
+    suppressed_dirs = { "~/", "~/Dev/", "~/Downloads", "~/Documents", "~/Desktop/" }
+  }
+
+General Info ~
+- Session directory: /Users/carlos/.local/share/nvim/sessions/
+- Current session: 
+- Current session file: 
+
+==============================================================================
+avante:                                                                     ✅
+
+avante.nvim ~
+- ✅ OK Found required plugin: nvim-lua/plenary.nvim
+- ✅ OK Found required plugin: MunifTanjim/nui.nvim
+- ✅ OK Found icons plugin (nvim-web-devicons or mini.icons)
+- ✅ OK Using native input provider (no additional dependencies required)
+
+TreeSitter Dependencies ~
+- ✅ OK All essential TreeSitter parsers are installed
+- ✅ OK TreeSitter highlighter is available
+
+==============================================================================
+conform:                                                                  1 ⚠️
+
+conform.nvim report ~
+- Log file: /Users/carlos/.local/state/nvim/conform.log
+- ✅ OK black ready (python)
+- ⚠️ WARNING dbml unavailable: Unknown formatter. Formatter config missing or incomplete
+- ✅ OK isort ready (python)
+- ✅ OK prettier ready (json, graphql, yaml, html, scss, css, svelte, typescriptreact, javascriptreact, javascript, markdown, liquid, typescript)
+- ✅ OK sqlfluff ready (sql)
+- ✅ OK stylua ready (lua)
+
+==============================================================================
+copilot:                                                                    ✅
+
+{copilot.lua} ~
+- {copilot.lua} GitHub Copilot plugin for Neovim
+
+Copilot Dependencies ~
+- ✅ OK `node` found: v22.11.0
+
+Copilot Authentication ~
+- No environment token set (`GITHUB_COPILOT_TOKEN` or `GH_COPILOT_TOKEN`)
+- ✅ OK Local credentials file found
+- Location: `/Users/carlos/.config/github-copilot/apps.json`
+
+Copilot LSP Status ~
+- ✅ OK LSP client is available and running
+- Client ID: 3
+- ✅ OK LSP authentication status: authenticated
+- For detailed authentication status, run `:Copilot status`
+
+Copilot Configuration ~
+- ✅ OK Suggestions enabled
+- Auto-trigger: enabled
+- ✅ OK Panel enabled
+- Panel Keybinding: <M-CR>
+
+==============================================================================
+dap:                                                                        ✅
+
+dap: Adapters ~
+
+dap.adapter: node2 ~
+- ✅ OK is executable: node
+
+dap.adapter: java ~
+- Adapter is a function. Can't validate it
+
+dap: Sessions ~
+- ✅ OK No active sessions
+
+==============================================================================
+dressing:                                                                   ✅
+
+dressing.nvim ~
+- ✅ OK vim.ui.input active
+- ✅ OK vim.ui.select active: telescope
+
+==============================================================================
+fzf_lua:                                                                    ✅
+
+fzf-lua [required] ~
+- ✅ OK 'fzf' `0.65.0 (brew)`
+- ✅ OK 'git' `git version 2.50.1`
+- ✅ OK 'rg' `ripgrep 14.1.1`
+- ✅ OK 'fd' `fd 10.2.0`
+
+fzf-lua [optional] ~
+- ✅ OK `nvim-web-devicons` found
+- ✅ OK 'rg' `ripgrep 14.1.1`
+- ✅ OK 'fd' `fd 10.2.0`
+- ✅ OK 'bat' `bat 0.25.0`
+- ✅ OK 'delta' `delta 0.18.2`
+
+fzf-lua [optional:media] ~
+- ✅ OK 'viu' `viu 1.5.1`
+- ✅ OK 'chafa' `Chafa version 1.16.2`
+- ✅ OK 'ueberzugpp' `ueberzugpp 2.9.6`
+
+fzf-lua [env] ~
+- ✅ OK `$FZF_DEFAULT_OPTS` is set to:
+  --color=fg:#CBE0F0,bg:#011628,hl:#B388FF,fg+:#CBE0F0,bg+:#143652,hl+:#B388FF,info:#06BCE4,prompt:#2CF9ED,pointer:#2CF9ED,marker:#2CF9ED,spinner:#2CF9ED,header:#2CF9ED
+- ✅ OK `FZF_DEFAULT_OPTS_FILE` is not set
+
+==============================================================================
+img-clip:                                                                   ✅
+
+img-clip.nvim ~
+- ✅ OK `pngpaste` is installed
+
+==============================================================================
+lazy:                                                                     2 ⚠️
+
+lazy.nvim ~
+- {lazy.nvim} version `11.17.1`
+- ✅ OK {git} `version 2.50.1`
+- ✅ OK no existing packages found by other package managers
+- ✅ OK packer_compiled.lua not found
+
+luarocks ~
+- checking `luarocks` installation
+- ✅ OK no plugins require `luarocks`, so you can ignore any warnings below
+- ✅ OK {luarocks} `/opt/homebrew/bin/luarocks 3.12.2`
+- ⚠️ WARNING `lua` version `5.1` needed, but found `Lua 5.4.8  Copyright (C) 1994-2025 Lua.org, PUC-Rio`
+- ⚠️ WARNING {lua5.1} or {lua} or {lua-5.1} version `5.1` not installed
+
+==============================================================================
+lspconfig:                                                                  ✅
+
+- Skipped. This healthcheck is redundant with `:checkhealth vim.lsp`.
+
+==============================================================================
+luasnip:                                                                    ✅
+
+luasnip ~
+- ✅ OK jsregexp is installed
+
+==============================================================================
+mason:                                                                      ✅
+
+mason.nvim ~
+- ✅ OK mason.nvim version v2.0.1
+- ✅ OK PATH: prepend
+- ✅ OK Providers: 
+    mason.providers.registry-api
+    mason.providers.client
+- ✅ OK neovim version >= 0.10.0
+
+mason.nvim [Registries] ~
+- ✅ OK Registry `github.com/mason-org/mason-registry version: 2025-07-28-rusty-action` is installed.
+
+mason.nvim [Core utils] ~
+- ✅ OK unzip: `UnZip 6.00 of 20 April 2009, by Info-ZIP, with modifications by Apple Inc.`
+- ✅ OK wget: `GNU Wget 1.25.0, a non-interactive network retriever.`
+- ✅ OK curl: `curl 8.7.1 (x86_64-apple-darwin24.0) libcurl/8.7.1 (SecureTransport) LibreSSL/3.3.6 zlib/1.2.12 nghttp2/1.64.0`
+- ✅ OK gzip: `Apple gzip 457.120.3`
+- ✅ OK tar: `bsdtar 3.5.3 - libarchive 3.7.4 zlib/1.2.12 liblzma/5.4.3 bz2lib/1.0.8 `
+- ✅ OK bash: `GNU bash, version 3.2.57(1)-release (arm64-apple-darwin24)`
+- ✅ OK sh: `Ok`
+
+mason.nvim [Languages] ~
+- ✅ OK Go: `go version go1.24.5 darwin/arm64`
+- ✅ OK cargo: `cargo 1.82.0 (8f40fc59f 2024-08-21)`
+- ✅ OK luarocks: `/opt/homebrew/bin/luarocks 3.12.2`
+- ✅ OK Ruby: `ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin24]`
+- ✅ OK node: `v22.11.0`
+- ✅ OK PHP: `PHP 8.4.10 (cli) (built: Jul  2 2025 02:22:42) (NTS)`
+- ✅ OK RubyGem: `3.5.3`
+- ✅ OK Composer: `Composer version 2.8.10 2025-07-10 19:08:33`
+- ✅ OK python: `Python 3.13.5`
+- ✅ OK java: `openjdk version "23.0.2" 2025-01-21`
+- ✅ OK npm: `11.4.2`
+- ✅ OK julia: `julia version 1.11.6`
+- ✅ OK javac: `javac 23.0.2`
+- ✅ OK pip: `pip 25.1.1 from /opt/homebrew/lib/python3.13/site-packages/pip (python 3.13)`
+- ✅ OK python venv: `Ok`
+
+==============================================================================
+mason-lspconfig:                                                            ✅
+
+mason-lspconfig.nvim ~
+- ✅ OK Neovim v0.11
+- ✅ OK mason.nvim v2
+
+==============================================================================
+mcphub:                                                                   1 ⚠️
+
+mcphub.nvim ~
+- mcphub.nvim version: 6.1.0
+- mcp-hub binary:
+- mcp-hub required version: 4.2.0
+- mcp-hub installed version: 4.2.0
+- ✅ OK mcp-hub version 4.2.0 is compatible
+
+Plugin Dependencies: ~
+- ✅ OK plenary.nvim installed
+
+Libraries: ~
+- ✅ OK curl installed
+- ✅ OK node installed
+- ✅ OK uv installed
+
+Chat plugins ~
+- ⚠️ WARNING codecompanion.nvim not found
+- ✅ OK avante.nvim installed
+- ✅ OK CopilotChat.nvim installed
+
+==============================================================================
+noice:                                                                    3 ⚠️
+
+noice.nvim ~
+- ✅ OK *Neovim* >= 0.9.0
+- ✅ OK You're using a GUI that should work ok
+- ✅ OK *vim.go.lazyredraw* is not enabled
+- ✅ OK `snacks.nvim` is installed
+- ✅ OK `nvim-notify` is installed
+- ✅ OK {TreeSitter} `vim` parser is installed
+- ✅ OK {TreeSitter} `regex` parser is installed
+- ✅ OK {TreeSitter} `lua` parser is installed
+- ✅ OK {TreeSitter} `bash` parser is installed
+- ✅ OK {TreeSitter} `markdown` parser is installed
+- ✅ OK {TreeSitter} `markdown_inline` parser is installed
+- ✅ OK `vim.notify` is set to **Noice**
+- ✅ OK `vim.lsp.buf.hover` is set to **Noice**
+- ✅ OK `vim.lsp.buf.signature_help` is set to **Noice**
+- ⚠️ WARNING `vim.lsp.util.convert_input_to_markdown_lines` is not configured to be handled by **Noice**
+- ⚠️ WARNING `vim.lsp.util.stylize_markdown` is not configured to be handled by **Noice**
+- ⚠️ WARNING `cmp.entry.get_documentation` is not configured to be handled by **Noice**
+
+==============================================================================
+nvim-treesitter:                                                            ✅
+
+Installation ~
+- ✅ OK `tree-sitter` found 0.25.8 (parser generator, only needed for :TSInstallFromGrammar)
+- ✅ OK `node` found v22.11.0 (only needed for :TSInstallFromGrammar)
+- ✅ OK `git` executable found.
+- ✅ OK `cc` executable found. Selected from { vim.NIL, "cc", "gcc", "clang", "cl", "zig" }
+  Version: Apple clang version 17.0.0 (clang-1700.0.13.5)
+- ✅ OK Neovim was compiled with tree-sitter runtime ABI version 15 (required >=13). Parsers must be compatible with runtime ABI.
+
+OS Info:
+{
+  machine = "arm64",
+  release = "24.5.0",
+  sysname = "Darwin",
+  version = "Darwin Kernel Version 24.5.0: Tue Apr 22 19:54:33 PDT 2025; root:xnu-11417.121.6~2/RELEASE_ARM64_T8122"
+} ~
+
+Parser/Features         H L F I J
+  - bash                ✓ ✓ ✓ . ✓
+  - c                   ✓ ✓ ✓ ✓ ✓
+  - css                 ✓ . ✓ ✓ ✓
+  - diff                ✓ . ✓ . ✓
+  - dockerfile          ✓ . . . ✓
+  - gitignore           ✓ . . . ✓
+  - graphql             ✓ . . ✓ ✓
+  - html                ✓ ✓ ✓ ✓ ✓
+  - java                ✓ ✓ ✓ ✓ ✓
+  - javascript          ✓ ✓ ✓ ✓ ✓
+  - json                ✓ ✓ ✓ ✓ .
+  - latex               ✓ . ✓ . ✓
+  - lua                 ✓ ✓ ✓ ✓ ✓
+  - markdown            ✓ . ✓ ✓ ✓
+  - markdown_inline     ✓ . . . ✓
+  - prisma              ✓ . ✓ . ✓
+  - query               ✓ ✓ ✓ ✓ ✓
+  - regex               ✓ . . . .
+  - sql                 ✓ . ✓ ✓ ✓
+  - svelte              ✓ ✓ ✓ ✓ ✓
+  - tsx                 ✓ ✓ ✓ ✓ ✓
+  - typescript          ✓ ✓ ✓ ✓ ✓
+  - vim                 ✓ ✓ ✓ . ✓
+  - vimdoc              ✓ . . . ✓
+  - yaml                ✓ ✓ ✓ ✓ ✓
+
+  Legend: H[ighlight], L[ocals], F[olds], I[ndents], In[j]ections
+         +) multiple parsers found, only one will be used
+         x) errors found in the query, try to run :TSUpdate {lang} ~
+
+==============================================================================
+render-markdown:                                                          1 ⚠️
+
+render-markdown.nvim [version] ~
+- ✅ OK plugin 8.6.9
+- ✅ OK neovim >= 0.11
+
+render-markdown.nvim [configuration] ~
+- ✅ OK valid
+
+render-markdown.nvim [treesitter] ~
+- ✅ OK markdown: parser installed
+- ✅ OK markdown: highlights ~/.local/share/nvim/lazy/nvim-treesitter/queries/markdown/highlights.scm
+- ✅ OK markdown: highlighter enabled
+- ✅ OK markdown_inline: parser installed
+- ✅ OK markdown_inline: highlights ~/.local/share/nvim/lazy/nvim-treesitter/queries/markdown_inline/highlights.scm
+- ✅ OK latex: parser installed
+- ✅ OK html: parser installed
+
+render-markdown.nvim [icons] ~
+- ✅ OK using: nvim-web-devicons
+
+render-markdown.nvim [executables] ~
+- ⚠️ WARNING latex2text: not installed
+  - ADVICE:
+    - disable latex support to avoid this warning
+    - require('render-markdown').setup({ latex = { enabled = false } })
+
+render-markdown.nvim [conflicts] ~
+- ✅ OK headlines: not installed
+- ✅ OK markview: not installed
+- ✅ OK obsidian: not installed
+
+==============================================================================
+snacks:                                                            19 ⚠️  2 ❌
+
+Snacks ~
+- ❌ ERROR setup not called
+- ⚠️ WARNING `snacks.nvim` should not be lazy-loaded. Add `lazy=false` to the plugin spec
+- ⚠️ WARNING `snacks.nvim` should have a priority of 1000 or higher. Add `priority=1000` to the plugin spec
+
+Snacks.bigfile ~
+- ⚠️ WARNING setup {disabled}
+
+Snacks.dashboard ~
+- ⚠️ WARNING setup {disabled}
+
+Snacks.explorer ~
+- ⚠️ WARNING setup {disabled}
+
+Snacks.image ~
+- ⚠️ WARNING setup {disabled}
+- ✅ OK 'kitty' `kitty 0.42.2 created by Kovid Goyal`
+- ✅ OK 'magick' `Version: ImageMagick 7.1.2-0 Q16-HDRI aarch64 23234 https://imagemagick.org`
+- ✅ OK 'convert' `WARNING: The convert command is deprecated in IMv7, use "magick" instead of "convert" or "magick convert"`
+- ✅ OK `wezterm` detected and supported
+- ⚠️ WARNING `wezterm` does not support placeholders. Fallback rendering will be used
+- ⚠️ WARNING Inline images are disabled
+- ✅ OK `tmux` detected and supported
+- ✅ OK Terminal Dimensions:
+  - {size}: `2522` x `1344` pixels
+  - {scale}: `1.63`
+  - {cell}: `13` x `28` pixels
+- ✅ OK Available Treesitter languages:
+    `css`, `html`, `javascript`, `latex`, `markdown_inline`, `markdown`, `svelte`, `tsx`
+- ⚠️ WARNING Missing Treesitter languages:
+    `norg`, `scss`, `typst`, `vue`
+- ⚠️ WARNING Image rendering in docs with missing treesitter parsers won't work
+- ✅ OK 'gs' `10.05.1`
+- ✅ OK PDF files are supported
+- ✅ OK 'tectonic' `tectonic 0.15.0Tectonic 0.15.0`
+- ✅ OK LaTeX math equations are supported
+- ✅ OK 'mmdc' `node:internal/modules/esm/resolve:838`
+- ✅ OK Mermaid diagrams are supported
+- ✅ OK your terminal supports the kitty graphics protocol
+
+Snacks.input ~
+- ⚠️ WARNING setup {disabled}
+
+Snacks.lazygit ~
+- ✅ OK {lazygit} installed
+
+Snacks.notifier ~
+- ⚠️ WARNING setup {disabled}
+- ❌ ERROR is not ready
+
+Snacks.picker ~
+- ⚠️ WARNING setup {disabled}
+- ⚠️ WARNING `vim.ui.select` for `Snacks.picker` is not enabled
+- ✅ OK Available Treesitter languages:
+    `regex`
+- ✅ OK 'git' `git version 2.50.1`
+- ✅ OK 'rg' `ripgrep 14.1.1`
+- ✅ OK `Snacks.picker.grep()` is available
+- ✅ OK 'fd' `fd 10.2.0`
+- ✅ OK `Snacks.picker.files()` is available
+- ✅ OK `Snacks.picker.explorer()` is available
+- ✅ OK `SQLite3` is available
+
+Snacks.quickfile ~
+- ⚠️ WARNING setup {disabled}
+
+Snacks.scope ~
+- ⚠️ WARNING setup {disabled}
+
+Snacks.scroll ~
+- ⚠️ WARNING setup {disabled}
+
+Snacks.statuscolumn ~
+- ⚠️ WARNING setup {disabled}
+
+Snacks.terminal ~
+- ✅ OK shell configured
+  - `vim.o.shell`: /bin/zsh
+  - `parsed`: { "/bin/zsh" }
+
+Snacks.toggle ~
+- ✅ OK {which-key} is installed
+
+Snacks.words ~
+- ⚠️ WARNING setup {disabled}
+
+==============================================================================
+telescope:                                                                  ✅
+
+Checking for required plugins ~
+- ✅ OK plenary installed.
+- ✅ OK nvim-treesitter installed.
+
+Checking external dependencies ~
+- ✅ OK rg: found ripgrep 14.1.1
+- ✅ OK fd: found fd 10.2.0
+
+===== Installed extensions ===== ~
+
+Telescope Extension: `dap` ~
+- No healthcheck provided
+
+Telescope Extension: `fzf` ~
+- ✅ OK lib working as expected
+- ✅ OK file_sorter correctly configured
+- ✅ OK generic_sorter correctly configured
+
+Telescope Extension: `notify` ~
+- No healthcheck provided
+
+Telescope Extension: `session-lens` ~
+- No healthcheck provided
+
+==============================================================================
+vim.deprecated:                                                           3 ⚠️
+
+ ~
+- ⚠️ WARNING vim.highlight is deprecated. Feature will be removed in Nvim 2.0.0
+  - ADVICE:
+    - use vim.hl instead.
+    - stack traceback:
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict.lua:111
+        [C]:-1
+        /Users/carlos/.config/nvim/lua/cargdev/plugins/gitConflicts.lua:4
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:380
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/util.lua:135
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:395
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:362
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:197
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:127
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/init.lua:112
+        /Users/carlos/.config/nvim/lua/cargdev/lazy.lua:14
+        [C]:-1
+        /Users/carlos/.config/nvim/init.lua:2
+
+ ~
+- ⚠️ WARNING vim.tbl_flatten is deprecated. Feature will be removed in Nvim 0.13
+  - ADVICE:
+    - use vim.iter(…):flatten():totable() instead.
+    - stack traceback:
+        /Users/carlos/.local/share/nvim/lazy/neotest-jest/lua/neotest-jest/util.lua:162
+        /Users/carlos/.local/share/nvim/lazy/neotest-jest/lua/neotest-jest/jest-util.lua:44
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/neotest-jest/lua/neotest-jest/init.lua:6
+        [C]:-1
+        /Users/carlos/.config/nvim/lua/cargdev/plugins/dap.lua:22
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:380
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/util.lua:135
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:395
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:362
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:197
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:354
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/util.lua:135
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:353
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:197
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:354
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/util.lua:135
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:353
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:197
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:127
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/init.lua:112
+        /Users/carlos/.config/nvim/lua/cargdev/lazy.lua:14
+        [C]:-1
+        /Users/carlos/.config/nvim/init.lua:2
+
+ ~
+- ⚠️ WARNING vim.validate is deprecated. Feature will be removed in Nvim 1.0
+  - ADVICE:
+    - use vim.validate(name, value, validator, optional_or_msg) instead.
+    - stack traceback:
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict/colors.lua:12
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict/colors.lua:28
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict.lua:590
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict.lua:617
+        /Users/carlos/.config/nvim/lua/cargdev/plugins/gitConflicts.lua:4
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:380
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/util.lua:135
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:395
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:362
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:197
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:127
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/init.lua:112
+        /Users/carlos/.config/nvim/lua/cargdev/lazy.lua:14
+        [C]:-1
+        /Users/carlos/.config/nvim/init.lua:2
+    - stack traceback:
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict/colors.lua:12
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict/colors.lua:28
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict.lua:591
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict.lua:617
+        /Users/carlos/.config/nvim/lua/cargdev/plugins/gitConflicts.lua:4
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:380
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/util.lua:135
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:395
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:362
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:197
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:127
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/init.lua:112
+        /Users/carlos/.config/nvim/lua/cargdev/lazy.lua:14
+        [C]:-1
+        /Users/carlos/.config/nvim/init.lua:2
+    - stack traceback:
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict/colors.lua:12
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict/colors.lua:28
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict.lua:592
+        /Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua/git-conflict.lua:617
+        /Users/carlos/.config/nvim/lua/cargdev/plugins/gitConflicts.lua:4
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:380
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/util.lua:135
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:395
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:362
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:197
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:127
+        /Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua/lazy/init.lua:112
+        /Users/carlos/.config/nvim/lua/cargdev/lazy.lua:14
+        [C]:-1
+        /Users/carlos/.config/nvim/init.lua:2
+    - stack traceback:
+        /Users/carlos/.local/share/nvim/lazy/nvim-notify/lua/notify/service/notification.lua:42
+        /Users/carlos/.local/share/nvim/lazy/nvim-notify/lua/notify/instance.lua:111
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/view/backend/notify.lua:168
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/view/backend/notify.lua:198
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/view/init.lua:163
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/util/call.lua:149
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/view/init.lua:170
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/message/router.lua:214
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/util/call.lua:149
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/util/init.lua:146
+        vim/_editor.lua:0
+        vim/_editor.lua:0
+    - stack traceback:
+        /Users/carlos/.local/share/nvim/lazy/nvim-notify/lua/notify/service/notification.lua:42
+        /Users/carlos/.local/share/nvim/lazy/nvim-notify/lua/notify/instance.lua:111
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/view/backend/notify.lua:168
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/view/backend/notify.lua:198
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/view/init.lua:163
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/util/call.lua:149
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/view/init.lua:170
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/message/router.lua:214
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/util/call.lua:149
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/noice.nvim/lua/noice/util/init.lua:146
+        vim/_editor.lua:0
+        vim/_editor.lua:0
+        [C]:-1
+        /Users/carlos/.local/share/nvim/lazy/snacks.nvim/lua/snacks/notifier.lua:769
+        /Users/carlos/.local/share/nvim/lazy/snacks.nvim/lua/snacks/health.lua:67
+        equire("snacks.health").check():1
+        [C]:-1
+        /opt/homebrew/Cellar/neovim/0.11.3/share/nvim/runtime/lua/vim/health.lua:442
+        nvim>:1
+
+==============================================================================
+vim.health:                                                                 ✅
+
+Configuration ~
+- ✅ OK no issues found
+
+Runtime ~
+- ✅ OK $VIMRUNTIME: /opt/homebrew/Cellar/neovim/0.11.3/share/nvim/runtime
+
+Performance ~
+- ✅ OK Build type: Release
+
+Remote Plugins ~
+- ✅ OK Up to date
+
+terminal ~
+- key_backspace (kbs) terminfo entry: `key_backspace=^H`
+- key_dc (kdch1) terminfo entry: `key_dc=\E[3~`
+- $TERM_PROGRAM="tmux"
+- $COLORTERM="truecolor"
+
+tmux ~
+- ✅ OK escape-time: 10
+- ✅ OK focus-events: on
+- $TERM: tmux-256color
+
+External Tools ~
+- ✅ OK ripgrep 14.1.1 (/opt/homebrew/bin/rg)
+
+==============================================================================
+vim.lsp:                                                                    ✅
+
+- LSP log level : WARN
+- Log path: /Users/carlos/.local/state/nvim/lsp.log
+- Log size: 9415 KB
+
+vim.lsp: Active Clients ~
+- lua_ls (id: 1)
+  - Version: 3.15.0
+  - Root directory: ~/.config/nvim
+  - Command: { "lua-language-server" }
+  - Settings: {}
+  - Attached buffers: 14
+- lua_ls (id: 2)
+  - Version: 3.15.0
+  - Root directory: ~/.config/nvim
+  - Command: { "lua-language-server" }
+  - Settings: {
+      Lua = {
+        diagnostics = {
+          globals = { "vim" }
+        },
+        runtime = {
+          path = { "?.lua", "?/init.lua" },
+          pathStrict = true,
+          version = "LuaJIT"
+        },
+        workspace = {
+          checkThirdParty = false,
+          ignoreDir = { "types/nightly", "lua" },
+          library = { "/Users/carlos/.local/share/nvim/lazy/neodev.nvim/types/stable", "/opt/homebrew/Cellar/neovim/0.11.3/share/nvim/runtime/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-lsp-file-operations/lua", "/Users/carlos/.local/share/nvim/lazy/tokyonight.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/auto-session/lua", "/Users/carlos/.local/share/nvim/lazy/vim-wakatime/lua", "/Users/carlos/.local/share/nvim/lazy/lazy.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/indent-blankline.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/telescope-fzf-native.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/todo-comments.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-autopairs/lua", "/Users/carlos/.local/share/nvim/lazy/mcphub.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/telescope.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/lazygit.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/plenary.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/Comment.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-dap-python/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-ts-context-commentstring/lua", "/Users/carlos/.local/share/nvim/lazy/noice.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/nui.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-dap/lua", "/Users/carlos/.local/share/nvim/lazy/transparent.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/neodev.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-dap-virtual-text/lua", "/Users/carlos/.local/share/nvim/lazy/typescript-tools.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/conform.nvim/lua", "/Volumes/Carlos_SSD/Documents/projects/intellij.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-lint/lua", "/Users/carlos/.local/share/nvim/lazy/avante.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/which-key.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/mini.pick/lua", "/Users/carlos/.local/share/nvim/lazy/fzf-lua/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-ts-autotag/lua", "/Users/carlos/.local/share/nvim/lazy/mason-lspconfig.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/dressing.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/snacks.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-web-devicons/lua", "/Users/carlos/.local/share/nvim/lazy/cmp-buffer/lua", "/Users/carlos/.local/share/nvim/lazy/substitute.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/CopilotChat.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/render-markdown.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/LuaSnip/lua", "/Users/carlos/.local/share/nvim/lazy/cmp_luasnip/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-treesitter/lua", "/Users/carlos/.local/share/nvim/lazy/mason.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/mason-tool-installer.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/lspkind.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/cmp-nvim-lsp/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-surround/lua", "/Users/carlos/.local/share/nvim/lazy/neotest-jest/lua", "/Users/carlos/.local/share/nvim/lazy/neotest/lua", "/Users/carlos/.local/share/nvim/lazy/persistent-breakpoints.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/bufferline.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/cmp-path/lua", "/Users/carlos/.local/share/nvim/lazy/alpha-nvim/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-jdtls/lua", "/Users/carlos/.local/share/nvim/lazy/trouble.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-tree.lua/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-cmp/lua", "/Users/carlos/.local/share/nvim/lazy/copilot.lua/lua", "/Users/carlos/.local/share/nvim/lazy/lualine.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-dap-ui/lua", "/Users/carlos/.local/share/nvim/lazy/git-conflict.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/gitsigns.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/toggleterm.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/neotest-python/lua", "/Users/carlos/.local/share/nvim/lazy/leetcode.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/telescope-dap.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/mason-nvim-dap.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-notify/lua", "/Users/carlos/.local/share/nvim/lazy/ideaDrop/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-nio/lua", "/Users/carlos/.local/share/nvim/lazy/img-clip.nvim/lua", "/Users/carlos/.local/share/nvim/lazy/nvim-treesitter-textobjects/lua", "/Users/carlos/.config/nvim", "/Users/carlos/.local/share/nvim/lazy/lazy.nvim", "/Users/carlos/.local/share/nvim/lazy/typescript-tools.nvim", "/Users/carlos/.local/share/nvim/lazy/neodev.nvim", "/Users/carlos/.local/share/nvim/lazy/cmp-nvim-lsp", "/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig", "/Users/carlos/.local/share/nvim/lazy/substitute.nvim", "/Users/carlos/.local/share/nvim/lazy/nvim-surround", "/Users/carlos/.local/share/nvim/lazy/nvim-ts-context-commentstring", "/Users/carlos/.local/share/nvim/lazy/Comment.nvim", "/Users/carlos/.local/share/nvim/lazy/transparent.nvim", "/Users/carlos/.local/share/nvim/lazy/nvim-notify", "/Users/carlos/.local/share/nvim/lazy/noice.nvim", "/Users/carlos/.local/share/nvim/lazy/vim-tmux-navigator", "/Users/carlos/.local/share/nvim/lazy/which-key.nvim", "/Users/carlos/.local/share/nvim/lazy/alpha-nvim", "/Users/carlos/.local/share/nvim/lazy/mcphub.nvim", "/Users/carlos/.local/share/nvim/lazy/ideaDrop", "/Users/carlos/.local/share/nvim/lazy/auto-session", "/Users/carlos/.local/share/nvim/lazy/vim-wakatime", "/Users/carlos/.local/share/nvim/lazy/toggleterm.nvim", "/Users/carlos/.local/share/nvim/lazy/FixCursorHold.nvim", "/Users/carlos/.local/share/nvim/lazy/neotest-python", "/Users/carlos/.local/share/nvim/lazy/neotest-jest", "/Users/carlos/.local/share/nvim/lazy/neotest", "/Users/carlos/.local/share/nvim/lazy/persistent-breakpoints.nvim", "/Users/carlos/.local/share/nvim/lazy/telescope-dap.nvim", "/Users/carlos/.local/share/nvim/lazy/nvim-dap-virtual-text", "/Users/carlos/.local/share/nvim/lazy/nvim-dap-python", "/Users/carlos/.local/share/nvim/lazy/nvim-dap-ui", "/Users/carlos/.local/share/nvim/lazy/nvim-nio", "/Users/carlos/.local/share/nvim/lazy/nvim-dap", "/Users/carlos/Documents/SSD_Documents/projects/intellij.nvim", "/Users/carlos/.local/share/nvim/lazy/render-markdown.nvim", "/Users/carlos/.local/share/nvim/lazy/img-clip.nvim", "/Users/carlos/.local/share/nvim/lazy/snacks.nvim", "/Users/carlos/.local/share/nvim/lazy/dressing.nvim", "/Users/carlos/.local/share/nvim/lazy/fzf-lua", "/Users/carlos/.local/share/nvim/lazy/lspkind.nvim", "/Users/carlos/.local/share/nvim/lazy/friendly-snippets", "/Users/carlos/.local/share/nvim/lazy/cmp_luasnip", "/Users/carlos/.local/share/nvim/lazy/LuaSnip", "/Users/carlos/.local/share/nvim/lazy/cmp-path", "/Users/carlos/.local/share/nvim/lazy/cmp-buffer", "/Users/carlos/.local/share/nvim/lazy/nvim-cmp", "/Users/carlos/.local/share/nvim/lazy/trouble.nvim", "/Users/carlos/.local/share/nvim/lazy/todo-comments.nvim", "/Users/carlos/.local/share/nvim/lazy/telescope-fzf-native.nvim", "/Users/carlos/.local/share/nvim/lazy/telescope.nvim", "/Users/carlos/.local/share/nvim/lazy/mini.pick", "/Users/carlos/.local/share/nvim/lazy/nui.nvim", "/Users/carlos/.local/share/nvim/lazy/nvim-ts-autotag", "/Users/carlos/.local/share/nvim/lazy/nvim-treesitter", "/Users/carlos/.local/share/nvim/lazy/avante.nvim", "/Users/carlos/.local/share/nvim/lazy/CopilotChat.nvim", "/Users/carlos/.local/share/nvim/lazy/git-conflict.nvim", "/Users/carlos/.local/share/nvim/lazy/mason-nvim-dap.nvim", "/Users/carlos/.local/share/nvim/lazy/mason-tool-installer.nvim", "/Users/carlos/.local/share/nvim/lazy/mason-lspconfig.nvim", "/Users/carlos/.local/share/nvim/lazy/mason.nvim", "/Users/carlos/.local/share/nvim/lazy/lualine.nvim", "/Users/carlos/.local/share/nvim/lazy/copilot.lua", "/Users/carlos/.local/share/nvim/lazy/bufferline.nvim", "/Users/carlos/.local/share/nvim/lazy/nvim-jdtls", "/Users/carlos/.local/share/nvim/lazy/nvim-web-devicons", "/Users/carlos/.local/share/nvim/lazy/nvim-tree.lua", "/Users/carlos/.local/share/nvim/lazy/plenary.nvim", "/Users/carlos/.local/share/nvim/lazy/nvim-lsp-file-operations", "/Users/carlos/.local/share/nvim/lazy/tokyonight.nvim", "/opt/homebrew/Cellar/neovim/0.11.3/share/nvim/runtime", "/opt/homebrew/Cellar/neovim/0.11.3/share/nvim/runtime/pack/dist/opt/matchit", "/opt/homebrew/Cellar/neovim/0.11.3/lib/nvim", "/Users/carlos/.local/state/nvim/lazy/readme", "/Users/carlos/.local/share/nvim/lazy/cmp-nvim-lsp/after", "/Users/carlos/.local/share/nvim/lazy/cmp_luasnip/after", "/Users/carlos/.local/share/nvim/lazy/cmp-path/after", "/Users/carlos/.local/share/nvim/lazy/cmp-buffer/after", "/Users/carlos/.local/share/nvim/lazy/mason-lspconfig.nvim/after", "/Users/carlos/.config/nvim/lua" }
+        }
+      }
+    }
+  - Attached buffers: 14
+- copilot (id: 3)
+  - Version: 1.349.0
+  - Root directory: ~/.config/nvim
+  - Command: { "node", "/Users/carlos/.local/share/nvim/lazy/copilot.lua/copilot/js/language-server.js", "--stdio" }
+  - Settings: {
+      telemetry = {
+        telemetryLevel = "all"
+      }
+    }
+  - Attached buffers: 14
+
+vim.lsp: Enabled Configurations ~
+- css_variables:
+  - cmd: { "css-variables-language-server", "--stdio" }
+  - filetypes: css, scss, less
+  - root_markers: package.json, .git
+  - settings: {
+      cssVariables = {
+        blacklistFolders = { "**/.cache", "**/.DS_Store", "**/.git", "**/.hg", "**/.next", "**/.svn", "**/bower_components", "**/CVS", "**/dist", "**/node_modules", "**/tests", "**/tmp" },
+        lookupFiles = { "**/*.less", "**/*.scss", "**/*.sass", "**/*.css" }
+      }
+    }
+
+- cssls:
+  - cmd: { "vscode-css-language-server", "--stdio" }
+  - filetypes: css, scss, less
+  - init_options: {
+      provideFormatter = true
+    }
+  - root_markers: package.json, .git
+  - settings: {
+      css = {
+        validate = true
+      },
+      less = {
+        validate = true
+      },
+      scss = {
+        validate = true
+      }
+    }
+
+- cssmodules_ls:
+  - cmd: { "cssmodules-language-server" }
+  - filetypes: javascript, javascriptreact, typescript, typescriptreact
+  - root_markers: package.json
+
+- emmet_ls:
+  - cmd: { "emmet-ls", "--stdio" }
+  - filetypes: astro, css, eruby, html, htmlangular, htmldjango, javascriptreact, less, pug, sass, scss, svelte, templ, typescriptreact, vue
+  - root_markers: .git
+
+- eslint:
+  - before_init: <function @/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig/lsp/eslint.lua:121>
+  - cmd: { "vscode-eslint-language-server", "--stdio" }
+  - filetypes: javascript, javascriptreact, javascript.jsx, typescript, typescriptreact, typescript.tsx, vue, svelte, astro, htmlangular
+  - handlers: {
+      ["eslint/confirmESLintExecution"] = <function 1>,
+      ["eslint/noLibrary"] = <function 2>,
+      ["eslint/openDoc"] = <function 3>,
+      ["eslint/probeFailed"] = <function 4>
+    }
+  - on_attach: <function @/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig/lsp/eslint.lua:52>
+  - root_dir: <function @/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig/lsp/eslint.lua:66>
+  - settings: {
+      codeAction = {
+        disableRuleComment = {
+          enable = true,
+          location = "separateLine"
+        },
+        showDocumentation = {
+          enable = true
+        }
+      },
+      codeActionOnSave = {
+        enable = false,
+        mode = "all"
+      },
+      experimental = {
+        useFlatConfig = false
+      },
+      format = true,
+      nodePath = "",
+      onIgnoredFiles = "off",
+      problems = {
+        shortenToSingleLine = false
+      },
+      quiet = false,
+      rulesCustomizations = {},
+      run = "onType",
+      useESLintClass = false,
+      validate = "on",
+      workingDirectory = {
+        mode = "location"
+      }
+    }
+  - workspace_required: true
+
+- gopls:
+  - cmd: { "gopls" }
+  - filetypes: go, gomod, gowork, gotmpl
+  - root_dir: <function @/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig/lsp/gopls.lua:91>
+
+- graphql:
+  - cmd: { "graphql-lsp", "server", "-m", "stream" }
+  - filetypes: graphql, typescriptreact, javascriptreact
+  - root_dir: <function @/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig/lsp/graphql.lua:18>
+
+- html:
+  - cmd: { "vscode-html-language-server", "--stdio" }
+  - filetypes: html, templ
+  - init_options: {
+      configurationSection = { "html", "css", "javascript" },
+      embeddedLanguages = {
+        css = true,
+        javascript = true
+      },
+      provideFormatter = true
+    }
+  - root_markers: package.json, .git
+  - settings: {}
+
+- jdtls:
+  - cmd: { "jdtls", "-configuration", "/Users/carlos/.cache/jdtls/config", "-data", "/Users/carlos/.cache/jdtls/workspace" }
+  - filetypes: java
+  - handlers: {
+      ["language/status"] = <function 1>,
+      ["textDocument/codeAction"] = <function 2>,
+      ["textDocument/rename"] = <function 3>,
+      ["workspace/applyEdit"] = <function 4>
+    }
+  - init_options: {
+      jvm_args = {},
+      workspace = "/Users/carlos/.cache/jdtls/workspace"
+    }
+  - root_markers: .git, build.gradle, build.gradle.kts, build.xml, pom.xml, settings.gradle, settings.gradle.kts
+
+- lua_ls:
+  - cmd: { "lua-language-server" }
+  - filetypes: lua
+  - root_markers: .luarc.json, .luarc.jsonc, .luacheckrc, .stylua.toml, stylua.toml, selene.toml, selene.yml, .git
+
+- prismals:
+  - cmd: { "prisma-language-server", "--stdio" }
+  - filetypes: prisma
+  - root_markers: .git, package.json
+  - settings: {
+      prisma = {
+        prismaFmtBinPath = ""
+      }
+    }
+
+- pyright:
+  - cmd: { "pyright-langserver", "--stdio" }
+  - filetypes: python
+  - on_attach: <function @/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig/lsp/pyright.lua:43>
+  - root_markers: pyproject.toml, setup.py, setup.cfg, requirements.txt, Pipfile, pyrightconfig.json, .git
+  - settings: {
+      python = {
+        analysis = {
+          autoSearchPaths = true,
+          diagnosticMode = "openFilesOnly",
+          useLibraryCodeForTypes = true
+        }
+      }
+    }
+
+- svelte:
+  - cmd: { "svelteserver", "--stdio" }
+  - filetypes: svelte
+  - on_attach: <function @/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig/lsp/svelte.lua:23>
+  - root_dir: <function @/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig/lsp/svelte.lua:15>
+
+- tailwindcss:
+  - before_init: <function @/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig/lsp/tailwindcss.lua:97>
+  - cmd: { "tailwindcss-language-server", "--stdio" }
+  - filetypes: aspnetcorerazor, astro, astro-markdown, blade, clojure, django-html, htmldjango, edge, eelixir, elixir, ejs, erb, eruby, gohtml, gohtmltmpl, haml, handlebars, hbs, html, htmlangular, html-eex, heex, jade, leaf, liquid, markdown, mdx, mustache, njk, nunjucks, php, razor, slim, twig, css, less, postcss, sass, scss, stylus, sugarss, javascript, javascriptreact, reason, rescript, typescript, typescriptreact, vue, svelte, templ
+  - root_dir: <function @/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig/lsp/tailwindcss.lua:109>
+  - settings: {
+      tailwindCSS = {
+        classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
+        includeLanguages = {
+          eelixir = "html-eex",
+          elixir = "phoenix-heex",
+          eruby = "erb",
+          heex = "phoenix-heex",
+          htmlangular = "html",
+          templ = "html"
+        },
+        lint = {
+          cssConflict = "warning",
+          invalidApply = "error",
+          invalidConfigPath = "error",
+          invalidScreen = "error",
+          invalidTailwindDirective = "error",
+          invalidVariant = "error",
+          recommendedVariantOrder = "warning"
+        },
+        validate = true
+      }
+    }
+  - workspace_required: true
+
+- ts_ls:
+  - cmd: { "typescript-language-server", "--stdio" }
+  - commands: {
+      ["editor.action.showReferences"] = <function 1>
+    }
+  - filetypes: javascript, javascriptreact, javascript.jsx, typescript, typescriptreact, typescript.tsx
+  - handlers: {
+      ["_typescript.rename"] = <function 1>
+    }
+  - init_options: {
+      hostInfo = "neovim"
+    }
+  - on_attach: <function @/Users/carlos/.local/share/nvim/lazy/nvim-lspconfig/lsp/ts_ls.lua:89>
+  - root_markers: tsconfig.json, jsconfig.json, package.json, .git
+
+
+vim.lsp: File Watcher ~
+- file watching "(workspace/didChangeWatchedFiles)" disabled on all clients
+
+vim.lsp: Position Encodings ~
+- No buffers contain mixed position encodings
+
+==============================================================================
+vim.provider:                                                             2 ⚠️
+
+Clipboard (optional) ~
+- ✅ OK Clipboard tool found: pbcopy
+
+Node.js provider (optional) ~
+- Node.js: v22.11.0
+
+- Nvim node.js host: /Users/carlos/.config/yarn/global//node_modules/neovim/bin/cli.js
+
+Perl provider (optional) ~
+- ⚠️ WARNING "Neovim::Ext" cpan module is not installed
+  - ADVICE:
+    - See :help |provider-perl| for more information.
+    - You can disable this provider (and warning) by adding `let g:loaded_perl_provider = 0` to your init.vim
+- ⚠️ WARNING No usable perl executable found
+
+Python 3 provider (optional) ~
+- pyenv: Path: /opt/homebrew/Cellar/pyenv/2.6.5/libexec/pyenv
+- pyenv: Root: /Users/carlos/.pyenv
+- `g:python3_host_prog` is not set. Searching for python3.12 in the environment.
+- Executable: /opt/homebrew/bin/python3.12
+- Python version: 3.12.11
+- pynvim version: 0.5.2
+- ✅ OK Latest pynvim is installed.
+
+Python virtualenv ~
+- ✅ OK no $VIRTUAL_ENV
+
+Ruby provider (optional) ~
+- Ruby: ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin24]
+- Host: /usr/local/bin/neovim-ruby-host
+- ✅ OK Latest "neovim" gem is installed: 0.10.0
+
+
+==============================================================================
+vim.treesitter:                                                             ✅
+
+Treesitter features ~
+- Treesitter ABI support: min 13, max 15
+- WASM parser support: false
+
+Treesitter parsers ~
+- ✅ OK Parser: bash                 ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/bash.so
+- ✅ OK Parser: c                    ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/c.so
+- ✅ OK Parser: c                    ABI: 14, path: /opt/homebrew/Cellar/neovim/0.11.3/lib/nvim/parser/c.so
+- ✅ OK Parser: css                  ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/css.so
+- ✅ OK Parser: diff                 ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/diff.so
+- ✅ OK Parser: dockerfile           ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/dockerfile.so
+- ✅ OK Parser: gitignore            ABI: 13, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/gitignore.so
+- ✅ OK Parser: graphql              ABI: 13, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/graphql.so
+- ✅ OK Parser: html                 ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/html.so
+- ✅ OK Parser: java                 ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/java.so
+- ✅ OK Parser: javascript           ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/javascript.so
+- ✅ OK Parser: json                 ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/json.so
+- ✅ OK Parser: latex                ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/latex.so
+- ✅ OK Parser: lua                  ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/lua.so
+- ✅ OK Parser: lua                  ABI: 14, path: /opt/homebrew/Cellar/neovim/0.11.3/lib/nvim/parser/lua.so
+- ✅ OK Parser: markdown             ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/markdown.so
+- ✅ OK Parser: markdown             ABI: 14, path: /opt/homebrew/Cellar/neovim/0.11.3/lib/nvim/parser/markdown.so
+- ✅ OK Parser: markdown_inline      ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/markdown_inline.so
+- ✅ OK Parser: markdown_inline      ABI: 14, path: /opt/homebrew/Cellar/neovim/0.11.3/lib/nvim/parser/markdown_inline.so
+- ✅ OK Parser: prisma               ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/prisma.so
+- ✅ OK Parser: query                ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/query.so
+- ✅ OK Parser: query                ABI: 14, path: /opt/homebrew/Cellar/neovim/0.11.3/lib/nvim/parser/query.so
+- ✅ OK Parser: regex                ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/regex.so
+- ✅ OK Parser: sql                  ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/sql.so
+- ✅ OK Parser: svelte               ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/svelte.so
+- ✅ OK Parser: tsx                  ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/tsx.so
+- ✅ OK Parser: typescript           ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/typescript.so
+- ✅ OK Parser: vim                  ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/vim.so
+- ✅ OK Parser: vim                  ABI: 14, path: /opt/homebrew/Cellar/neovim/0.11.3/lib/nvim/parser/vim.so
+- ✅ OK Parser: vimdoc               ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/vimdoc.so
+- ✅ OK Parser: vimdoc               ABI: 14, path: /opt/homebrew/Cellar/neovim/0.11.3/lib/nvim/parser/vimdoc.so
+- ✅ OK Parser: yaml                 ABI: 14, path: /Users/carlos/.local/share/nvim/lazy/nvim-treesitter/parser/yaml.so
+
+==============================================================================
+which-key:                                                               14 ⚠️
+
+- ✅ OK Most of these checks are for informational purposes only.
+  WARNINGS should be treated as a warning, and don't necessarily indicate a problem with your config.
+  Please |DON'T| report these warnings as an issue.
+
+Checking your config ~
+- ⚠️ WARNING |mini.icons| is not installed
+- ✅ OK |nvim-web-devicons| is installed
+
+Checking for issues with your mappings ~
+- ✅ OK No issues reported
+
+checking for overlapping keymaps ~
+- ⚠️ WARNING In mode `n`, <gb> overlaps with <gbc>:
+  - <gb>: Comment toggle blockwise
+  - <gbc>: Comment toggle current block
+- ⚠️ WARNING In mode `n`, <gc> overlaps with <gco>, <gcA>, <gcc>, <gcO>:
+  - <gc>: Comment toggle linewise
+  - <gco>: Comment insert below
+  - <gcA>: Comment insert end of line
+  - <gcc>: Comment toggle current line
+  - <gcO>: Comment insert above
+- ⚠️ WARNING In mode `n`, <<Space>x> overlaps with <<Space>xw>, <<Space>xd>, <<Space>xl>, <<Space>xa>, <<Space>xq>, <<Space>xt>:
+  - <<Space>x>: Running current project using node
+  - <<Space>xw>: Open trouble workspace diagnostics
+  - <<Space>xd>: Open trouble document diagnostics
+  - <<Space>xl>: Open trouble location list
+  - <<Space>xa>: Save and close all the files
+  - <<Space>xq>: Open trouble quickfix list
+  - <<Space>xt>: Open todos in trouble
+- ⚠️ WARNING In mode `n`, <<Space>l> overlaps with <<Space>lh>, <<Space>ld>, <<Space>lc>, <<Space>ls>, <<Space>lr>, <<Space>lu>, <<Space>ll>, <<Space>lls>, <<Space>lg>:
+  - <<Space>l>: Trigger linting for current file
+  - <<Space>lh>: LeetCode: Open hints
+  - <<Space>ld>: LeetCode: Daily Challenge
+  - <<Space>lc>: LeetCode: Open Console
+  - <<Space>ls>: LeetCode: Submit Code
+  - <<Space>lr>: LeetCode: Run Code
+  - <<Space>lu>: LeetCode: Update Cookie
+  - <<Space>ll>: LeetCode: List Problems
+  - <<Space>lls>: LeetCode: Get latest submition
+  - <<Space>lg>: Open lazy git
+- ⚠️ WARNING In mode `n`, <<Space>s> overlaps with <<Space>so>, <<Space>ss>, <<Space>sy>, <<Space>sh>, <<Space>sv>, <<Space>se>, <<Space>sm>, <<Space>sx>:
+  - <<Space>s>: Substitute with motion
+  - <<Space>so>: Reload nvim
+  - <<Space>ss>: Substitute line
+  - <<Space>sy>: Format current file
+  - <<Space>sh>: Split window horizontally
+  - <<Space>sv>: Split window vertically
+  - <<Space>se>: Make splits equal size
+  - <<Space>sm>: Maximize/minimize a split
+  - <<Space>sx>: Close current split
+- ⚠️ WARNING In mode `n`, <<Space>w> overlaps with <<Space>wr>, <<Space>ws>:
+  - <<Space>w>: Save the current file
+  - <<Space>wr>: Restore session for cwd
+  - <<Space>ws>: Save session for auto session root dir
+- ⚠️ WARNING In mode `n`, <yS> overlaps with <ySS>:
+  - <yS>: Add a surrounding pair around a motion, on new lines (normal mode)
+  - <ySS>: Add a surrounding pair around the current line, on new lines (normal mode)
+- ⚠️ WARNING In mode `n`, <ys> overlaps with <yss>:
+  - <ys>: Add a surrounding pair around a motion (normal mode)
+  - <yss>: Add a surrounding pair around the current line (normal mode)
+- ⚠️ WARNING In mode `n`, <<Space>co> overlaps with <<Space>con>:
+  - <<Space>co>: Choose ours (git conflict)
+  - <<Space>con>: Adding console.log() on the line below
+- ⚠️ WARNING In mode `n`, <<Space>dr> overlaps with <<Space>drt>:
+  - <<Space>dr>: 💬 Open REPL
+  - <<Space>drt>: 🧼 Reset DAP UI Layout
+- ⚠️ WARNING In mode `n`, <<Space>do> overlaps with <<Space>dot>:
+  - <<Space>do>: ⏭ Step Over
+  - <<Space>dot>: ⤴ Step Out
+- ⚠️ WARNING In mode `n`, <<Space>dc> overlaps with <<Space>dco>, <<Space>dcf>, <<Space>dcb>:
+  - <<Space>dc>: ▶ Start Debugging
+  - <<Space>dco>: ⚙️ DAP Commands
+  - <<Space>dcf>: 🔭 DAP Configs
+  - <<Space>dcb>: 🧷 List Breakpoints
+- ⚠️ WARNING In mode `n`, <<Space>ll> overlaps with <<Space>lls>:
+  - <<Space>ll>: LeetCode: List Problems
+  - <<Space>lls>: LeetCode: Get latest submition
+- ✅ OK Overlapping keymaps are only reported for informational purposes.
+  This doesn't necessarily mean there is a problem with your config.
+
+Checking for duplicate mappings ~
+- ✅ OK No duplicate mappings found
