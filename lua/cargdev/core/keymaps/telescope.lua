@@ -22,7 +22,7 @@ keymap.set("n", "<leader>fC", "<cmd>Telescope commands<cr>", { desc = "Find comm
 keymap.set("n", "<leader>fg", "<cmd>Telescope git_commits<cr>", { desc = "Git commits" })
 keymap.set("n", "<leader>fG", "<cmd>Telescope git_bcommits<cr>", { desc = "Git buffer commits" })
 keymap.set("n", "<leader>fb", "<cmd>Telescope git_branches<cr>", { desc = "Git branches" })
-keymap.set("n", "<leader>fs", "<cmd>Telescope git_status<cr>", { desc = "Git status" })
+keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>", { desc = "Git status" })
 
 -- Todos
 keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" }) 

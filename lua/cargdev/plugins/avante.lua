@@ -52,6 +52,10 @@ return {
             toggle = { enabled = true },
             words = { enabled = true },
           })
+          
+          -- Set up vim.ui.input and vim.ui.select for snacks
+          vim.ui.input = require("snacks.input").input
+          vim.ui.select = require("snacks.picker").select
         end,
       },
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons

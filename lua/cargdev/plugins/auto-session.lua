@@ -1,16 +1,24 @@
 return {
   "rmagatti/auto-session",
-  config = function()
-    local auto_session = require("auto-session")
-
-    require("auto-session").setup({
-      auto_restore = false,
-      suppressed_dirs = { "~/", "~/Dev/", "~/Downloads", "~/Documents", "~/Desktop/" },
-    })
-
-    local keymap = vim.keymap
-
-    keymap.set("n", "<leader>wr", "<cmd>SessionRestore<CR>", { desc = "Restore session for cwd" }) -- restore last workspace session for current directory
-    keymap.set("n", "<leader>ws", "<cmd>SessionSave<CR>", { desc = "Save session for auto session root dir" }) -- save workspace session for current working directory
+  event = "VeryLazy",
+  opts = {
+    log_level = "error",
+    auto_session_suppress_dirs = { "~/", "~/Dev/", "~/Downloads", "~/Documents", "~/Desktop/" },
+    auto_session_enable_last_session = false,
+    auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
+    auto_session_enabled = true,
+    auto_save_enabled = true,
+    auto_restore_enabled = false,
+    auto_session_use_git_branch = true,
+    auto_session_create_enabled = true,
+    auto_session_enable_last_session = false,
+    -- Don't auto-restore on startup to allow alpha to show
+    auto_session_restore_on_startup = false,
+  },
+  config = function(_, opts)
+    require("auto-session").setup(opts)
+    
+    -- Set recommended sessionoptions
+    vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
   end,
 }

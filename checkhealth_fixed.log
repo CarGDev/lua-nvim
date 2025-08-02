@@ -42,35 +42,6 @@ CopilotChat.nvim [dependencies] ~
 - ✅ OK treesitter[diff]: installed
 
 ==============================================================================
-auto-session:                                                             1 ⚠️
-
-Setup ~
-- ✅ OK setup() called
-
-Lazy.nvim settings ~
-- ✅ OK Lazy.nvim support is enabled
-- ✅ OK auto-session is not lazy loaded
-
-Config ~
-- ⚠️ WARNING `vim.o.sessionoptions` should contain 'localoptions' to make sure
-  filetype and highlighting work correctly after a session is restored.
-  Recommended setting is:
-
-  vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
-
-
-Current Config ~
-- {
-    auto_restore = false,
-    suppressed_dirs = { "~/", "~/Dev/", "~/Downloads", "~/Documents", "~/Desktop/" }
-  }
-
-General Info ~
-- Session directory: /Users/carlos/.local/share/nvim/sessions/
-- Current session: 
-- Current session file: 
-
-==============================================================================
 avante:                                                                     ✅
 
 avante.nvim ~
@@ -204,12 +175,12 @@ mason.nvim [Languages] ~
 - ✅ OK cargo: `cargo 1.82.0 (8f40fc59f 2024-08-21)`
 - ✅ OK Ruby: `ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin24]`
 - ✅ OK node: `v22.11.0`
-- ✅ OK RubyGem: `3.5.3`
 - ✅ OK npm: `11.4.2`
 - ✅ OK PHP: `PHP 8.4.10 (cli) (built: Jul  2 2025 02:22:42) (NTS)`
+- ✅ OK Composer: `Composer version 2.8.10 2025-07-10 19:08:33`
+- ✅ OK RubyGem: `3.5.3`
 - ✅ OK python: `Python 3.13.5`
 - ✅ OK java: `openjdk version "23.0.2" 2025-01-21`
-- ✅ OK Composer: `Composer version 2.8.10 2025-07-10 19:08:33`
 - ✅ OK javac: `javac 23.0.2`
 - ✅ OK julia: `julia version 1.11.6`
 - ✅ OK pip: `pip 25.1.1 from /opt/homebrew/lib/python3.13/site-packages/pip (python 3.13)`
@@ -433,9 +404,6 @@ Telescope Extension: `fzf` ~
 - ✅ OK file_sorter correctly configured
 - ✅ OK generic_sorter correctly configured
 
-Telescope Extension: `session-lens` ~
-- No healthcheck provided
-
 ==============================================================================
 vim.deprecated:                                                             ✅
 
@@ -479,7 +447,7 @@ vim.lsp:                                                                 15 ⚠�
 
 - LSP log level : WARN
 - Log path: /Users/carlos/.local/state/nvim/lsp.log
-- Log size: 9415 KB
+- Log size: 9416 KB
 
 vim.lsp: Active Clients ~
 - No active clients

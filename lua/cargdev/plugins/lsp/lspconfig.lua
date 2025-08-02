@@ -29,6 +29,9 @@ return {
         "pyright",
         "svelte",
         "tailwindcss",
+        -- Database language servers
+        "sqls", -- SQL language server
+        "mongols", -- MongoDB language server
       },
     })
 
@@ -71,24 +74,67 @@ return {
       pyright = {},
       svelte = {},
       tailwindcss = {},
+      -- Database servers
+      sqls = {
+        settings = {
+          sqls = {
+            connections = {
+              {
+                name = "PostgreSQL",
+                adapter = "postgresql",
+                host = "localhost",
+                port = 5432,
+                database = "postgres",
+                username = "postgres",
+                password = "",
+              },
+              {
+                name = "MySQL",
+                adapter = "mysql",
+                host = "localhost",
+                port = 3306,
+                database = "mysql",
+                username = "root",
+                password = "",
+              },
+            },
+          },
+        },
+      },
+      mongols = {
+        settings = {
+          mongols = {
+            connectionString = "mongodb://localhost:27017",
+            maxNumberOfProblems = 100,
+          },
+        },
+      },
     }
 
-    for server, config in pairs(servers) do
-      config.capabilities = capabilities
-      lspconfig[server].setup(config)
+    -- Set up all LSP servers
+    for server_name, server_config in pairs(servers) do
+      lspconfig[server_name].setup({
+        capabilities = capabilities,
+        settings = server_config.settings or {},
+      })
     end
 
-    -- ✅ Correct way to setup typescript-tools
-    require("typescript-tools").setup({
+    -- Set up additional LSP servers that might not be in mason-lspconfig
+    lspconfig.css_variables.setup({
       capabilities = capabilities,
-      -- optional settings:
-      -- settings = {
-      --   tsserver_plugins = {},
-      --   tsserver_max_memory = 4096,
-      -- }
     })
 
-    -- LSP keymaps are now handled in the main keymaps.lua file
-    -- This ensures consistent keymaps across all file types
+    lspconfig.cssmodules_ls.setup({
+      capabilities = capabilities,
+    })
+
+    -- Set up TypeScript Tools
+    require("typescript-tools").setup({
+      settings = {
+        tsserver_plugins = {},
+        tsserver_file_preferences = {},
+        tsserver_format_options = {},
+      },
+    })
   end,
 }

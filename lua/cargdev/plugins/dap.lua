@@ -6,7 +6,6 @@ return {
     "jay-babu/mason-nvim-dap.nvim",
     "mfussenegger/nvim-dap-python",
     "theHamsta/nvim-dap-virtual-text",
-    "nvim-telescope/telescope-dap.nvim",
     "Weissle/persistent-breakpoints.nvim",
     {
       "nvim-neotest/neotest",
@@ -135,12 +134,6 @@ return {
         dapui.open()
       end, 200)
     end, { desc = "🧼 Reset DAP UI Layout" })
-
-    -- 🔭 Telescope Integration
-    require("telescope").load_extension("dap")
-    keymap("n", "<leader>dcf", "<cmd>Telescope dap configurations<cr>", { desc = "🔭 DAP Configs" })
-    keymap("n", "<leader>dcb", "<cmd>Telescope dap list_breakpoints<cr>", { desc = "🧷 List Breakpoints" })
-    keymap("n", "<leader>dco", "<cmd>Telescope dap commands<cr>", { desc = "⚙️ DAP Commands" })
 
     -- 🧿 Sign Icons
     for name, icon in pairs({

@@ -42,8 +42,34 @@ opt.relativenumber = true -- Show relative line numbers
 opt.cursorline = true -- Highlight current line
 opt.cursorcolumn = false -- Don't highlight current column
 opt.signcolumn = "yes" -- Always show sign column
-opt.wrap = false -- Don't wrap lines
+
+-- =============================================================================
+-- NATIVE AUTO WRAPPER CONFIGURATION
+-- =============================================================================
+
+-- Text wrapping settings
+opt.wrap = true -- Enable line wrapping
 opt.linebreak = true -- Break lines at word boundaries
+opt.breakindent = true -- Preserve indentation in wrapped lines
+opt.showbreak = "↪ " -- Show break indicator
+opt.breakindentopt = "shift:2" -- Indent wrapped lines by 2 spaces
+
+-- Text width and formatting
+opt.textwidth = 80 -- Set text width for auto-wrapping
+opt.colorcolumn = "80" -- Show column at 80 characters
+opt.formatoptions = "jcroqlnt" -- Format options for auto-wrapping
+
+-- Auto-wrap specific settings
+opt.formatoptions:append("t") -- Auto-wrap text using textwidth
+opt.formatoptions:append("c") -- Auto-wrap comments using textwidth
+opt.formatoptions:append("r") -- Auto-wrap comments when pressing Enter
+opt.formatoptions:append("o") -- Auto-wrap comments when pressing 'o' or 'O'
+opt.formatoptions:append("q") -- Allow formatting of comments with 'gq'
+opt.formatoptions:append("l") -- Long lines are not broken in insert mode
+opt.formatoptions:append("n") -- Recognize numbered lists
+opt.formatoptions:append("j") -- Remove comment leader when joining lines
+
+-- Scroll settings for wrapped text
 opt.scrolloff = 8 -- Keep 8 lines above/below cursor
 opt.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
 opt.showmatch = true -- Show matching brackets
@@ -141,3 +167,50 @@ local disabled_built_ins = {
 for _, plugin in pairs(disabled_built_ins) do
   g["loaded_" .. plugin] = 1
 end
+
+-- =============================================================================
+-- AUTO WRAPPER AUTOCMDS
+-- =============================================================================
+
+-- Set up auto-wrapping for different file types
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "text", "markdown", "gitcommit", "mail" },
+  callback = function()
+    vim.opt_local.textwidth = 80
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+    vim.opt_local.formatoptions:append("t") -- Auto-wrap text
+  end,
+})
+
+-- Set up auto-wrapping for code files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "lua", "javascript", "typescript", "python", "java", "cpp", "c", "rust", "go" },
+  callback = function()
+    vim.opt_local.textwidth = 100 -- Longer lines for code
+    vim.opt_local.formatoptions:append("c") -- Auto-wrap comments
+    vim.opt_local.formatoptions:append("r") -- Auto-wrap comments with leader
+    vim.opt_local.formatoptions:append("o") -- Auto-wrap comments with 'o'
+    vim.opt_local.formatoptions:append("q") -- Allow formatting of comments with 'gq'
+  end,
+})
+
+-- Set up auto-wrapping for documentation files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "help", "man" },
+  callback = function()
+    vim.opt_local.textwidth = 78
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+    vim.opt_local.formatoptions:append("t") -- Auto-wrap text
+  end,
+})
+
+-- Set up auto-wrapping for configuration files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "conf", "config", "ini", "toml", "yaml", "json" },
+  callback = function()
+    vim.opt_local.textwidth = 80
+    vim.opt_local.formatoptions:append("c") -- Auto-wrap comments
+  end,
+})

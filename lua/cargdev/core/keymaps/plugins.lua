@@ -114,4 +114,82 @@ keymap.set("n", "gco", "<cmd>lua require('Comment.api').insert_below()<cr>", { d
 keymap.set("n", "gcO", "<cmd>lua require('Comment.api').insert_above()<cr>", { desc = "Insert comment above" })
 keymap.set("n", "gcA", "<cmd>lua require('Comment.api').insert_eol()<cr>", { desc = "Insert comment at end of line" })
 keymap.set("n", "gb", "<cmd>lua require('Comment.api').toggle_current_blockwise()<cr>", { desc = "Toggle block comment" })
-keymap.set("n", "gbc", "<cmd>lua require('Comment.api').toggle_current_blockwise()<cr>", { desc = "Toggle current block comment" }) 
+keymap.set("n", "gbc", "<cmd>lua require('Comment.api').toggle_current_blockwise()<cr>", { desc = "Toggle current block comment" })
+
+-- =============================================================================
+-- DATABASE KEYMAPS (Temporarily disabled to prevent conflicts)
+-- =============================================================================
+
+-- -- Dadbod UI
+-- keymap.set("n", "<leader>du", "<cmd>DBUI<CR>", { desc = "Open Database UI" })
+-- keymap.set("n", "<leader>dul", "<cmd>DBUILastQueryInfo<CR>", { desc = "Show last query info" })
+-- keymap.set("n", "<leader>duf", "<cmd>DBUIFindBuffer<CR>", { desc = "Find database buffer" })
+
+-- -- Database connections
+-- keymap.set("n", "<leader>dua", "<cmd>DBUIAddConnection<CR>", { desc = "Add database connection" })
+-- keymap.set("n", "<leader>dur", "<cmd>DBUIRenameBuffer<CR>", { desc = "Rename database buffer" })
+-- keymap.set("n", "<leader>dud", "<cmd>DBUIRefresh<CR>", { desc = "Refresh database" })
+
+-- -- Database queries
+-- keymap.set("n", "<leader>due", "<cmd>DBExecute<CR>", { desc = "Execute SQL query" })
+-- keymap.set("n", "<leader>dus", "<cmd>DBSelect<CR>", { desc = "Select SQL query" })
+-- keymap.set("n", "<leader>dui", "<cmd>DBInsert<CR>", { desc = "Insert SQL query" })
+-- keymap.set("n", "<leader>duu", "<cmd>DBUpdate<CR>", { desc = "Update SQL query" })
+-- keymap.set("n", "<leader>dudel", "<cmd>DBDelete<CR>", { desc = "Delete SQL query" })
+
+-- -- Database table operations
+-- keymap.set("n", "<leader>dut", "<cmd>DBUITableCreate<CR>", { desc = "Create table" })
+-- keymap.set("n", "<leader>duti", "<cmd>DBUITableIndex<CR>", { desc = "Show table indexes" })
+-- keymap.set("n", "<leader>dutc", "<cmd>DBUITableCount<CR>", { desc = "Count table rows" })
+-- keymap.set("n", "<leader>dutx", "<cmd>DBUITableExplain<CR>", { desc = "Explain table query" })
+-- keymap.set("n", "<leader>dutz", "<cmd>DBUITableSize<CR>", { desc = "Show table size" })
+
+-- -- SQL formatting
+-- keymap.set("n", "<leader>duf", "<cmd>SQLFormat<CR>", { desc = "Format SQL query" })
+
+-- -- Database utilities
+-- keymap.set("n", "<leader>duh", "<cmd>DBUIHideNotifications<CR>", { desc = "Hide database notifications" })
+-- keymap.set("n", "<leader>dus", "<cmd>DBUISaveBuffer<CR>", { desc = "Save database buffer" })
+-- keymap.set("n", "<leader>dul", "<cmd>DBUILoadBuffer<CR>", { desc = "Load database buffer" })
+
+-- Redis specific
+keymap.set("n", "<leader>rds", "<cmd>Redis<CR>", { desc = "Open Redis" })
+keymap.set("n", "<leader>rdk", "<cmd>RedisKeys<CR>", { desc = "Show Redis keys" })
+keymap.set("n", "<leader>rdi", "<cmd>RedisInfo<CR>", { desc = "Show Redis info" })
+
+-- MongoDB specific
+keymap.set("n", "<leader>mdb", "<cmd>MongoDB<CR>", { desc = "Open MongoDB" })
+keymap.set("n", "<leader>mdc", "<cmd>MongoDBConnect<CR>", { desc = "Connect to MongoDB" })
+keymap.set("n", "<leader>mdd", "<cmd>MongoDBDisconnect<CR>", { desc = "Disconnect from MongoDB" }) 
+
+-- =============================================================================
+-- NATIVE AUTO WRAPPER KEYMAPS
+-- =============================================================================
+
+-- Text wrapping controls
+keymap.set("n", "<leader>tw", "<cmd>set wrap!<cr>", { desc = "Toggle line wrapping" })
+keymap.set("n", "<leader>tl", "<cmd>set linebreak!<cr>", { desc = "Toggle line break" })
+keymap.set("n", "<leader>tc", "<cmd>set colorcolumn=80<cr>", { desc = "Show 80 char column" })
+keymap.set("n", "<leader>tC", "<cmd>set colorcolumn=<cr>", { desc = "Hide column guide" })
+
+-- Format text using native Neovim commands
+keymap.set("n", "<leader>tf", "gqap", { desc = "Format paragraph" })
+keymap.set("v", "<leader>tf", "gq", { desc = "Format selection" })
+keymap.set("n", "<leader>tF", "gggqG", { desc = "Format entire file" })
+
+-- Text width adjustments
+keymap.set("n", "<leader>t80", "<cmd>set textwidth=80<cr>", { desc = "Set text width to 80" })
+keymap.set("n", "<leader>t100", "<cmd>set textwidth=100<cr>", { desc = "Set text width to 100" })
+keymap.set("n", "<leader>t120", "<cmd>set textwidth=120<cr>", { desc = "Set text width to 120" })
+keymap.set("n", "<leader>t0", "<cmd>set textwidth=0<cr>", { desc = "Disable text width" })
+
+-- Auto-wrap controls
+keymap.set("n", "<leader>ta", "<cmd>set formatoptions+=t<cr>", { desc = "Enable auto-wrap text" })
+keymap.set("n", "<leader>tA", "<cmd>set formatoptions-=t<cr>", { desc = "Disable auto-wrap text" })
+keymap.set("n", "<leader>tc", "<cmd>set formatoptions+=c<cr>", { desc = "Enable auto-wrap comments" })
+keymap.set("n", "<leader>tC", "<cmd>set formatoptions-=c<cr>", { desc = "Disable auto-wrap comments" })
+
+-- Indent and wrap
+keymap.set("n", "<leader>ti", "<cmd>set breakindent!<cr>", { desc = "Toggle break indent" })
+keymap.set("n", "<leader>ts", "<cmd>set showbreak=↪ <cr>", { desc = "Show break indicator" })
+keymap.set("n", "<leader>tS", "<cmd>set showbreak=<cr>", { desc = "Hide break indicator" }) 
