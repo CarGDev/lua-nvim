@@ -73,32 +73,32 @@ return {
 
         -- File Management keybindings
         vim.keymap.set("n", "a", function() -- Add a new file
-          vim.cmd("set modifiable") -- Ensure modifiable mode is on
+          vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
           api.fs.create()
         end, opts)
 
         vim.keymap.set("n", "r", function() -- Rename file
-          vim.cmd("set modifiable") -- Ensure modifiable mode is on
+          vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
           api.fs.rename()
         end, opts)
 
         vim.keymap.set("n", "d", function() -- Delete file
-          vim.cmd("set modifiable") -- Ensure modifiable mode is on
+          vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
           api.fs.remove()
         end, opts)
 
         vim.keymap.set("n", "x", function() -- Cut (move) file
-          vim.cmd("set modifiable") -- Ensure modifiable mode is on
+          vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
           api.fs.cut()
         end, opts)
 
         vim.keymap.set("n", "p", function() -- Paste file
-          vim.cmd("set modifiable") -- Ensure modifiable mode is on
+          vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
           api.fs.paste()
         end, opts)
 
         vim.keymap.set("n", "y", function() -- Copy file
-          vim.cmd("set modifiable") -- Ensure modifiable mode is on
+          vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
           api.fs.copy.node()
         end, opts)
       end,
