@@ -74,7 +74,7 @@ return {
 
     -- 🧠 Mason DAP
     require("mason-nvim-dap").setup({
-      ensure_installed = { "node2", "chrome", "firefox" },
+      ensure_installed = { "js-debug-adapter", "firefox" },
       automatic_setup = true,
     })
 
@@ -173,19 +173,20 @@ return {
       },
     }
 
-    -- 🧠 Node.js (NestJS / TypeScript)
-    dap.adapters.node2 = {
+    -- 🧠 Node.js (NestJS / TypeScript) - Using js-debug-adapter
+    dap.adapters.node = {
       type = "executable",
       command = "node",
       args = {
-        os.getenv("HOME") .. "/.local/share/nvim/mason/packages/node-debug2-adapter/out/src/nodedebug.js",
+        os.getenv("HOME") .. "/.local/share/nvim/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+        "${port}",
       },
     }
 
     dap.configurations.typescript = {
       {
         name = "Launch NestJS",
-        type = "node2",
+        type = "node",
         request = "launch",
         program = "${workspaceFolder}/dist/main.js",
         args = {},
@@ -199,7 +200,7 @@ return {
       },
       {
         name = "Attach to NestJS (start:debug)",
-        type = "node2",
+        type = "node",
         request = "attach",
         port = 9229,
         protocol = "inspector",
@@ -209,5 +210,8 @@ return {
         skipFiles = { "<node_internals>/**" },
       },
     }
+
+    -- Also add JavaScript configurations
+    dap.configurations.javascript = dap.configurations.typescript
   end,
 }
