@@ -28,8 +28,8 @@ if ok_dap and ok_dapui then
     end, 200)
   end, { desc = "🧼 Reset DAP UI Layout" })
 
-  -- 🔭 Telescope Integration
-  keymap("n", "<leader>dcf", "<cmd>Telescope dap configurations<cr>", { desc = "🔭 DAP Configs" })
-  keymap("n", "<leader>dcb", "<cmd>Telescope dap list_breakpoints<cr>", { desc = "🧷 List Breakpoints" })
-  keymap("n", "<leader>dco", "<cmd>Telescope dap commands<cr>", { desc = "⚙️ DAP Commands" })
+  -- 🔭 Snacks Integration (replacing Telescope)
+keymap("n", "<leader>dcf", "<cmd>lua require('snacks.picker').dap_configurations()<cr>", { desc = "🔭 DAP Configs" })
+keymap("n", "<leader>dcb", "<cmd>lua require('snacks.picker').dap_list_breakpoints()<cr>", { desc = "🧷 List Breakpoints" })
+keymap("n", "<leader>dco", "<cmd>lua require('snacks.picker').dap_commands()<cr>", { desc = "⚙️ DAP Commands" })
 end

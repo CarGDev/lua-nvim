@@ -29,10 +29,10 @@ return {
 
     -- 📂 Set menu with improved icons
     dashboard.section.buttons.val = {
-      dashboard.button("f", "🔎  Find File", "<cmd>Telescope find_files<CR>"),
+      dashboard.button("f", "🔎  Find File", "<cmd>lua require('snacks.picker').files()<CR>"),
       dashboard.button("n", "📜  New File", "<cmd>ene<CR>"),
-      dashboard.button("g", "📝  Find Text", "<cmd>Telescope live_grep<CR>"),
-      dashboard.button("r", "📚  Recent Files", "<cmd>Telescope oldfiles<CR>"),
+      dashboard.button("g", "📝  Find Text", "<cmd>lua require('snacks.picker').grep()<CR>"),
+      dashboard.button("r", "📚  Recent Files", "<cmd>lua require('snacks.picker').oldfiles()<CR>"),
       dashboard.button("c", "⚙️  Config", "<cmd>e ~/.config/nvim/init.lua<CR>"),
       dashboard.button("L", "🦥  Lazy", "<cmd>Lazy<CR>"),
       dashboard.button("q", "🚪  Quit", "<cmd>qa<CR>"),

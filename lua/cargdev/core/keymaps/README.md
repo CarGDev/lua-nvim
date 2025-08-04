@@ -10,7 +10,7 @@ keymaps/
 ├── general.lua        # General keymaps (leader, basic navigation)
 ├── personal.lua       # Personal workflow keymaps
 ├── lsp.lua           # LSP and function navigation keymaps
-├── telescope.lua     # Telescope search and navigation keymaps
+├── snacks.lua        # Snacks search and navigation keymaps (replacing Telescope)
 └── plugins.lua       # Plugin-specific keymaps
 ```
 
@@ -36,7 +36,7 @@ The main `keymaps.lua` file automatically loads all `.lua` files from this folde
 - Code actions and documentation
 - Diagnostics
 
-### **telescope.lua**
+### **snacks.lua**
 - File search (`<leader>ff`, `<leader>fs`)
 - Buffer management
 - Git integration
@@ -71,7 +71,7 @@ To add new keymaps:
 | General | `general.lua` | Basic setup and utilities |
 | Personal | `personal.lua` | Your workflow shortcuts |
 | LSP | `lsp.lua` | Function navigation and LSP features |
-| Search | `telescope.lua` | File and text search |
+| Search | `snacks.lua` | File and text search |
 | Plugins | `plugins.lua` | Plugin-specific functionality |
 
 ## 🔄 Benefits
@@ -86,8 +86,8 @@ To add new keymaps:
 
 The keymaps are automatically loaded when Neovim starts. You can:
 
-- **View all keymaps**: `<leader>fk` (Telescope keymaps)
-- **Search keymaps**: Use Telescope to search through your keymaps
+- **View all keymaps**: `<leader>fk` (Snacks keymaps)
+- **Search keymaps**: Use Snacks to search through your keymaps
 - **Modify keymaps**: Edit the appropriate file and restart Neovim
 
 ## 📝 Notes
