@@ -1,178 +1,75 @@
--- Temporarily disabled to fix database error
--- return {
---   -- =============================================================================
---   -- DATABASE PLUGINS
---   -- =============================================================================
-
---   -- Database client for Neovim
---   {
---     "tpope/vim-dadbod",
---     dependencies = {
---       "kristijanhusak/vim-dadbod-ui",
---       "kristijanhusak/vim-dadbod-completion",
---     },
---     config = function()
---       -- Dadbod UI configuration
---       vim.g.db_ui_use_nerd_fonts = 1
---       vim.g.db_ui_winwidth = 30
---       vim.g.db_ui_winposition = "right"
---       vim.g.db_ui_show_help = 0
---       vim.g.db_ui_auto_execute_table_helpers = 1
-      
---       -- Disable auto-connection to prevent errors
---       vim.g.db_ui_auto_execute_table_helpers = 0
---       vim.g.db_ui_show_database_icon = 0
---       vim.g.db_ui_winwidth = 30
---       vim.g.db_ui_winposition = "right"
---       vim.g.db_ui_use_nerd_fonts = 1
---       vim.g.db_ui_show_help = 0
-      
---       -- Disable automatic database loading
---       vim.g.db_ui_auto_execute_table_helpers = 0
---       vim.g.db_ui_show_database_icon = 0
---       vim.g.db_ui_auto_execute_table_helpers = 0
---       vim.g.db_ui_show_database_icon = 0
-      
---       vim.g.db_ui_table_helpers = {
---         sqlite = {
---           count = "SELECT COUNT(*) FROM {table}",
---           explain = "EXPLAIN QUERY PLAN {last_query}",
---           indexes = "PRAGMA index_list({table})",
---           show = "PRAGMA table_info({table})",
---           size = "SELECT page_count * page_size as size FROM pragma_page_count(), pragma_page_size() WHERE name = '{table}'",
---         },
---         mysql = {
---           count = "SELECT COUNT(*) FROM {table}",
---           explain = "EXPLAIN {last_query}",
---           indexes = "SHOW INDEX FROM {table}",
---           show = "SHOW CREATE TABLE {table}",
---           size = "SELECT ROUND(((data_length + index_length) / 1024 / 1024), 2) AS 'Size (MB)' FROM information_schema.TABLES WHERE table_schema = '{database}' AND table_name = '{table}'",
---         },
---         postgresql = {
---           count = "SELECT COUNT(*) FROM {table}",
---           explain = "EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON) {last_query}",
---           indexes = "SELECT indexname, indexdef FROM pg_indexes WHERE tablename = '{table}'",
---           show = "\\d {table}",
---           size = "SELECT pg_size_pretty(pg_total_relation_size('{table}'))",
---         },
---         redis = {
---           count = "LLEN {table}",
---           explain = "SLOWLOG GET 10",
---           indexes = "KEYS *",
---           show = "TYPE {table}",
---           size = "MEMORY USAGE {table}",
---         },
---       }
-
---       -- Dadbod completion
---       vim.g.vim_dadbod_completion_mark = "📊"
-      
---       -- Configure database adapters
---       vim.g.db_adapter_sqlite = 'sqlite3'
---       vim.g.db_adapter_mysql = 'mysql'
---       vim.g.db_adapter_postgresql = 'psql'
---       vim.g.db_adapter_redis = 'redis-cli'
-      
---       -- Disable automatic database connections
---       vim.g.db_ui_auto_execute_table_helpers = 0
---       vim.g.db_ui_show_database_icon = 0
---     end,
---   },
-
---   -- SQL formatting and syntax highlighting
---   {
---     "b4winckler/vim-objc",
---     ft = { "sql", "mysql", "postgresql" },
---   },
-
---   -- SQL formatting with sqlparse
---   {
---     "b4winckler/vim-objc",
---     ft = { "sql" },
---     config = function()
---       vim.g.sqlformat_command = "sqlformat"
---       vim.g.sqlformat_options = "-r -k upper"
---     end,
---   },
--- }
-
--- Return empty table to prevent errors
 return {
   -- =============================================================================
   -- DATABASE PLUGINS
   -- =============================================================================
 
-  -- Database client for Neovim
+  -- Modern database client for Neovim (replaces vim-dadbod)
   {
-    "tpope/vim-dadbod",
+    "kndndrj/nvim-dbee",
+    build = function()
+      -- Install the Go binary
+      require("dbee").install()
+    end,
     dependencies = {
-      "kristijanhusak/vim-dadbod-ui",
-      "kristijanhusak/vim-dadbod-completion",
+      "nvim-lua/plenary.nvim",
     },
     config = function()
-      -- Disable all automatic database operations
-      vim.g.db_ui_auto_execute_table_helpers = 0
-      vim.g.db_ui_show_database_icon = 0
-      vim.g.db_ui_use_nerd_fonts = 1
-      vim.g.db_ui_winwidth = 30
-      vim.g.db_ui_winposition = "right"
-      vim.g.db_ui_show_help = 0
-      
-      -- Disable automatic database loading completely
-      vim.g.db_ui_auto_execute_table_helpers = 0
-      vim.g.db_ui_show_database_icon = 0
-      
-      -- Configure table helpers (only used when manually triggered)
-      vim.g.db_ui_table_helpers = {
-        sqlite = {
-          count = "SELECT COUNT(*) FROM {table}",
-          explain = "EXPLAIN QUERY PLAN {last_query}",
-          indexes = "PRAGMA index_list({table})",
-          show = "PRAGMA table_info({table})",
-          size = "SELECT page_count * page_size as size FROM pragma_page_count(), pragma_page_size() WHERE name = '{table}'",
+      require("dbee").setup({
+        -- Sources for database connections
+        sources = {
+          -- Load connections from memory (only guaranteed working connections)
+          require("dbee.sources").MemorySource:new({
+            -- PostgreSQL (confirmed working)
+            {
+              name = "mock_api",
+              type = "postgres",
+              url = "postgres://localhost:5432/mock_api?sslmode=disable",
+            },
+          }),
+          -- Load connections from environment variable (for dynamic connections)
+          require("dbee.sources").EnvSource:new("DBEE_CONNECTIONS"),
+          -- Load connections from file (persistent storage - user-added connections)
+          require("dbee.sources").FileSource:new(vim.fn.stdpath("cache") .. "/dbee/persistence.json"),
         },
-        mysql = {
-          count = "SELECT COUNT(*) FROM {table}",
-          explain = "EXPLAIN {last_query}",
-          indexes = "SHOW INDEX FROM {table}",
-          show = "SHOW CREATE TABLE {table}",
-          size = "SELECT ROUND(((data_length + index_length) / 1024 / 1024), 2) AS 'Size (MB)' FROM information_schema.TABLES WHERE table_schema = '{database}' AND table_name = '{table}'",
+        
+        -- UI Configuration
+        ui = {
+          -- Layout configuration
+          layout = {
+            -- Drawer (left panel) width
+            drawer_width = 30,
+            -- Result buffer height
+            result_height = 15,
+            -- Editor buffer height
+            editor_height = 10,
+          },
         },
-        postgresql = {
-          count = "SELECT COUNT(*) FROM {table}",
-          explain = "EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON) {last_query}",
-          indexes = "SELECT indexname, indexdef FROM pg_indexes WHERE tablename = '{table}'",
-          show = "\\d {table}",
-          size = "SELECT pg_size_pretty(pg_total_relation_size('{table}'))",
+        
+        -- Database configuration
+        database = {
+          -- Default page size for results
+          page_size = 100,
+          -- Connection timeout in seconds
+          timeout = 30,
+          -- Maximum number of connections
+          max_connections = 5,
         },
-        redis = {
-          count = "LLEN {table}",
-          explain = "SLOWLOG GET 10",
-          indexes = "KEYS *",
-          show = "TYPE {table}",
-          size = "MEMORY USAGE {table}",
+        
+        -- Logging configuration
+        log = {
+          -- Log level: "debug", "info", "warn", "error"
+          level = "info",
+          -- Log file path
+          file = vim.fn.stdpath("cache") .. "/dbee/dbee.log",
         },
-      }
-
-      -- Dadbod completion
-      vim.g.vim_dadbod_completion_mark = "📊"
-      
-      -- Configure database adapters
-      vim.g.db_adapter_sqlite = 'sqlite3'
-      vim.g.db_adapter_mysql = 'mysql'
-      vim.g.db_adapter_postgresql = 'psql'
-      vim.g.db_adapter_redis = 'redis-cli'
-      
-      -- Ensure no automatic connections
-      vim.g.db_ui_auto_execute_table_helpers = 0
-      vim.g.db_ui_show_database_icon = 0
+      })
     end,
   },
 
   -- SQL formatting and syntax highlighting
   {
     "b4winckler/vim-objc",
-    ft = { "sql", "mysql", "postgresql" },
+    ft = { "sql", "mysql", "postgresql", "oracle" },
   },
 
   -- SQL formatting with sqlparse
@@ -184,4 +81,52 @@ return {
       vim.g.sqlformat_options = "-r -k upper"
     end,
   },
-} 
+
+
+
+  -- MongoDB syntax highlighting (without LSP)
+  {
+    "neovim/nvim-lspconfig",
+    ft = { "javascript", "json" },
+    config = function()
+      -- Enable MongoDB syntax highlighting for .js files
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "javascript", "json" },
+        callback = function()
+          vim.bo.filetype = "javascript"
+        end,
+      })
+    end,
+  },
+
+  -- Redis syntax highlighting
+  {
+    "neovim/nvim-lspconfig",
+    ft = { "redis" },
+    config = function()
+      -- Enable Redis syntax highlighting
+      vim.api.nvim_create_autocmd("BufRead,BufNewFile", {
+        pattern = "*.redis",
+        callback = function()
+          vim.bo.filetype = "redis"
+        end,
+      })
+    end,
+  },
+
+  -- CQL (Cassandra Query Language) syntax highlighting
+  {
+    "neovim/nvim-lspconfig",
+    ft = { "cql" },
+    config = function()
+      -- Enable CQL syntax highlighting
+      vim.api.nvim_create_autocmd("BufRead,BufNewFile", {
+        pattern = "*.cql",
+        callback = function()
+          vim.bo.filetype = "cql"
+        end,
+      })
+    end,
+  },
+}
+

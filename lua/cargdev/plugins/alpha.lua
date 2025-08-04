@@ -29,12 +29,13 @@ return {
 
     -- 📂 Set menu with improved icons
     dashboard.section.buttons.val = {
-      dashboard.button("e", "📜  New File", "<cmd>ene<CR>"),
-      dashboard.button("SPC ee", "📂  File Explorer", "<cmd>NvimTreeToggle<CR>"),
-      dashboard.button("SPC ff", "🔎  Find File", "<cmd>Telescope find_files<CR>"),
-      dashboard.button("SPC fs", "📝  Find Word", "<cmd>Telescope live_grep<CR>"),
-      dashboard.button("SPC wr", "💾  Restore Session", "<cmd>SessionRestore<CR>"),
-      dashboard.button("q", "❌  Quit NVIM", "<cmd>qa<CR>"),
+      dashboard.button("f", "🔎  Find File", "<cmd>Telescope find_files<CR>"),
+      dashboard.button("n", "📜  New File", "<cmd>ene<CR>"),
+      dashboard.button("g", "📝  Find Text", "<cmd>Telescope live_grep<CR>"),
+      dashboard.button("r", "📚  Recent Files", "<cmd>Telescope oldfiles<CR>"),
+      dashboard.button("c", "⚙️  Config", "<cmd>e ~/.config/nvim/init.lua<CR>"),
+      dashboard.button("L", "🦥  Lazy", "<cmd>Lazy<CR>"),
+      dashboard.button("q", "🚪  Quit", "<cmd>qa<CR>"),
     }
 
     -- 🎯 Function to center text within a width

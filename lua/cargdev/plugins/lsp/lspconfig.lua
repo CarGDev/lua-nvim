@@ -31,7 +31,10 @@ return {
         "tailwindcss",
         -- Database language servers
         "sqls", -- SQL language server
-        "mongols", -- MongoDB language server
+        "mongodb", -- MongoDB language server
+        "redis", -- Redis language server
+        "oracle", -- Oracle language server
+        "cassandra", -- Cassandra language server
       },
     })
 
