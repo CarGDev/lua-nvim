@@ -5,7 +5,7 @@ local keymap = vim.keymap
 -- PERSONAL KEYMAPS (ORIGINAL WORKFLOW)
 -- =============================================================================
 
-keymap.set("n", "<leader>u", "gg0vG$", { desc = "Select the whole file open" })
+keymap.set("n", "<leader>u", "gg0vG$$", { desc = "Select the whole file open" })
 keymap.set("n", "<leader>4", "0v$hy<Esc>0o<Esc>0p0kw<CR>", { desc = "Copy the entire line and paste just below" })
 
 -- file management
