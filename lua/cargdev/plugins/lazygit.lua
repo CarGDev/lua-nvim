@@ -1,6 +1,6 @@
 return {
-  dir = "/Users/carlos/Documents/SSD_Documents/projects/lazygit.nvim",
-  --[[ "kdheepak/lazygit.nvim", ]]
+  --[[ dir = "/Users/carlos/Documents/SSD_Documents/projects/lazygit.nvim", ]]
+  "kdheepak/lazygit.nvim",
   cmd = {
     "LazyGit",
     "LazyGitConfig",
