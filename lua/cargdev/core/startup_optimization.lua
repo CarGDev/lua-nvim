@@ -8,7 +8,6 @@ function M.optimize_startup()
   
   -- Disable unused providers
   vim.g.loaded_python3_provider = 0
-  vim.g.loaded_node_provider = 0
   vim.g.loaded_ruby_provider = 0
   vim.g.loaded_perl_provider = 0
   
@@ -42,8 +41,14 @@ function M.optimize_startup()
   vim.g.do_filetype_lua = 1
   vim.g.did_load_filetypes = 0
   
-  -- Fix lazyredraw conflict with Noice
-  vim.opt.lazyredraw = false -- Disable to prevent Noice conflicts
+  -- Fix lazyredraw conflict with Noice - but only after LazyVim loads
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "LazyDone",
+    callback = function()
+      vim.opt.lazyredraw = false -- Disable to prevent Noice conflicts
+    end,
+    once = true,
+  })
   
   -- Optimize completion settings
   vim.opt.completeopt = "menuone,noselect"
@@ -99,32 +104,50 @@ end
 -- Function to defer heavy operations
 function M.defer_heavy_operations()
   -- Defer treesitter loading
-  vim.defer_fn(function()
-    if vim.fn.exists(":TSBufEnable") > 0 then
-      vim.cmd("TSBufEnable highlight")
-    end
-  end, 100)
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "LazyDone",
+    callback = function()
+      vim.defer_fn(function()
+        if vim.fn.exists(":TSBufEnable") > 0 then
+          vim.cmd("TSBufEnable highlight")
+        end
+      end, 100)
+    end,
+    once = true,
+  })
   
   -- Defer LSP setup for non-critical buffers
-  vim.defer_fn(function()
-    -- Enable LSP for current buffer if it's a supported filetype
-    local supported_ft = {
-      "lua", "javascript", "typescript", "python", "java", "cpp", "c", "rust", "go",
-      "html", "css", "json", "yaml", "markdown"
-    }
-    
-    local current_ft = vim.bo.filetype
-    if vim.tbl_contains(supported_ft, current_ft) then
-      vim.cmd("LspStart")
-    end
-  end, 200)
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "LazyDone",
+    callback = function()
+      vim.defer_fn(function()
+        -- Enable LSP for current buffer if it's a supported filetype
+        local supported_ft = {
+          "lua", "javascript", "typescript", "python", "java", "cpp", "c", "rust", "go",
+          "html", "css", "json", "yaml", "markdown"
+        }
+        
+        local current_ft = vim.bo.filetype
+        if vim.tbl_contains(supported_ft, current_ft) then
+          vim.cmd("LspStart")
+        end
+      end, 200)
+    end,
+    once = true,
+  })
   
   -- Defer completion setup
-  vim.defer_fn(function()
-    if vim.fn.exists(":CmpStatus") > 0 then
-      vim.cmd("CmpStatus")
-    end
-  end, 300)
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "LazyDone",
+    callback = function()
+      vim.defer_fn(function()
+        if vim.fn.exists(":CmpStatus") > 0 then
+          vim.cmd("CmpStatus")
+        end
+      end, 300)
+    end,
+    once = true,
+  })
 end
 
 -- Function to check if we're in a large repository
@@ -142,7 +165,7 @@ function M.check_repo_size()
       vim.opt.cursorline = false -- Disable cursor line
       vim.opt.relativenumber = false -- Disable relative numbers
       
-      print("Large repository detected (" .. file_count .. " files). Applied additional optimizations.")
+      print("Large repository detected (" .. file_count .. " lines). Applied additional optimizations.")
     end
   end
 end
@@ -165,8 +188,8 @@ function M.eliminate_startup_prompts()
     once = true,
   })
   
-  -- Create autocmd to handle any message events
-  vim.api.nvim_create_autocmd("MsgShow", {
+  -- Create autocmd to handle any message events - use valid events
+  vim.api.nvim_create_autocmd("BufReadPost", {
     callback = function()
       -- Clear messages that might cause prompts
       vim.cmd("redraw!")

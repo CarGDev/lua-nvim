@@ -15,6 +15,13 @@ keymap.set("i", "jk", "<ESC>", opts) -- Exit insert mode with jk
 keymap.set("n", "<leader>nh", ":nohl<CR>", opts) -- Clear search highlights
 keymap.set("n", "x", '"_x', opts) -- Delete character without copying into register
 
+-- Comment keymaps
+keymap.set("n", "gcc", "<cmd>CommentToggle<CR>", { desc = "Toggle comment line" })
+keymap.set("n", "gc", "<cmd>CommentToggle<CR>", { desc = "Toggle comment line" })
+keymap.set("v", "gc", "<cmd>CommentToggle<CR>", { desc = "Toggle comment selection" })
+keymap.set("n", "gbc", "<cmd>CommentToggle<CR>", { desc = "Toggle comment block" })
+keymap.set("v", "gb", "<cmd>CommentToggle<CR>", { desc = "Toggle comment block" })
+
 -- Save and quit (additional)
 keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Quit all" })
 

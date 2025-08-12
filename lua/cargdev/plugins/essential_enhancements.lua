@@ -288,18 +288,6 @@ return {
     },
   },
 
-  -- Better indentation guides
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    event = "VeryLazy",
-    opts = {
-      char = "│",
-      filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
-      show_trailing_blankline_indent = false,
-      show_current_context = false,
-    },
-  },
-
   -- Better git integration
   {
     "lewis6991/gitsigns.nvim",

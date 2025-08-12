@@ -94,8 +94,23 @@ function M.show_notification(message, level, opts)
     local notification_id = notify(message, level, opts)
     return notification_id
   else
-    -- Fallback to vim.notify
-    vim.notify(message, level, opts)
+    -- Fallback to echo instead of vim.notify to avoid circular dependency
+    local icon = "💬"
+    if level == vim.log.levels.ERROR then
+      icon = "❌"
+    elseif level == vim.log.levels.WARN then
+      icon = "⚠️"
+    elseif level == vim.log.levels.INFO then
+      icon = "ℹ️"
+    end
+    
+    -- Use echo for fallback notifications
+    vim.cmd("echo '" .. icon .. " " .. message .. "'")
+    
+    -- Clear message after a delay
+    vim.defer_fn(function()
+      vim.cmd("echo ''")
+    end, opts.timeout or 3000)
   end
 end
 
@@ -256,20 +271,11 @@ function M.eliminate_enter_prompts()
     once = true,
   })
   
-  -- Create autocmd to handle message events
-  vim.api.nvim_create_autocmd("MsgShow", {
+  -- Create autocmd to handle message events - use valid events
+  vim.api.nvim_create_autocmd("BufReadPost", {
     callback = function()
       -- Clear messages that might cause prompts
       vim.cmd("redraw!")
-    end,
-  })
-  
-  -- Create autocmd to handle any prompt events
-  vim.api.nvim_create_autocmd("PromptDone", {
-    callback = function()
-      -- Clear any remaining prompts
-      vim.cmd("redraw!")
-      vim.cmd("echo ''")
     end,
   })
 end
@@ -295,11 +301,8 @@ function M.setup()
   -- Eliminate "Press ENTER" prompts
   M.eliminate_enter_prompts()
   
-  -- Override vim.notify to use our custom system
-  local original_notify = vim.notify
-  vim.notify = function(msg, level, opts)
-    M.show_notification(msg, level, opts)
-  end
+  -- Don't override vim.notify here to avoid circular dependency
+  -- Let the system handle notifications naturally
   
   print("Notification manager initialized")
 end
