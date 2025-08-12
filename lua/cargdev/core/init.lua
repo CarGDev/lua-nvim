@@ -4,6 +4,9 @@ require("cargdev.core.compatibility").setup()
 -- Load startup optimizations early
 require("cargdev.core.startup_optimization")
 
+-- Load notification manager for better UX
+require("cargdev.core.function.notification_manager")
+
 require("cargdev.core.options")
 require("cargdev.core.keymaps")
 

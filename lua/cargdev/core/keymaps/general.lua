@@ -25,4 +25,8 @@ keymap.set("n", "<leader>pb", "<cmd>lua require('cargdev.core.function.performan
 
 -- LSP health and troubleshooting keymaps
 keymap.set("n", "<leader>pl", "<cmd>lua require('cargdev.core.function.performance_monitor').check_lsp_health()<CR>", { desc = "Check LSP health" })
-keymap.set("n", "<leader>pr", "<cmd>lua require('cargdev.core.function.performance_monitor').restart_lsp()<CR>", { desc = "Restart LSP" }) 
+keymap.set("n", "<leader>pr", "<cmd>lua require('cargdev.core.function.performance_monitor').restart_lsp()<CR>", { desc = "Restart LSP" })
+
+-- Notification management keymaps
+keymap.set("n", "<leader>nc", "<cmd>lua require('cargdev.core.function.notification_manager').clear_all_notifications()<CR>", { desc = "Clear all notifications" })
+keymap.set("n", "<leader>nn", "<cmd>lua require('cargdev.core.function.notification_manager').show_notification('Test notification', vim.log.levels.INFO)<CR>", { desc = "Test notification" }) 

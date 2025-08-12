@@ -30,7 +30,7 @@ return {
     -- 📂 Set menu with improved icons and performance tools
     dashboard.section.buttons.val = {
       dashboard.button("f", "🔎  Find File (Safe)", "<cmd>Telescope find_files<CR>"),
-      dashboard.button("n", "📜  New File", "<cmd>ene<CR>"),
+      dashboard.button("n", "📄  New File", "<cmd>ene<CR>"),
       dashboard.button("g", "📝  Find Text", "<cmd>Telescope live_grep<CR>"),
       dashboard.button("r", "📚  Recent Files", "<cmd>Telescope oldfiles<CR>"),
       dashboard.button("c", "⚙️  Config", "<cmd>e ~/.config/nvim/init.lua<CR>"),
@@ -103,5 +103,42 @@ return {
 
     -- 🔥 Disable folding on alpha buffer
     vim.cmd([[autocmd FileType alpha setlocal nofoldenable]])
+    
+    -- 🚫 Suppress startup messages that can overlap with dashboard
+    vim.api.nvim_create_autocmd("VimEnter", {
+      callback = function()
+        -- Clear any startup messages
+        vim.cmd("redraw!")
+        
+        -- Suppress specific startup messages
+        vim.opt.shortmess = vim.opt.shortmess + "I" -- No intro message
+        vim.opt.shortmess = vim.opt.shortmess + "c" -- No completion messages
+        vim.opt.shortmess = vim.opt.shortmess + "F" -- No file info message
+        vim.opt.shortmess = vim.opt.shortmess + "W" -- No "written" message
+        vim.opt.shortmess = vim.opt.shortmess + "A" -- No attention message
+        vim.opt.shortmess = vim.opt.shortmess + "o" -- No overwrite messages
+        
+        -- Clear any existing messages
+        vim.cmd("echo ''")
+      end,
+      once = true,
+    })
+    
+    -- 🎨 Improve dashboard appearance and reduce overlapping
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "alpha",
+      callback = function()
+        -- Set buffer options for better appearance
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
+        vim.opt_local.cursorline = false
+        vim.opt_local.cursorcolumn = false
+        vim.opt_local.signcolumn = "no"
+        vim.opt_local.foldcolumn = "0"
+        
+        -- Clear any messages that might overlap
+        vim.cmd("redraw!")
+      end,
+    })
   end,
 }

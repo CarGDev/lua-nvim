@@ -1,10 +1,46 @@
 return {
-  -- Enhanced notifications
+  -- Enhanced notifications with better positioning
   {
     "rcarriga/nvim-notify",
     event = "VeryLazy",
     config = function()
       vim.notify = require("notify")
+      
+      -- Configure notifications to avoid overlapping
+      require("notify").setup({
+        -- Position notifications to avoid overlapping with dashboard
+        stages = "fade_in_slide_out",
+        timeout = 3000,
+        background_colour = "#000000",
+        max_width = 50,
+        max_height = 10,
+        default_timeout = 4000,
+        top_down = false, -- Show newer notifications at the bottom
+        render = "minimal",
+        minimum_width = 20,
+        icons = {
+          ERROR = " ",
+          WARN = " ",
+          INFO = " ",
+          DEBUG = " ",
+          TRACE = " ",
+        },
+        -- Position notifications away from dashboard
+        on_open = function(win)
+          -- Move notification window to avoid overlapping with alpha dashboard
+          local config = vim.api.nvim_win_get_config(win)
+          if config.relative == "editor" then
+            -- Position notifications in the top-right, but not overlapping dashboard
+            vim.api.nvim_win_set_config(win, {
+              row = 2,
+              col = vim.o.columns - 60, -- Position from right side
+              relative = "editor",
+              width = 55,
+              height = 8,
+            })
+          end
+        end,
+      })
     end,
   },
 
@@ -126,7 +162,7 @@ return {
     end,
   },
 
-  -- Better completion menu
+  -- Better completion menu with improved positioning
   {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -156,12 +192,44 @@ return {
           },
           view = "mini",
         },
+        -- Route startup messages to avoid overlapping with dashboard
+        {
+          filter = {
+            event = "msg_show",
+            any = {
+              { find = "ideaDrop loaded!" },
+              { find = "noice.nvim" },
+              { find = "lazyredraw" },
+            },
+          },
+          view = "notify",
+          opts = { timeout = 2000 },
+        },
       },
       presets = {
         bottom_search = true,
         command_palette = true,
         long_message_to_split = true,
         inc_rename = true,
+      },
+      -- Position command palette and other UI elements to avoid overlapping
+      cmdline = {
+        position = {
+          row = "50%",
+          col = "50%",
+        },
+      },
+      popupmenu = {
+        position = {
+          row = "50%",
+          col = "50%",
+        },
+      },
+      notify = {
+        -- Position notifications to avoid dashboard overlap
+        position = "top_right",
+        max_width = 50,
+        max_height = 10,
       },
     },
   },
@@ -175,6 +243,8 @@ return {
         theme = "auto",
         globalstatus = true,
         disabled_filetypes = { statusline = { "dashboard", "alpha" } },
+        component_separators = { left = "│", right = "│" },
+        section_separators = { left = "", right = "" },
       },
       sections = {
         lualine_a = { "mode" },
