@@ -1,9 +1,6 @@
 -- Load compatibility layer first
 require("cargdev.core.compatibility").setup()
 
--- Load startup optimizations early
-require("cargdev.core.startup_optimization")
-
 require("cargdev.core.options")
 require("cargdev.core.keymaps")
 
@@ -14,13 +11,10 @@ local function load_functions()
 
   for _, file in ipairs(scan) do
     local module_name = "cargdev.core.function." .. file:match("([^/]+)%.lua$")
-    -- Skip notification manager as it's loaded separately
-    if module_name ~= "cargdev.core.function.notification_manager" then
-      local success, err = pcall(require, module_name)
+    local success, err = pcall(require, module_name)
 
-      if not success then
-        vim.notify("Error loading function module: " .. module_name .. "\n" .. err, vim.log.levels.ERROR)
-      end
+    if not success then
+      vim.notify("Error loading function module: " .. module_name .. "\n" .. err, vim.log.levels.ERROR)
     end
   end
 end
@@ -29,16 +23,34 @@ end
 vim.api.nvim_create_autocmd("User", {
   pattern = "LazyDone",
   callback = function()
-    -- Load notification manager after plugins with error handling
-    local success, err = pcall(require, "cargdev.core.function.notification_manager")
-    if not success then
-      -- Use safe echo instead of vim.notify to avoid circular dependency
-      local safe_msg = tostring(err):gsub("'", "\\'")
-      vim.api.nvim_echo({{"Warning: Notification manager failed to load: " .. safe_msg, "WarningMsg"}}, false, {})
-    end
+    -- Force apply colorscheme after plugins are loaded
+    vim.defer_fn(function()
+      local ok, _ = pcall(vim.cmd, "colorscheme cargdev-cyberpunk")
+      if not ok then
+        vim.cmd("colorscheme desert")
+      end
+    end, 100)
     
-    -- Load all other functions
+    -- Load all functions
     load_functions()
+  end,
+  once = true,
+})
+
+-- Fallback: also try to load on VimEnter if LazyDone doesn't fire
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    -- Wait a bit for plugins to load
+    vim.defer_fn(function()
+      -- Try to apply colorscheme
+      local ok, _ = pcall(vim.cmd, "colorscheme cargdev-cyberpunk")
+      if not ok then
+        vim.cmd("colorscheme desert")
+      end
+      
+      -- Load functions
+      load_functions()
+    end, 200)
   end,
   once = true,
 })

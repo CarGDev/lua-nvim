@@ -32,7 +32,6 @@ opt.autoindent = true -- Auto indent
 opt.smartindent = true -- Smart indent
 
 -- Performance optimizations
-opt.lazyredraw = true -- Don't redraw while executing macros
 opt.updatetime = 100 -- Faster completion (reduced from 250)
 opt.timeoutlen = 200 -- Faster key sequence completion (reduced from 300)
 opt.redrawtime = 1500 -- Allow more time for loading syntax
@@ -92,6 +91,7 @@ opt.swapfile = false -- Don't create swap files
 
 -- Terminal
 opt.termguicolors = true -- Enable true color support
+opt.background = "dark" -- Set background to dark
 
 -- File encoding
 opt.encoding = "utf-8" -- Set encoding to UTF-8

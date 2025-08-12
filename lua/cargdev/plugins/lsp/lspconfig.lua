@@ -29,12 +29,6 @@ return {
         "pyright",
         "svelte",
         "tailwindcss",
-        -- Database language servers
-        "sqls", -- SQL language server
-        "mongodb", -- MongoDB language server
-        "redis", -- Redis language server
-        "oracle", -- Oracle language server
-        "cassandra", -- Cassandra language server
       },
     })
 
