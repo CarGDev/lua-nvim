@@ -29,4 +29,8 @@ keymap.set("n", "<leader>pr", "<cmd>lua require('cargdev.core.function.performan
 
 -- Notification management keymaps
 keymap.set("n", "<leader>nc", "<cmd>lua require('cargdev.core.function.notification_manager').clear_all_notifications()<CR>", { desc = "Clear all notifications" })
-keymap.set("n", "<leader>nn", "<cmd>lua require('cargdev.core.function.notification_manager').show_notification('Test notification', vim.log.levels.INFO)<CR>", { desc = "Test notification" }) 
+keymap.set("n", "<leader>nn", "<cmd>lua require('cargdev.core.function.notification_manager').show_notification('Test notification', vim.log.levels.INFO)<CR>", { desc = "Test notification" })
+
+-- Startup prompt management keymaps
+keymap.set("n", "<leader>ns", "<cmd>redraw!<CR><cmd>echo ''<CR>", { desc = "Clear startup prompts" })
+keymap.set("n", "<leader>nr", "<cmd>redraw!<CR>", { desc = "Redraw screen" }) 

@@ -181,21 +181,97 @@ function M.show_startup_notification(message, level)
   })
 end
 
--- Function to handle startup messages
+-- Function to handle startup messages aggressively
 function M.handle_startup_messages()
-  -- Clear any existing messages
+  -- Clear any existing messages immediately
   vim.cmd("redraw!")
+  vim.cmd("echo ''")
   
-  -- Suppress startup messages
+  -- Suppress all startup messages
   vim.opt.shortmess = vim.opt.shortmess + "I" -- No intro message
   vim.opt.shortmess = vim.opt.shortmess + "c" -- No completion messages
   vim.opt.shortmess = vim.opt.shortmess + "F" -- No file info message
   vim.opt.shortmess = vim.opt.shortmess + "W" -- No "written" message
   vim.opt.shortmess = vim.opt.shortmess + "A" -- No attention message
   vim.opt.shortmess = vim.opt.shortmess + "o" -- No overwrite messages
+  vim.opt.shortmess = vim.opt.shortmess + "t" -- No truncation messages
+  vim.opt.shortmess = vim.opt.shortmess + "T" -- No truncation messages
+  vim.opt.shortmess = vim.opt.shortmess + "f" -- No file info messages
+  vim.opt.shortmess = vim.opt.shortmess + "i" -- No intro messages
+  vim.opt.shortmess = vim.opt.shortmess + "l" -- No line number messages
+  vim.opt.shortmess = vim.opt.shortmess + "m" -- No modification messages
+  vim.opt.shortmess = vim.opt.shortmess + "n" -- No line number messages
+  vim.opt.shortmess = vim.opt.shortmess + "r" -- No read messages
+  vim.opt.shortmess = vim.opt.shortmess + "s" -- No search messages
+  vim.opt.shortmess = vim.opt.shortmess + "x" -- No truncation messages
+  vim.opt.shortmess = vim.opt.shortmess + "O" -- No overwrite messages
+  
+  -- Disable command line messages
+  vim.opt.cmdheight = 0
+  vim.opt.showmode = false
   
   -- Clear any existing messages
   vim.cmd("echo ''")
+  
+  -- Force clear any pending messages
+  vim.defer_fn(function()
+    vim.cmd("redraw!")
+    vim.cmd("echo ''")
+  end, 100)
+end
+
+-- Function to eliminate "Press ENTER" prompts completely
+function M.eliminate_enter_prompts()
+  -- Override the message display to prevent "Press ENTER" prompts
+  local original_echo = vim.cmd.echo
+  vim.cmd.echo = function(msg)
+    local msg_str = tostring(msg)
+    -- Block any messages that might cause "Press ENTER" prompts
+    if msg_str:match("Press ENTER") or 
+       msg_str:match("lazyredraw") or
+       msg_str:match("You have enabled") or
+       msg_str:match("This is only meant") or
+       msg_str:match("You'll experience issues") then
+      return -- Don't show these messages
+    end
+    -- Allow other messages
+    original_echo(msg)
+  end
+  
+  -- Create autocmd to handle any remaining prompts
+  vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+      -- Clear any startup messages immediately
+      vim.cmd("redraw!")
+      vim.cmd("echo ''")
+      
+      -- Force clear any pending messages multiple times
+      for i = 1, 5 do
+        vim.defer_fn(function()
+          vim.cmd("redraw!")
+          vim.cmd("echo ''")
+        end, i * 50)
+      end
+    end,
+    once = true,
+  })
+  
+  -- Create autocmd to handle message events
+  vim.api.nvim_create_autocmd("MsgShow", {
+    callback = function()
+      -- Clear messages that might cause prompts
+      vim.cmd("redraw!")
+    end,
+  })
+  
+  -- Create autocmd to handle any prompt events
+  vim.api.nvim_create_autocmd("PromptDone", {
+    callback = function()
+      -- Clear any remaining prompts
+      vim.cmd("redraw!")
+      vim.cmd("echo ''")
+    end,
+  })
 end
 
 -- Function to setup notification system
@@ -215,6 +291,9 @@ function M.setup()
       M.handle_startup_messages()
     end,
   })
+  
+  -- Eliminate "Press ENTER" prompts
+  M.eliminate_enter_prompts()
   
   -- Override vim.notify to use our custom system
   local original_notify = vim.notify

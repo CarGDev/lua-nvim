@@ -42,8 +42,8 @@ function M.optimize_startup()
   vim.g.do_filetype_lua = 1
   vim.g.did_load_filetypes = 0
   
-  -- Reduce redraw frequency during startup
-  vim.opt.lazyredraw = true
+  -- Fix lazyredraw conflict with Noice
+  vim.opt.lazyredraw = false -- Disable to prevent Noice conflicts
   
   -- Optimize completion settings
   vim.opt.completeopt = "menuone,noselect"
@@ -61,15 +61,30 @@ function M.optimize_startup()
   vim.opt.foldmethod = "manual"
   vim.opt.foldlevel = 99
   
-  -- Prevent "Press ENTER" prompts
+  -- Completely eliminate "Press ENTER" prompts
   vim.opt.shortmess = vim.opt.shortmess + "I" -- No intro message
   vim.opt.shortmess = vim.opt.shortmess + "c" -- No completion messages
   vim.opt.shortmess = vim.opt.shortmess + "F" -- No file info message
   vim.opt.shortmess = vim.opt.shortmess + "W" -- No "written" message
   vim.opt.shortmess = vim.opt.shortmess + "A" -- No attention message
-  
-  -- Disable swap file messages
   vim.opt.shortmess = vim.opt.shortmess + "o" -- No overwrite messages
+  vim.opt.shortmess = vim.opt.shortmess + "t" -- No truncation messages
+  vim.opt.shortmess = vim.opt.shortmess + "T" -- No truncation messages
+  vim.opt.shortmess = vim.opt.shortmess + "f" -- No file info messages
+  vim.opt.shortmess = vim.opt.shortmess + "i" -- No intro messages
+  vim.opt.shortmess = vim.opt.shortmess + "l" -- No line number messages
+  vim.opt.shortmess = vim.opt.shortmess + "m" -- No modification messages
+  vim.opt.shortmess = vim.opt.shortmess + "n" -- No line number messages
+  vim.opt.shortmess = vim.opt.shortmess + "r" -- No read messages
+  vim.opt.shortmess = vim.opt.shortmess + "s" -- No search messages
+  vim.opt.shortmess = vim.opt.shortmess + "x" -- No truncation messages
+  
+  -- Disable swap file messages completely
+  vim.opt.shortmess = vim.opt.shortmess + "O" -- No overwrite messages
+  
+  -- Disable all startup messages
+  vim.opt.cmdheight = 0 -- Reduce command line height
+  vim.opt.showmode = false -- Don't show mode in command line
   
   -- Record end time and calculate duration
   local end_time = vim.loop.hrtime()
@@ -132,9 +147,46 @@ function M.check_repo_size()
   end
 end
 
+-- Function to completely eliminate startup prompts
+function M.eliminate_startup_prompts()
+  -- Create autocmd to handle any remaining startup messages
+  vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+      -- Clear any startup messages immediately
+      vim.cmd("redraw!")
+      vim.cmd("echo ''")
+      
+      -- Force clear any pending messages
+      vim.defer_fn(function()
+        vim.cmd("redraw!")
+        vim.cmd("echo ''")
+      end, 50)
+    end,
+    once = true,
+  })
+  
+  -- Create autocmd to handle any message events
+  vim.api.nvim_create_autocmd("MsgShow", {
+    callback = function()
+      -- Clear messages that might cause prompts
+      vim.cmd("redraw!")
+    end,
+  })
+  
+  -- Override the message display to prevent prompts
+  local original_echo = vim.cmd.echo
+  vim.cmd.echo = function(msg)
+    -- Only echo if it's not a startup message
+    if not tostring(msg):match("Press ENTER") and not tostring(msg):match("lazyredraw") then
+      original_echo(msg)
+    end
+  end
+end
+
 -- Initialize startup optimizations
 M.optimize_startup()
 M.defer_heavy_operations()
 M.check_repo_size()
+M.eliminate_startup_prompts()
 
 return M
