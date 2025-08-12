@@ -8,9 +8,18 @@ function M.check_performance()
   -- Check startup time
   local startup_time = vim.g.startup_time or 0
   
-  -- Check memory usage
-  local memory_info = vim.loop.get_memory_info()
-  local memory_mb = math.floor(memory_info.used / 1024 / 1024)
+  -- Check memory usage safely
+  local memory_mb = 0
+  local memory_info_available = pcall(function()
+    local info = vim.loop.get_memory_info()
+    if info and info.used then
+      memory_mb = math.floor(info.used / 1024 / 1024)
+    end
+  end)
+  
+  if not memory_info_available then
+    memory_mb = "N/A (not available on this platform)"
+  end
   
   -- Check buffer count
   local buffer_count = #vim.api.nvim_list_bufs()
@@ -72,7 +81,7 @@ function M.check_performance()
   -- Performance recommendations
   local recommendations = {}
   
-  if memory_mb > 500 then
+  if type(memory_mb) == "number" and memory_mb > 500 then
     table.insert(recommendations, "High memory usage: " .. memory_mb .. "MB - Consider disabling heavy plugins")
   end
   
@@ -105,7 +114,7 @@ function M.check_performance()
 Performance Report:
 ==================
 Startup Time: %dms
-Memory Usage: %dMB
+Memory Usage: %s
 Active Buffers: %d
 Active Windows: %d
 Active Tabs: %d
@@ -122,7 +131,7 @@ Line Count: %d
 Potential Issues: %s
 
 Performance Recommendations:
-]], startup_time, memory_mb, buffer_count, window_count, tab_count, lsp_count, ts_active, error_count, warning_count, 
+]], startup_time, tostring(memory_mb), buffer_count, window_count, tab_count, lsp_count, ts_active, error_count, warning_count, 
    current_filename, current_filetype, current_line_count, is_problematic_file and "Yes (" .. file_extension .. ")" or "No")
   
   if #recommendations > 0 then

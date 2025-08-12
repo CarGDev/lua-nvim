@@ -81,13 +81,6 @@ return {
         preview = {
           treesitter = false, -- Disable treesitter in preview for better performance
           timeout = 100, -- Reduce preview timeout
-          -- Add file filtering to preview
-          file_previewer = require("telescope.previewers").vim_buffer_cat.new({
-            previewer_options = {
-              -- Skip preview for non-text files
-              file_filter = filter_files,
-            },
-          }),
         },
         -- Optimize sorting
         sorting_strategy = "ascending",
@@ -112,22 +105,6 @@ return {
           follow = false, -- Don't follow symlinks for better performance
           -- Add file filtering
           file_filter = filter_files,
-          -- Skip heavy directories
-          search_dirs = {
-            -- Exclude heavy directories from search
-            exclude = {
-              "node_modules",
-              "vendor",
-              ".git",
-              "dist",
-              "build",
-              "target",
-              "coverage",
-              ".next",
-              ".nuxt",
-              ".output"
-            }
-          },
         },
         live_grep = {
           additional_args = function()
@@ -138,10 +115,6 @@ return {
           previewer = false, -- Disable previewer for live_grep for better performance
           -- Add file filtering for grep
           file_filter = filter_files,
-          -- Skip binary files in grep
-          search = function(query_string)
-            return query_string .. " -I" -- -I flag skips binary files
-          end,
         },
         -- Optimize other pickers
         buffers = {
@@ -152,16 +125,6 @@ return {
           git_command = { "git", "ls-files", "--exclude-standard" },
           -- Add file filtering for git files
           file_filter = filter_files,
-        },
-        -- Add specific picker for text files only
-        text_files = {
-          find_command = { "rg", "--files", "--type", "text", "--hidden" },
-          file_filter = filter_files,
-          previewer = require("telescope.previewers").vim_buffer_cat.new({
-            previewer_options = {
-              file_filter = filter_files,
-            },
-          }),
         },
       },
       -- Performance optimizations
@@ -178,21 +141,5 @@ return {
     -- Load extensions
     telescope.load_extension("fzf")
     telescope.load_extension("dap")
-    
-    -- Add custom picker for safe file searching (text files only)
-    telescope.register_module("safe_files", {
-      exports = {
-        find_files = function(opts)
-          opts = opts or {}
-          opts.file_filter = filter_files
-          opts.previewer = require("telescope.previewers").vim_buffer_cat.new({
-            previewer_options = {
-              file_filter = filter_files,
-            },
-          })
-          return telescope.builtin.find_files(opts)
-        end,
-      },
-    })
   end,
 }

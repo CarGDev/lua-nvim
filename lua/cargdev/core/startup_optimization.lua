@@ -61,6 +61,16 @@ function M.optimize_startup()
   vim.opt.foldmethod = "manual"
   vim.opt.foldlevel = 99
   
+  -- Prevent "Press ENTER" prompts
+  vim.opt.shortmess = vim.opt.shortmess + "I" -- No intro message
+  vim.opt.shortmess = vim.opt.shortmess + "c" -- No completion messages
+  vim.opt.shortmess = vim.opt.shortmess + "F" -- No file info message
+  vim.opt.shortmess = vim.opt.shortmess + "W" -- No "written" message
+  vim.opt.shortmess = vim.opt.shortmess + "A" -- No attention message
+  
+  -- Disable swap file messages
+  vim.opt.shortmess = vim.opt.shortmess + "o" -- No overwrite messages
+  
   -- Record end time and calculate duration
   local end_time = vim.loop.hrtime()
   local duration = (end_time - start_time) / 1000000
