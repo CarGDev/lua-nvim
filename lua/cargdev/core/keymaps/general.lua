@@ -16,4 +16,4 @@ keymap.set("n", "<leader>nh", ":nohl<CR>", opts) -- Clear search highlights
 keymap.set("n", "x", '"_x', opts) -- Delete character without copying into register
 
 -- Save and quit (additional)
-keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Quit all" }) 
+keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Quit all" })

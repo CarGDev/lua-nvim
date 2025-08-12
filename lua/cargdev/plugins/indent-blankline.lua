@@ -3,6 +3,16 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   main = "ibl",
   opts = {
-    indent = { char = "┊" },
+    indent = { 
+      char = "┊",
+    },
+    exclude = {
+      filetypes = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
+      buftypes = { "terminal", "nofile", "quickfix", "prompt" },
+    },
+    scope = { 
+      enabled = false 
+    },
   },
 }
+

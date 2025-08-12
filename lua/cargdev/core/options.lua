@@ -31,15 +31,21 @@ opt.softtabstop = 2 -- Number of spaces for soft tabs
 opt.autoindent = true -- Auto indent
 opt.smartindent = true -- Smart indent
 
--- Performance
-opt.lazyredraw = false -- Don't redraw while executing macros
-opt.updatetime = 250 -- Faster completion
-opt.timeoutlen = 300 -- Faster key sequence completion
+-- Performance optimizations
+opt.updatetime = 100 -- Faster completion (reduced from 250)
+opt.timeoutlen = 200 -- Faster key sequence completion (reduced from 300)
+opt.redrawtime = 1500 -- Allow more time for loading syntax
+opt.synmaxcol = 240 -- Only highlight the first 240 columns
+opt.maxmempattern = 1000 -- Reduce memory for pattern matching
+opt.hidden = true -- Allow switching buffers without saving
+opt.scrolljump = 1 -- Minimal number of screen lines to scroll
+opt.scrolloff = 3 -- Keep 3 lines above/below cursor (reduced from 8)
+opt.sidescrolloff = 3 -- Keep 3 columns left/right of cursor (reduced from 8)
 
 -- UI settings
 opt.number = true -- Show line numbers
 opt.relativenumber = true -- Show relative line numbers
-opt.cursorline = true -- Highlight current line
+opt.cursorline = false -- Disable cursor line highlighting for performance
 opt.cursorcolumn = false -- Don't highlight current column
 opt.signcolumn = "yes" -- Always show sign column
 
@@ -70,8 +76,6 @@ opt.formatoptions:append("n") -- Recognize numbered lists
 opt.formatoptions:append("j") -- Remove comment leader when joining lines
 
 -- Scroll settings for wrapped text
-opt.scrolloff = 8 -- Keep 8 lines above/below cursor
-opt.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
 opt.showmatch = true -- Show matching brackets
 opt.matchtime = 2 -- How long to show matching brackets
 
@@ -87,6 +91,7 @@ opt.swapfile = false -- Don't create swap files
 
 -- Terminal
 opt.termguicolors = true -- Enable true color support
+opt.background = "dark" -- Set background to dark
 
 -- File encoding
 opt.encoding = "utf-8" -- Set encoding to UTF-8
@@ -109,9 +114,6 @@ g.loaded_ruby_provider = 0 -- Disable Ruby provider (optional)
 
 -- Lua specific settings
 opt.runtimepath:append(vim.fn.stdpath("config") .. "/lua")
-
--- Improve performance for large files
-opt.maxmempattern = 2000 -- Increase memory for pattern matching
 
 -- Better diff
 opt.diffopt:append("algorithm:patience")

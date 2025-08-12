@@ -18,7 +18,7 @@ return {
       "                                                     ",
       "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
       "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
-      "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
+      "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██╗ ",
       "  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
       "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
       "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
@@ -27,14 +27,20 @@ return {
       "  🚀 Welcome to CarGDev Neovim - Customize Your Flow! 🚀  ",
     }
 
-    -- 📂 Set menu with improved icons
+    -- 📂 Set menu with improved icons and performance tools
     dashboard.section.buttons.val = {
-      dashboard.button("f", "🔎  Find File", "<cmd>lua require('snacks.picker').files()<CR>"),
-      dashboard.button("n", "📜  New File", "<cmd>ene<CR>"),
-      dashboard.button("g", "📝  Find Text", "<cmd>lua require('snacks.picker').grep()<CR>"),
-      dashboard.button("r", "📚  Recent Files", "<cmd>lua require('snacks.picker').oldfiles()<CR>"),
+      dashboard.button("f", "🔎  Find File (Safe)", "<cmd>Telescope find_files<CR>"),
+      dashboard.button("n", "📄  New File", "<cmd>ene<CR>"),
+      dashboard.button("g", "📝  Find Text", "<cmd>Telescope live_grep<CR>"),
+      dashboard.button("r", "📚  Recent Files", "<cmd>Telescope oldfiles<CR>"),
+      dashboard.button("t", "🌳  File Tree", "<cmd>NvimTreeToggle<CR>"),
       dashboard.button("c", "⚙️  Config", "<cmd>e ~/.config/nvim/init.lua<CR>"),
       dashboard.button("L", "🦥  Lazy", "<cmd>Lazy<CR>"),
+      dashboard.button("p", "📊  Performance", "<cmd>lua require('cargdev.core.function.performance_monitor').check_performance()<CR>"),
+      dashboard.button("l", "🔧  LSP Health", "<cmd>lua require('cargdev.core.function.performance_monitor').check_lsp_health()<CR>"),
+      dashboard.button("s", "🧩  Sudoku", "<cmd>Sudoku<CR>"),
+      dashboard.button("e", "💻  LeetCode", "<cmd>Leet<CR>"),
+      dashboard.button("m", "🔨  Mason", "<cmd>Mason<CR>"),
       dashboard.button("q", "🚪  Quit", "<cmd>qa<CR>"),
     }
 

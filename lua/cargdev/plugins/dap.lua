@@ -1,5 +1,7 @@
 return {
   "mfussenegger/nvim-dap",
+  event = "VeryLazy", -- Changed from immediate loading to lazy loading
+  cmd = { "Dap", "DapUI", "DapContinue", "DapToggleBreakpoint" }, -- Load on command
   dependencies = {
     { "nvim-neotest/nvim-nio", lazy = false },
     "rcarriga/nvim-dap-ui",
@@ -9,6 +11,7 @@ return {
     "Weissle/persistent-breakpoints.nvim",
     {
       "nvim-neotest/neotest",
+      event = "VeryLazy",
       dependencies = {
         "nvim-neotest/neotest-jest",
         "nvim-neotest/neotest-python",
