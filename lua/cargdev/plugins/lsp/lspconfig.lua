@@ -1,6 +1,6 @@
 return {
   "neovim/nvim-lspconfig",
-  event = { "BufReadPost", "BufNewFile" }, -- Changed from BufReadPre to BufReadPost for better performance
+  event = { "BufReadPost", "BufNewFile" },
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
@@ -23,7 +23,6 @@ return {
         "gopls",
         "graphql",
         "html",
-        -- "jdtls", -- uncomment if you're actively doing Java
         "lua_ls",
         "prismals",
         "pyright",
@@ -65,208 +64,124 @@ return {
       },
     })
 
-    -- File type filtering to prevent LSP errors on non-text files
-    local function should_attach_lsp(client, bufnr)
-      local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-      local filename = vim.api.nvim_buf_get_name(bufnr)
-      
-      -- Skip non-text files
-      local non_text_extensions = {
+    -- Only attach to sensible buffers
+    local function should_attach_lsp(bufnr)
+      if type(bufnr) ~= "number" or bufnr == 0 then 
+        bufnr = vim.api.nvim_get_current_buf() 
+      end
+      local ft = vim.bo[bufnr].filetype
+      local name = vim.api.nvim_buf_get_name(bufnr)
+
+      -- skip binaries / media
+      local exts = { 
         "png", "jpg", "jpeg", "gif", "svg", "ico", "bmp", "webp",
         "mp4", "avi", "mov", "wmv", "flv", "webm", "mkv",
         "mp3", "wav", "flac", "aac", "ogg",
         "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx",
-        "zip", "rar", "7z", "tar", "gz", "bz2",
-        "exe", "dll", "so", "dylib", "bin"
+        "zip", "rar", "7z", "tar", "gz", "bz2", "exe", "dll", "so", "dylib", "bin" 
       }
-      
-      for _, ext in ipairs(non_text_extensions) do
-        if filename:match("%." .. ext .. "$") then
-          return false
-        end
+      for _, e in ipairs(exts) do 
+        if name:match("%." .. e .. "$") then 
+          return false 
+        end 
       end
-      
-      -- Skip empty or very large files
-      local line_count = vim.api.nvim_buf_line_count(bufnr)
-      if line_count == 0 or line_count > 50000 then
-        return false
+
+      local lines = vim.api.nvim_buf_line_count(bufnr)
+      if lines == 0 or lines > 50000 then 
+        return false 
       end
-      
-      -- Skip specific file types that don't need LSP
-      local skip_filetypes = {
-        "git", "gitcommit", "gitrebase", "gitconfig",
-        "help", "man", "markdown", "text",
-        "qf", "quickfix", "locationlist",
-        "terminal", "toggleterm"
+
+      local skip_ft = { 
+        git = true, gitcommit = true, gitrebase = true, gitconfig = true,
+        help = true, man = true, qf = true, quickfix = true, terminal = true, toggleterm = true 
       }
-      
-      for _, skip_ft in ipairs(skip_filetypes) do
-        if filetype == skip_ft then
-          return false
-        end
+      if skip_ft[ft] then 
+        return false 
       end
-      
+
       return true
     end
 
+    -- Shared on_attach
+    local function on_attach(client, bufnr)
+      if not should_attach_lsp(bufnr) then
+        -- Detach politely; don't override client.request
+        vim.schedule(function()
+          if vim.api.nvim_buf_is_valid(bufnr) then
+            vim.lsp.buf_detach_client(bufnr, client.id)
+          else
+            client.stop()
+          end
+        end)
+        return
+      end
+      -- your normal keymaps/etc here
+    end
+
     local servers = {
-      cssls = {
-        settings = {
-          css = {
-            validate = true,
-            lint = {
-              unknownAtRules = "ignore"
-            }
-          }
-        }
+      cssls = { 
+        settings = { 
+          css = { 
+            validate = true, 
+            lint = { unknownAtRules = "ignore" } 
+          } 
+        } 
       },
       emmet_ls = {},
-      eslint = {
-        settings = {
-          workingDirectory = { mode = "auto" }
-        }
+      eslint = { 
+        settings = { workingDirectory = { mode = "auto" } } 
       },
-      gopls = {
-        settings = {
-          gopls = {
-            analyses = {
-              unusedparams = true,
-            },
-            staticcheck = true,
-            usePlaceholders = true,
-          },
-        },
+      gopls = { 
+        settings = { 
+          gopls = { 
+            analyses = { unusedparams = true }, 
+            staticcheck = true, 
+            usePlaceholders = true 
+          } 
+        } 
       },
-      graphql = {},
+      graphql = {}, 
       html = {},
-      -- jdtls = {}, -- same here
       lua_ls = {
         settings = {
           Lua = {
             diagnostics = { globals = { "vim" } },
-            workspace = {
-              library = vim.api.nvim_get_runtime_file("", true),
-              checkThirdParty = false,
+            workspace = { 
+              library = vim.api.nvim_get_runtime_file("", true), 
+              checkThirdParty = false 
             },
-            -- Performance optimizations
             telemetry = { enable = false },
-            hint = {
-              enable = false, -- Disable hints for better performance
-            },
+            hint = { enable = false },
           },
         },
       },
       prismals = {},
-      pyright = {
-        settings = {
-          python = {
-            analysis = {
-              typeCheckingMode = "basic", -- Reduce type checking for better performance
-              autoImportCompletions = true,
-            },
-          },
-        },
+      pyright = { 
+        settings = { 
+          python = { 
+            analysis = { 
+              typeCheckingMode = "basic", 
+              autoImportCompletions = true 
+            } 
+          } 
+        } 
       },
       svelte = {},
       tailwindcss = {},
-      -- Database servers
-      sqls = {
-        settings = {
-          sqls = {
-            connections = {
-              {
-                name = "PostgreSQL",
-                adapter = "postgresql",
-                host = "localhost",
-                port = 5432,
-                database = "postgres",
-                username = "postgres",
-                password = "",
-              },
-              {
-                name = "MySQL",
-                adapter = "mysql",
-                host = "localhost",
-                port = 3306,
-                database = "mysql",
-                username = "root",
-                password = "",
-              },
-            },
-          },
-        },
-      },
-      mongols = {
-        settings = {
-          mongols = {
-            connectionString = "mongodb://localhost:27017",
-            maxNumberOfProblems = 100,
-          },
-        },
-      },
+      -- sqls = { settings = { sqls = { connections = { /* …your dbs… */ } } } }, -- optional
     }
 
     -- Set up all LSP servers with performance optimizations and error handling
-    for server_name, server_config in pairs(servers) do
-      lspconfig[server_name].setup({
+    for name, cfg in pairs(servers) do
+      lspconfig[name].setup({
         capabilities = capabilities,
-        settings = server_config.settings or {},
-        -- Performance optimizations
-        flags = {
-          debounce_text_changes = 150, -- Debounce text changes
-        },
-        -- Enhanced error handling and file filtering
-        on_attach = function(client, bufnr)
-          -- Only attach LSP if it's appropriate for this file
-          if not should_attach_lsp(client, bufnr) then
-            client.stop()
-            return
-          end
-          
-          -- Add error handling for LSP operations
-          local function safe_lsp_call(func, ...)
-            local success, result = pcall(func, ...)
-            if not success then
-              vim.notify("LSP error: " .. tostring(result), vim.log.levels.WARN)
-              return nil
-            end
-            return result
-          end
-          
-          -- Override LSP methods with error handling
-          local original_request = client.request
-          client.request = function(method, params, handler, bufnr)
-            -- Skip requests for non-text files
-            if not should_attach_lsp(client, bufnr or 0) then
-              return
-            end
-            
-            -- Add timeout to prevent hanging
-            local timeout_id = vim.defer_fn(function()
-              if handler then
-                handler(nil, { message = "LSP request timed out" })
-              end
-            end, 5000) -- 5 second timeout
-            
-            -- Wrap the original request
-            local wrapped_handler = handler and function(...)
-              vim.loop.timer_stop(timeout_id)
-              handler(...)
-            end
-            
-            return original_request(method, params, wrapped_handler, bufnr)
-          end
-        end,
-        -- Reduce diagnostic frequency
+        on_attach = on_attach,
+        settings = cfg.settings,
+        flags = { debounce_text_changes = 150 },
         handlers = {
           ["textDocument/publishDiagnostics"] = vim.lsp.with(
             vim.lsp.diagnostic.on_publish_diagnostics,
-            {
-              virtual_text = false,
-              signs = true,
-              underline = true,
-              update_in_insert = false,
-            }
+            { virtual_text = false, signs = true, underline = true, update_in_insert = false }
           ),
         },
       })
@@ -293,7 +208,7 @@ return {
       },
       -- Add error handling for TypeScript Tools
       on_attach = function(client, bufnr)
-        if not should_attach_lsp(client, bufnr) then
+        if not should_attach_lsp(bufnr) then
           client.stop()
           return
         end

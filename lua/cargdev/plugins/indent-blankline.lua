@@ -5,13 +5,14 @@ return {
   opts = {
     indent = { 
       char = "┊",
-      exclude_filetypes = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" }
+    },
+    exclude = {
+      filetypes = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
+      buftypes = { "terminal", "nofile", "quickfix", "prompt" },
     },
     scope = { 
       enabled = false 
     },
-    exclude = {
-      filetypes = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" }
-    }
   },
 }
+

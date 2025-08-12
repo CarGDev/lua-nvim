@@ -50,7 +50,11 @@ return {
             statuscolumn = { enabled = true },
             terminal = { enabled = true },
             toggle = { enabled = true },
-            words = { enabled = true },
+            words = { 
+              enabled = true,
+              lsp = { enabled = false }, -- Disable LSP to prevent crashes
+              hl = { enabled = true },
+            },
           })
           
           -- Set up vim.ui.input and vim.ui.select for snacks

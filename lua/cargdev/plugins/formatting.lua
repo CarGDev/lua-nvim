@@ -34,5 +34,13 @@ return {
       },
       format_on_save = false, -- Set to true if you want auto-formatting on save
     })
+
+    vim.keymap.set({ "n", "v" }, "<leader>mm", function()
+      conform.format({
+        lsp_fallback = true,
+        async = false,
+        timeout_ms = 2000,
+      })
+    end, { desc = "Format file or range (in visual mode)" })
   end,
 }

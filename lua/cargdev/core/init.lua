@@ -23,14 +23,6 @@ end
 vim.api.nvim_create_autocmd("User", {
   pattern = "LazyDone",
   callback = function()
-    -- Force apply colorscheme after plugins are loaded
-    vim.defer_fn(function()
-      local ok, _ = pcall(vim.cmd, "colorscheme cargdev-cyberpunk")
-      if not ok then
-        vim.cmd("colorscheme desert")
-      end
-    end, 100)
-    
     -- Load all functions
     load_functions()
   end,
@@ -42,12 +34,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     -- Wait a bit for plugins to load
     vim.defer_fn(function()
-      -- Try to apply colorscheme
-      local ok, _ = pcall(vim.cmd, "colorscheme cargdev-cyberpunk")
-      if not ok then
-        vim.cmd("colorscheme desert")
-      end
-      
       -- Load functions
       load_functions()
     end, 200)
