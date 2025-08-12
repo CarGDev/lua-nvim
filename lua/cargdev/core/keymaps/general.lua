@@ -19,19 +19,49 @@ keymap.set("n", "x", '"_x', opts) -- Delete character without copying into regis
 keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Quit all" })
 
 -- Put this in your init.lua
-local vault_path = "/Users/carlos/Nextcloud/ObsidianVault"
+local vault_path = vim.env.IDEA_DIR
+
+
 
 local function follow_obsidian_link()
-  -- grab the token under cursor, clean obsidian syntax
-  local raw = vim.fn.expand("<cWORD>")
-  raw = raw:gsub("^!%[%[", "[[") -- strip leading ! from embeds
-  local link = raw:gsub("%[%[", ""):gsub("%]%]", "")
+  -- Extract the full [[...]] link from the current line under/around the cursor
+  local line = vim.api.nvim_get_current_line()
+  local col = vim.fn.col('.')
+  local start_idx, end_idx, raw
+  -- Search for all [[...]] in the line, pick the one under/around the cursor
+  local i = 1
+  while true do
+    local s, e = line:find('%[%[.-%]%]', i)
+    if not s then break end
+    if col >= s and col <= e + 1 then
+      start_idx, end_idx = s, e
+      break
+    end
+    i = e + 1
+  end
+  if not start_idx then
+    vim.notify('No [[link]] under cursor', vim.log.levels.WARN)
+    return
+  end
+  raw = line:sub(start_idx, end_idx)
+  raw = raw:gsub('^!%[%[', '[[') -- strip leading ! from embeds
+  local link = raw:gsub('%[%[', ''):gsub('%]%]', '')
 
-  -- split off alias and heading
-  local base, alias = link:match("^(.-)|(.+)$")
-  link = base or link
-  local fname, heading = link:match("^(.-)#(.+)$")
-  link = fname or link
+  -- split off alias (|) and heading (#) only after extracting the full link
+  local alias
+  local heading
+  -- first, split off alias if present
+  local pipe_idx = link:find("|", 1, true)
+  if pipe_idx then
+    alias = link:sub(pipe_idx + 1)
+    link = link:sub(1, pipe_idx - 1)
+  end
+  -- then, split off heading if present
+  local hash_idx = link:find("#", 1, true)
+  if hash_idx then
+    heading = link:sub(hash_idx + 1)
+    link = link:sub(1, hash_idx - 1)
+  end
 
   -- normalize spaces
   link = link:gsub("\\ ", " "):gsub("^%s+", ""):gsub("%s+$", "")

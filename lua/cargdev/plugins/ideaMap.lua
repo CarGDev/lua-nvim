@@ -1,5 +1,4 @@
 return {
-  --[[dir = "/Volumes/Carlos_SSD/Documents/projects/ideaDrop",]]
   "CarGDev/ideadrop.nvim",
   name = "ideaDrop",
   dependencies = {
@@ -8,7 +7,7 @@ return {
   },
   config = function()
     require("ideaDrop").setup({
-      idea_dir = "/Users/carlos/Nextcloud/ObsidianVault",
+      idea_dir = vim.env.IDEA_DIR,
     })
     
     -- Set up convenient keymaps for ideaDrop
