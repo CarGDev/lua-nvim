@@ -1,6 +1,6 @@
 return {
   "nvim-treesitter/nvim-treesitter",
-  event = { "BufReadPre", "BufNewFile" },
+  event = { "BufReadPost", "BufNewFile" }, -- Changed from BufReadPre to BufReadPost for better performance
   build = ":TSUpdate",
   dependencies = {
     "windwp/nvim-ts-autotag",
@@ -17,6 +17,9 @@ return {
           -- Prevent Treesitter from parsing Copilot files
           return lang == "copilot" or vim.api.nvim_buf_get_name(buf):match("copilot.lua")
         end,
+        -- Performance optimizations
+        use_languagetree = true,
+        additional_vim_regex_highlighting = false,
       },
       -- enable indentation
       indent = { enable = true },
@@ -57,6 +60,13 @@ return {
           scope_incremental = false,
           node_decremental = "<bs>",
         },
+      },
+      -- Performance optimizations
+      playground = {
+        enable = false, -- Disable playground for better performance
+      },
+      query_linter = {
+        enable = false, -- Disable query linter for better performance
       },
     })
   end,

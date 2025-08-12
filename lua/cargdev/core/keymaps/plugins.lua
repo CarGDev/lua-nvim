@@ -117,6 +117,19 @@ keymap.set("n", "gb", "<cmd>lua require('Comment.api').toggle_current_blockwise(
 keymap.set("n", "gbc", "<cmd>lua require('Comment.api').toggle_current_blockwise()<cr>", { desc = "Toggle current block comment" })
 
 -- =============================================================================
+-- TELESCOPE KEYMAPS (Enhanced with safe file searching)
+-- =============================================================================
+
+-- Safe file search (prevents LSP errors and image freezing)
+keymap.set("n", "<leader>ff", "<cmd>Telescope safe_files find_files<CR>", { desc = "Find files (safe)" })
+keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<CR>", { desc = "Live grep (safe)" })
+keymap.set("n", "<leader>fg", "<cmd>Telescope git_files<CR>", { desc = "Git files (safe)" })
+keymap.set("n", "<leader>ft", "<cmd>Telescope text_files find_files<CR>", { desc = "Text files only" })
+
+-- Regular telescope (use with caution)
+keymap.set("n", "<leader>fF", "<cmd>Telescope find_files<CR>", { desc = "Find files (all)" })
+
+-- =============================================================================
 -- DATABASE KEYMAPS (Temporarily disabled to prevent conflicts)
 -- =============================================================================
 

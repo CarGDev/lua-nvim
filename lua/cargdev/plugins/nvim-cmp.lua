@@ -28,6 +28,9 @@ return {
     cmp.setup({
       completion = {
         completeopt = "menu,menuone,preview,noselect",
+        -- Performance optimizations
+        keyword_length = 2, -- Start completion after 2 characters
+        keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]], -- Better keyword pattern
       },
       snippet = { -- configure how nvim-cmp interacts with snippet engine
         expand = function(args)
@@ -46,10 +49,10 @@ return {
       }),
       -- sources for autocompletion
       sources = cmp.config.sources({
-        { name = "nvim_lsp"},
-        { name = "luasnip" }, -- snippets
-        { name = "buffer" }, -- text within current buffer
-        { name = "path" }, -- file system paths
+        { name = "nvim_lsp", priority = 1000},
+        { name = "luasnip", priority = 750 }, -- snippets
+        { name = "buffer", priority = 500, keyword_length = 3 }, -- text within current buffer
+        { name = "path", priority = 250 }, -- file system paths
       }),
 
       -- configure lspkind for vs-code like pictograms in completion menu
@@ -58,6 +61,27 @@ return {
           maxwidth = 50,
           ellipsis_char = "...",
         }),
+      },
+      
+      -- Performance optimizations
+      performance = {
+        debounce = 50, -- Debounce completion requests
+        throttle = 100, -- Throttle completion requests
+        fetching_timeout = 200, -- Timeout for fetching completions
+      },
+      
+      -- Reduce completion menu size for better performance
+      window = {
+        completion = {
+          border = "rounded",
+          scrollbar = false,
+          col_offset = -3,
+          side_padding = 0,
+        },
+        documentation = {
+          border = "rounded",
+          scrollbar = false,
+        },
       },
     })
   end,

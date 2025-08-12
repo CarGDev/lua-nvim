@@ -16,4 +16,13 @@ keymap.set("n", "<leader>nh", ":nohl<CR>", opts) -- Clear search highlights
 keymap.set("n", "x", '"_x', opts) -- Delete character without copying into register
 
 -- Save and quit (additional)
-keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Quit all" }) 
+keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Quit all" })
+
+-- Performance monitoring keymaps
+keymap.set("n", "<leader>pp", "<cmd>lua require('cargdev.core.function.performance_monitor').check_performance()<CR>", { desc = "Check performance" })
+keymap.set("n", "<leader>po", "<cmd>lua require('cargdev.core.function.performance_monitor').check_plugin_performance()<CR>", { desc = "Check plugin performance" })
+keymap.set("n", "<leader>pb", "<cmd>lua require('cargdev.core.function.performance_monitor').optimize_buffer()<CR>", { desc = "Optimize current buffer" })
+
+-- LSP health and troubleshooting keymaps
+keymap.set("n", "<leader>pl", "<cmd>lua require('cargdev.core.function.performance_monitor').check_lsp_health()<CR>", { desc = "Check LSP health" })
+keymap.set("n", "<leader>pr", "<cmd>lua require('cargdev.core.function.performance_monitor').restart_lsp()<CR>", { desc = "Restart LSP" }) 

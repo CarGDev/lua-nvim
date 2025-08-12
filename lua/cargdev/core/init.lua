@@ -1,6 +1,9 @@
 -- Load compatibility layer first
 require("cargdev.core.compatibility").setup()
 
+-- Load startup optimizations early
+require("cargdev.core.startup_optimization")
+
 require("cargdev.core.options")
 require("cargdev.core.keymaps")
 
