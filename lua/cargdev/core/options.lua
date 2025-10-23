@@ -42,6 +42,23 @@ opt.scrolljump = 1 -- Minimal number of screen lines to scroll
 opt.scrolloff = 3 -- Keep 3 lines above/below cursor (reduced from 8)
 opt.sidescrolloff = 3 -- Keep 3 columns left/right of cursor (reduced from 8)
 
+-- Syntax loading optimizations
+opt.syntax = "on" -- Enable syntax highlighting
+opt.synmaxcol = 200 -- Reduce syntax highlighting column limit
+opt.lazyredraw = false -- Don't use lazy redraw (can cause issues)
+opt.foldmethod = "syntax" -- Use syntax-based folding for better performance
+opt.foldlevel = 99 -- Don't fold by default
+
+-- Filetype plugin optimizations
+opt.filetype = "on" -- Enable filetype detection
+opt.modeline = false -- Disable modeline for security and performance
+opt.modelines = 0 -- Disable modelines
+
+-- Matchparen optimizations
+g.matchparen_timeout = 100 -- Reduce from default 300ms
+g.matchparen_insert_timeout = 50 -- Reduce from default 100ms
+g.matchparen_disable_cursor_hl = 0 -- Keep cursor highlighting but optimize
+
 -- UI settings
 opt.number = true -- Show line numbers
 opt.relativenumber = true -- Show relative line numbers
@@ -108,9 +125,26 @@ opt.splitright = true -- Split right when creating vertical splits
 -- Conceal
 opt.conceallevel = 2 -- Conceal certain characters
 
--- Disable providers that cause warnings
+-- Provider configurations
 g.loaded_perl_provider = 0 -- Disable Perl provider
 g.loaded_ruby_provider = 0 -- Disable Ruby provider (optional)
+
+-- Python provider configuration
+g.python3_host_prog = "/opt/homebrew/bin/python3.12" -- Explicit Python path
+
+-- Clipboard provider optimization (macOS)
+g.clipboard = {
+  name = 'pbcopy',
+  copy = {
+    ['+'] = 'pbcopy',
+    ['*'] = 'pbcopy',
+  },
+  paste = {
+    ['+'] = 'pbpaste',
+    ['*'] = 'pbpaste',
+  },
+  cache_enabled = 1,
+}
 
 -- Lua specific settings
 opt.runtimepath:append(vim.fn.stdpath("config") .. "/lua")
@@ -171,48 +205,37 @@ for _, plugin in pairs(disabled_built_ins) do
 end
 
 -- =============================================================================
--- AUTO WRAPPER AUTOCMDS
+-- OPTIMIZED AUTO WRAPPER AUTOCMDS
 -- =============================================================================
 
--- Set up auto-wrapping for different file types
+-- Consolidated auto-wrapping configuration
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "text", "markdown", "gitcommit", "mail" },
+  pattern = "*",
   callback = function()
-    vim.opt_local.textwidth = 80
-    vim.opt_local.wrap = true
-    vim.opt_local.linebreak = true
-    vim.opt_local.formatoptions:append("t") -- Auto-wrap text
-  end,
-})
-
--- Set up auto-wrapping for code files
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "lua", "javascript", "typescript", "python", "java", "cpp", "c", "rust", "go" },
-  callback = function()
-    vim.opt_local.textwidth = 100 -- Longer lines for code
-    vim.opt_local.formatoptions:append("c") -- Auto-wrap comments
-    vim.opt_local.formatoptions:append("r") -- Auto-wrap comments with leader
-    vim.opt_local.formatoptions:append("o") -- Auto-wrap comments with 'o'
-    vim.opt_local.formatoptions:append("q") -- Allow formatting of comments with 'gq'
-  end,
-})
-
--- Set up auto-wrapping for documentation files
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "help", "man" },
-  callback = function()
-    vim.opt_local.textwidth = 78
-    vim.opt_local.wrap = true
-    vim.opt_local.linebreak = true
-    vim.opt_local.formatoptions:append("t") -- Auto-wrap text
-  end,
-})
-
--- Set up auto-wrapping for configuration files
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "conf", "config", "ini", "toml", "yaml", "json" },
-  callback = function()
-    vim.opt_local.textwidth = 80
-    vim.opt_local.formatoptions:append("c") -- Auto-wrap comments
+    local filetype = vim.bo.filetype
+    local opt = vim.opt_local
+    
+    -- Text/documentation files
+    if vim.tbl_contains({ "text", "markdown", "gitcommit", "mail", "help", "man" }, filetype) then
+      opt.textwidth = filetype == "help" or filetype == "man" and 78 or 80
+      opt.wrap = true
+      opt.linebreak = true
+      opt.formatoptions:append("t") -- Auto-wrap text
+    end
+    
+    -- Code files
+    if vim.tbl_contains({ "lua", "javascript", "typescript", "python", "java", "cpp", "c", "rust", "go" }, filetype) then
+      opt.textwidth = 100 -- Longer lines for code
+      opt.formatoptions:append("c") -- Auto-wrap comments
+      opt.formatoptions:append("r") -- Auto-wrap comments with leader
+      opt.formatoptions:append("o") -- Auto-wrap comments with 'o'
+      opt.formatoptions:append("q") -- Allow formatting of comments with 'gq'
+    end
+    
+    -- Configuration files
+    if vim.tbl_contains({ "conf", "config", "ini", "toml", "yaml", "json" }, filetype) then
+      opt.textwidth = 80
+      opt.formatoptions:append("c") -- Auto-wrap comments
+    end
   end,
 })

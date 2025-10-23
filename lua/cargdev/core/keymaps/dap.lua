@@ -6,7 +6,7 @@ local fn = vim.fn
 local keymap = vim.keymap.set
 
 if ok_dap and ok_dapui then
-  keymap("n", "<leader>dc", dap.continue, { desc = "▶ Start Debugging" })
+  keymap("n", "<leader>dcr", dap.continue, { desc = "▶ Start Debugging" })
   keymap("n", "<leader>do", dap.step_over, { desc = "⏭ Step Over" })
   keymap("n", "<leader>di", dap.step_into, { desc = "⤵ Step Into" })
   keymap("n", "<leader>dot", dap.step_out, { desc = "⤴ Step Out" })

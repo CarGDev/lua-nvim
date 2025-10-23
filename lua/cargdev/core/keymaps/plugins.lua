@@ -21,7 +21,7 @@ keymap.set("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "LazyGit" })
 
 -- DAP
 keymap.set("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { desc = "Toggle breakpoint" })
-keymap.set("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", { desc = "Continue" })
+keymap.set("n", "<leader>dcc", "<cmd>lua require'dap'.continue()<cr>", { desc = "Continue" })
 keymap.set("n", "<leader>di", "<cmd>lua require'dap'.step_into()<cr>", { desc = "Step into" })
 keymap.set("n", "<leader>do", "<cmd>lua require'dap'.step_over()<cr>", { desc = "Step over" })
 keymap.set("n", "<leader>dO", "<cmd>lua require'dap'.step_out()<cr>", { desc = "Step out" })
@@ -49,8 +49,8 @@ keymap.set("n", "<leader>sr", "<cmd>SessionRestore<cr>", { desc = "Restore sessi
 -- Formatting
 keymap.set("n", "<leader>f", "<cmd>lua vim.lsp.buf.format()<cr>", { desc = "Format buffer" })
 
--- Substitute
-keymap.set("n", "<leader>s", "<cmd>lua require('substitute').operator()<cr>", { desc = "Substitute with motion" })
+-- Substitute (changed from <leader>s to <leader>sub to avoid conflicts)
+keymap.set("n", "<leader>sub", "<cmd>lua require('substitute').operator()<cr>", { desc = "Substitute with motion" })
 keymap.set("n", "<leader>ss", "<cmd>lua require('substitute').line()<cr>", { desc = "Substitute line" })
 keymap.set("n", "<leader>S", "<cmd>lua require('substitute').eol()<cr>", { desc = "Substitute to end of line" })
 

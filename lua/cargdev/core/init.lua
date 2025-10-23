@@ -4,6 +4,15 @@
 -- Main core initialization for cargdev Neovim config
 -- =============================================================================
 
+-- 0. Setup LuaRocks path for rest.nvim dependencies (Lua 5.1 - Neovim uses LuaJIT)
+local function setup_luarocks_path()
+  local luarocks_path = vim.fn.system("luarocks path --lr-path --lua-version=5.1 --local"):gsub("\n", "")
+  if luarocks_path and luarocks_path ~= "" then
+    package.path = package.path .. ";" .. luarocks_path
+  end
+end
+setup_luarocks_path()
+
 -- 1. Compatibility Layer
 require("cargdev.core.compatibility").setup()
 
