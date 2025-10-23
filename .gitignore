@@ -1,1 +1,26 @@
 lazy-lock.json
+
+# Log files (contain personal paths and system info)
+*.log
+checkhealth*.log
+nvim-profile.log
+lazigitconfig.log
+
+# Backup files with personal paths
+*.bak
+
+# Temporary files
+*.tmp
+*.temp
+
+# Session files
+Session.vim
+session.vim
+
+# Swap files
+*.swp
+*.swo
+*~
+
+# Local configuration overrides
+local.lua
