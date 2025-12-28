@@ -134,16 +134,15 @@ g.python3_host_prog = "/opt/homebrew/bin/python3.12" -- Explicit Python path
 
 -- Clipboard provider optimization (macOS)
 g.clipboard = {
-  name = 'pbcopy',
+  name = "xclip",
   copy = {
-    ['+'] = 'pbcopy',
-    ['*'] = 'pbcopy',
+    ["+"] = "xclip -selection clipboard",
+    ["*"] = "xclip -selection primary",
   },
   paste = {
-    ['+'] = 'pbpaste',
-    ['*'] = 'pbpaste',
+    ["+"] = "xclip -selection clipboard -o",
+    ["*"] = "xclip -selection primary -o",
   },
-  cache_enabled = 1,
 }
 
 -- Lua specific settings
