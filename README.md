@@ -1,3 +1,12 @@
+# Neovim Configuration
+
+> **📋 Documentation:**
+> - **[IMPROVEMENTS.md](./IMPROVEMENTS.md)** - Comprehensive analysis of configuration improvements and recommendations
+> - **[keyboard_mappings.md](./keyboard_mappings.md)** - Complete keymap reference
+> - **[NATIVE_AUTO_WRAPPER_GUIDE.md](./NATIVE_AUTO_WRAPPER_GUIDE.md)** - Text wrapping configuration guide
+
+---
+
 # Vim and Tmux Keymaps
 
 ## Tmux Keymaps

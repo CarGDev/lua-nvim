@@ -49,12 +49,44 @@ return {
       },
     }
 
+    -- Custom word/character counter function
+    local function word_count()
+      -- Skip for very large files to avoid performance issues
+      local line_count = vim.api.nvim_buf_line_count(0)
+      if line_count > 10000 then
+        return ""
+      end
+      
+      local words = 0
+      local chars = 0
+      
+      -- Get all lines at once for better performance
+      local all_lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+      
+      for _, line in ipairs(all_lines) do
+        if line and #line > 0 then
+          -- Count words (non-whitespace sequences)
+          for _ in line:gmatch("%S+") do
+            words = words + 1
+          end
+          -- Count characters (excluding newline)
+          chars = chars + #line
+        end
+      end
+      
+      -- Format: show words and characters
+      return string.format("%d words, %d chars", words, chars)
+    end
+
     -- configure lualine with modified theme
     lualine.setup({
       options = {
         theme = my_lualine_theme,
       },
       sections = {
+        lualine_a = { "mode" },
+        lualine_b = { "branch", "diff", "diagnostics" },
+        lualine_c = { "filename" },
         lualine_x = {
           {
             lazy_status.updates,
@@ -65,6 +97,22 @@ return {
           { "fileformat" },
           { "filetype" },
         },
+        lualine_y = { "progress" },
+        lualine_z = {
+          {
+            word_count,
+            color = { fg = colors.fg },
+          },
+          { "location" },
+        },
+      },
+      inactive_sections = {
+        lualine_a = { "filename" },
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = { "location" },
       },
     })
   end,

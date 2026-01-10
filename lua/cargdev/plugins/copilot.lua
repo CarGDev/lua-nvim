@@ -8,13 +8,6 @@ return {
         panel = {
           enabled = true,
           auto_refresh = false,
-          keymap = {
-            jump_prev = "[[",
-            jump_next = "]]",
-            accept = "<CR>",
-            refresh = "gr",
-            open = "<M-CR>",
-          },
           layout = {
             position = "bottom", -- | top | left | right
             ratio = 0.4,
@@ -24,14 +17,6 @@ return {
           enabled = true,
           auto_trigger = true, -- Enable auto-trigger suggestions as you type
           debounce = 75,
-          keymap = {
-            accept = "<M-l>",
-            accept_word = false,
-            accept_line = false,
-            next = "<leader>]", -- Use leader key for next suggestion
-            prev = "<leader>[", -- Use leader key for previous suggestion
-            dismiss = "<C-]>",
-          },
         },
         filetypes = {
           markdown = true,
@@ -41,10 +26,26 @@ return {
           hgcommit = true,
           svn = true,
           cvs = true,
+          tex = false, -- Disable Copilot for LaTeX files by default
           ["."] = true,
         },
         copilot_node_command = "node", -- Node.js version must be > 16.x
         server_opts_overrides = {},
+      })
+
+      -- Disable Copilot when opening .tex files
+      vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
+        pattern = "tex",
+        callback = function()
+          -- Safely dismiss any active suggestions
+          local ok, suggestion = pcall(require, "copilot.suggestion")
+          if ok and suggestion and suggestion.is_visible() then
+            suggestion.dismiss()
+          end
+          -- Disable Copilot for this buffer
+          vim.cmd("Copilot disable")
+        end,
+        desc = "Disable Copilot for LaTeX files",
       })
     end,
   },

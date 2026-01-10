@@ -59,14 +59,7 @@ keymap.set("n", "<leader>sa", "<cmd>lua require('nvim-surround').surround_add()<
 keymap.set("n", "<leader>sd", "<cmd>lua require('nvim-surround').surround_delete()<cr>", { desc = "Delete surrounding" })
 keymap.set("n", "<leader>sr", "<cmd>lua require('nvim-surround').surround_replace()<cr>", { desc = "Replace surrounding" })
 
--- Git conflicts
-keymap.set("n", "]x", "<Plug>(git-conflict-next-conflict)", { desc = "Go to next git conflict" })
-keymap.set("n", "[x", "<Plug>(git-conflict-prev-conflict)", { desc = "Go to previous git conflict" })
-keymap.set("n", "<leader>co", "<Plug>(git-conflict-ours)", { desc = "Choose ours (git conflict)" })
-keymap.set("n", "<leader>ct", "<Plug>(git-conflict-theirs)", { desc = "Choose theirs (git conflict)" })
-keymap.set("n", "<leader>cb", "<Plug>(git-conflict-both)", { desc = "Choose both (git conflict)" })
-keymap.set("n", "<leader>c0", "<Plug>(git-conflict-none)", { desc = "Choose none (git conflict)" })
-keymap.set("n", "<leader>cq", "<Plug>(git-conflict-list)", { desc = "List all git conflicts" })
+-- Git conflicts (moved to lua/cargdev/core/keymaps/gitconflict.lua)
 
 -- LeetCode
 keymap.set("n", "<leader>lr", "<cmd>Leet run<CR>", { desc = "LeetCode: Run Code" })

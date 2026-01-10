@@ -47,17 +47,17 @@ return {
         ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
         ["<C-e>"] = cmp.mapping.abort(), -- close completion window
         ["<CR>"] = cmp.mapping.confirm({ select = false }),
-        -- Tab to accept Copilot suggestions, fallback to snippet expansion
+        -- Tab for completion menu and snippet expansion
+        -- Note: Copilot suggestion acceptance is handled in keymaps/copilot.lua
         ["<Tab>"] = cmp.mapping(function(fallback)
+          -- Handle nvim-cmp completion menu
           if cmp.visible() then
             local entry = cmp.get_selected_entry()
             -- If Copilot suggestion is available and selected, accept it
             if entry and entry.source.name == "copilot" then
               cmp.confirm({ select = true })
             else
-              -- Check if we can find a Copilot entry in the completion menu
-              -- Since Copilot has high priority (900), it's likely near the top
-              -- Just confirm the current selection (Copilot will be selected if available)
+              -- Confirm the current selection
               cmp.confirm({ select = true })
             end
           elseif luasnip.expand_or_jumpable() then

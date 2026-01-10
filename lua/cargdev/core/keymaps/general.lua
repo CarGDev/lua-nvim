@@ -7,9 +7,12 @@ local opts = { noremap = true, silent = true }
 -- =============================================================================
 
 -- General keymaps
-keymap.set("i", "jk", "<ESC>", opts) -- Exit insert mode with jk
+-- Changed from "jk" to "jj" to avoid conflicts when typing words containing 'j' followed by other letters
+-- "jj" is much less likely to appear in normal typing and won't interfere
+keymap.set("i", "jj", "<ESC>", opts) -- Exit insert mode with jj
 keymap.set("n", "<leader>nh", ":nohl<CR>", opts) -- Clear search highlights
-keymap.set("n", "x", '"_x', opts) -- Delete character without copying into register
+-- Removed: keymap.set("n", "x", '"_x', opts) -- Delete character without copying into register
+-- This was causing single character deletions to not be copied to the default register
 
 -- Save and quit (additional)
 keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Quit all" })

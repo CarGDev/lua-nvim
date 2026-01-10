@@ -78,7 +78,7 @@ keymap.set("n", "<C-j>", ":resize -5<CR>", { noremap = true, silent = true })
 keymap.set("n", "<leader>pr", ":RunProject<CR>", { desc = "Run Project" })
 keymap.set("n", "<leader>pd", ":DebugProject<CR>", { desc = "Debug Project" })
 
--- Copilot Chat
+-- Copilot Chat (all Copilot keymaps moved to lua/cargdev/core/keymaps/copilot.lua)
 keymap.set("v", "<leader>zn", ":CopilotChatRename<CR>", { desc = "Rename variable (Copilot Chat)" })
 keymap.set("n", "<leader>zc", ":CopilotChat<CR>", { desc = "Open Copilot Chat" })
 keymap.set("v", "<leader>ze", ":CopilotChatExplain<CR>", { desc = "Explain code (Copilot Chat)" })
@@ -86,10 +86,6 @@ keymap.set("v", "<leader>zr", ":CopilotChatReview<CR>", { desc = "Review code (C
 keymap.set("v", "<leader>zf", ":CopilotChatFix<CR>", { desc = "Fix code issues (Copilot Chat)" })
 keymap.set("v", "<leader>zo", ":CopilotChatOptimize<CR>", { desc = "Optimize code (Copilot Chat)" })
 keymap.set("v", "<leader>zd", ":CopilotChatDocs<CR>", { desc = "Generate docs (Copilot Chat)" })
-
--- Copilot
-keymap.set("n", "<leader>cp", ":Copilot panel<CR>", { desc = "Copilot: Open copilot panel" })
-keymap.set("n", "<leader>ce", ":CopilotChatExplain<CR>", { desc = "Copilot Chat: Explain code" })
 
 -- Paste HTML as Markdown using pandoc
 keymap.set("n", "<leader>p", function()

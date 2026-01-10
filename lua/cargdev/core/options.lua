@@ -76,20 +76,20 @@ opt.signcolumn = "yes" -- Always show sign column
 -- =============================================================================
 
 -- Text wrapping settings
-opt.wrap = true -- Enable line wrapping
+opt.wrap = true -- Enable visual line wrapping (wraps based on window width)
 opt.linebreak = true -- Break lines at word boundaries
 opt.breakindent = true -- Preserve indentation in wrapped lines
 opt.showbreak = "↪ " -- Show break indicator
 opt.breakindentopt = "shift:2" -- Indent wrapped lines by 2 spaces
 
 -- Text width and formatting
-opt.textwidth = 80 -- Set text width for auto-wrapping
-opt.colorcolumn = "80" -- Show column at 80 characters
-opt.formatoptions = "jcroqlnt" -- Format options for auto-wrapping
+opt.textwidth = 0 -- Disable hard wrapping (0 = no limit, wraps based on window width)
+opt.colorcolumn = "" -- Disable color column (or set to a high value if you want a guide)
+opt.formatoptions = "jcroqln" -- Format options (removed 't' to disable auto-wrap based on textwidth)
 
--- Auto-wrap specific settings
-opt.formatoptions:append("t") -- Auto-wrap text using textwidth
-opt.formatoptions:append("c") -- Auto-wrap comments using textwidth
+-- Format options settings
+-- Note: 't' option removed - we want visual wrapping only, not hard line breaks
+opt.formatoptions:append("c") -- Auto-wrap comments using textwidth (only applies if textwidth > 0)
 opt.formatoptions:append("r") -- Auto-wrap comments when pressing Enter
 opt.formatoptions:append("o") -- Auto-wrap comments when pressing 'o' or 'O'
 opt.formatoptions:append("q") -- Allow formatting of comments with 'gq'
@@ -214,33 +214,34 @@ end
 -- =============================================================================
 
 -- Consolidated auto-wrapping configuration
+-- Note: textwidth is set to 0 globally to allow visual wrapping based on window width
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
   callback = function()
     local filetype = vim.bo.filetype
     local opt = vim.opt_local
     
-    -- Text/documentation files
+    -- Text/documentation files - visual wrapping only (no hard breaks)
     if vim.tbl_contains({ "text", "markdown", "gitcommit", "mail", "help", "man" }, filetype) then
-      opt.textwidth = filetype == "help" or filetype == "man" and 78 or 80
+      opt.textwidth = 0 -- Disable hard wrapping, use visual wrapping based on window width
       opt.wrap = true
       opt.linebreak = true
-      opt.formatoptions:append("t") -- Auto-wrap text
+      -- Removed 't' option - we want visual wrapping only, not hard line breaks
     end
     
-    -- Code files
+    -- Code files - visual wrapping only (no hard breaks)
     if vim.tbl_contains({ "lua", "javascript", "typescript", "python", "java", "cpp", "c", "rust", "go" }, filetype) then
-      opt.textwidth = 100 -- Longer lines for code
-      opt.formatoptions:append("c") -- Auto-wrap comments
+      opt.textwidth = 0 -- Disable hard wrapping, use visual wrapping based on window width
+      opt.formatoptions:append("c") -- Auto-wrap comments (only if textwidth > 0, so this won't apply)
       opt.formatoptions:append("r") -- Auto-wrap comments with leader
       opt.formatoptions:append("o") -- Auto-wrap comments with 'o'
       opt.formatoptions:append("q") -- Allow formatting of comments with 'gq'
     end
     
-    -- Configuration files
+    -- Configuration files - visual wrapping only (no hard breaks)
     if vim.tbl_contains({ "conf", "config", "ini", "toml", "yaml", "json" }, filetype) then
-      opt.textwidth = 80
-      opt.formatoptions:append("c") -- Auto-wrap comments
+      opt.textwidth = 0 -- Disable hard wrapping, use visual wrapping based on window width
+      opt.formatoptions:append("c") -- Auto-wrap comments (only if textwidth > 0, so this won't apply)
     end
   end,
 })
