@@ -1,73 +1,81 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   event = { "BufReadPost", "BufNewFile" }, -- Changed from BufReadPre to BufReadPost for better performance
-  build = ":TSUpdate",
+  build = function()
+    -- Install tree-sitter-cli if not available, then update parsers
+    if vim.fn.executable("tree-sitter") == 0 then
+      vim.notify("tree-sitter-cli not found. Please install it: npm install -g tree-sitter-cli", vim.log.levels.WARN)
+    end
+    vim.cmd("TSUpdate")
+  end,
   dependencies = {
     "windwp/nvim-ts-autotag",
   },
-  config = function()
-    -- import nvim-treesitter plugin
-    local treesitter = require("nvim-treesitter.configs")
-
-    -- configure treesitter
-    treesitter.setup({ -- enable syntax highlighting
-      highlight = {
-        enable = true,
-        disable = function(lang, buf)
-          -- Prevent Treesitter from parsing Copilot files
-          return lang == "copilot" or vim.api.nvim_buf_get_name(buf):match("copilot.lua")
-        end,
-        -- Performance optimizations
-        use_languagetree = true,
-        additional_vim_regex_highlighting = false,
-      },
-      -- enable indentation
-      indent = { enable = true },
-      -- enable autotagging (w/ nvim-ts-autotag plugin)
-      autotag = {
-        enable = true,
-      },
-      -- ensure these language parsers are installed
-      ensure_installed = {
-        "json",
-        "javascript",
-        "typescript",
-        "java",
-        "tsx",
-        "yaml",
-        "html",
-        "css",
-        "prisma",
-        "markdown",
-        "markdown_inline",
-        "svelte",
-        "graphql",
-        "sql",
-        "bash",
-        "lua",
-        "vim",
-        "dockerfile",
-        "gitignore",
-        "query",
-        "vimdoc",
-        "c",
-      },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<C-space>",
-          node_incremental = "<C-space>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
-      },
+  opts = {
+    -- enable syntax highlighting
+    highlight = {
+      enable = true,
+      disable = function(lang, buf)
+        -- Prevent Treesitter from parsing Copilot files
+        return lang == "copilot" or vim.api.nvim_buf_get_name(buf):match("copilot.lua")
+      end,
       -- Performance optimizations
-      playground = {
-        enable = false, -- Disable playground for better performance
+      use_languagetree = true,
+      additional_vim_regex_highlighting = false,
+    },
+    -- enable indentation
+    indent = { enable = true },
+    -- enable autotagging (w/ nvim-ts-autotag plugin)
+    autotag = {
+      enable = true,
+    },
+    -- ensure these language parsers are installed
+    ensure_installed = {
+      "json",
+      "javascript",
+      "typescript",
+      "java",
+      "tsx",
+      "yaml",
+      "html",
+      "css",
+      "scss",
+      "prisma",
+      "markdown",
+      "markdown_inline",
+      "svelte",
+      "vue",
+      "graphql",
+      "sql",
+      "bash",
+      "lua",
+      "vim",
+      "dockerfile",
+      "gitignore",
+      "query",
+      "vimdoc",
+      "c",
+      "python",
+      "cpp",
+      "latex",
+      "norg",
+      "typst",
+    },
+    incremental_selection = {
+      enable = true,
+      keymaps = {
+        init_selection = "<C-space>",
+        node_incremental = "<C-space>",
+        scope_incremental = false,
+        node_decremental = "<bs>",
       },
-      query_linter = {
-        enable = false, -- Disable query linter for better performance
-      },
-    })
-  end,
+    },
+    -- Performance optimizations
+    playground = {
+      enable = false, -- Disable playground for better performance
+    },
+    query_linter = {
+      enable = false, -- Disable query linter for better performance
+    },
+  },
 }

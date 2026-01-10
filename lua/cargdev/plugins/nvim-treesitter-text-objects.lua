@@ -1,24 +1,10 @@
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    opts = {
-      ensure_installed = {
-        "lua",
-        "html", -- required by leetcode.nvim
-        "python",
-        "javascript",
-        "typescript",
-        "cpp",
-      },
-      highlight = {
-        enable = true,
-      },
-    },
-  },
-  {
     "nvim-treesitter/nvim-treesitter-textobjects",
     lazy = true,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
     config = function()
       require("nvim-treesitter.configs").setup({
         textobjects = {

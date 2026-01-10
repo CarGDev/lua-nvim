@@ -28,6 +28,7 @@ return {
         "pyright",
         "svelte",
         "tailwindcss",
+        "ts_ls",
       },
     })
 
@@ -127,7 +128,9 @@ return {
           } 
         } 
       },
-      emmet_ls = {},
+      emmet_ls = {
+        filetypes = { "html", "css", "sass", "scss", "less", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+      },
       eslint = { 
         settings = { workingDirectory = { mode = "auto" } } 
       },
@@ -140,8 +143,12 @@ return {
           } 
         } 
       },
-      graphql = {}, 
-      html = {},
+      graphql = {
+        filetypes = { "graphql", "gql", "typescript", "javascript", "typescriptreact", "javascriptreact" },
+      }, 
+      html = {
+        filetypes = { "html" },
+      },
       lua_ls = {
         settings = {
           Lua = {
@@ -155,7 +162,9 @@ return {
           },
         },
       },
-      prismals = {},
+      prismals = {
+        filetypes = { "prisma" },
+      },
       pyright = { 
         settings = { 
           python = { 
@@ -166,17 +175,59 @@ return {
           } 
         } 
       },
-      svelte = {},
-      tailwindcss = {},
+      svelte = {
+        filetypes = { "svelte" },
+      },
+      tailwindcss = {
+        filetypes = { "html", "css", "sass", "scss", "less", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+        init_options = {
+          userLanguages = {
+            html = "html",
+            css = "css",
+            javascript = "javascript",
+            typescript = "typescript",
+            javascriptreact = "javascriptreact",
+            typescriptreact = "typescriptreact",
+            vue = "vue",
+            svelte = "svelte",
+          },
+        },
+      },
+      ts_ls = {
+        filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+        settings = {
+          typescript = {
+            inlayHints = {
+              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
+          javascript = {
+            inlayHints = {
+              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
+        },
+      },
       -- sqls = { settings = { sqls = { connections = { /* …your dbs… */ } } } }, -- optional
     }
 
     -- Set up all LSP servers with performance optimizations and error handling
     for name, cfg in pairs(servers) do
-      lspconfig[name].setup({
+      local server_config = {
         capabilities = capabilities,
         on_attach = on_attach,
-        settings = cfg.settings,
         flags = { debounce_text_changes = 150 },
         handlers = {
           ["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -184,7 +235,24 @@ return {
             { virtual_text = false, signs = true, underline = true, update_in_insert = false }
           ),
         },
-      })
+      }
+      
+      -- Add settings if present
+      if cfg.settings then
+        server_config.settings = cfg.settings
+      end
+      
+      -- Add filetypes if present
+      if cfg.filetypes then
+        server_config.filetypes = cfg.filetypes
+      end
+      
+      -- Add init_options if present
+      if cfg.init_options then
+        server_config.init_options = cfg.init_options
+      end
+      
+      lspconfig[name].setup(server_config)
     end
 
     -- Set up additional LSP servers that might not be in mason-lspconfig

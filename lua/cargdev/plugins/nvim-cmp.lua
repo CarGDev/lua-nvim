@@ -47,10 +47,42 @@ return {
         ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
         ["<C-e>"] = cmp.mapping.abort(), -- close completion window
         ["<CR>"] = cmp.mapping.confirm({ select = false }),
+        -- Tab to accept Copilot suggestions, fallback to snippet expansion
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            local entry = cmp.get_selected_entry()
+            -- If Copilot suggestion is available and selected, accept it
+            if entry and entry.source.name == "copilot" then
+              cmp.confirm({ select = true })
+            else
+              -- Check if we can find a Copilot entry in the completion menu
+              -- Since Copilot has high priority (900), it's likely near the top
+              -- Just confirm the current selection (Copilot will be selected if available)
+              cmp.confirm({ select = true })
+            end
+          elseif luasnip.expand_or_jumpable() then
+            -- Expand snippet or jump to next placeholder
+            luasnip.expand_or_jump()
+          else
+            -- Fallback to default Tab behavior
+            fallback()
+          end
+        end, { "i", "s" }),
+        -- Shift-Tab to go back in snippets
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
       }),
       -- sources for autocompletion
       sources = cmp.config.sources({
         { name = "nvim_lsp", priority = 1000},
+        { name = "copilot", priority = 900 }, -- GitHub Copilot suggestions
         { name = "luasnip", priority = 750 }, -- snippets
         { name = "buffer", priority = 500, keyword_length = 3 }, -- text within current buffer
         { name = "path", priority = 250 }, -- file system paths

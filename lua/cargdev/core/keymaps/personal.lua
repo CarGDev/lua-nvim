@@ -89,4 +89,9 @@ keymap.set("v", "<leader>zd", ":CopilotChatDocs<CR>", { desc = "Generate docs (C
 
 -- Copilot
 keymap.set("n", "<leader>cp", ":Copilot panel<CR>", { desc = "Copilot: Open copilot panel" })
-keymap.set("n", "<leader>ce", ":CopilotChatExplain<CR>", { desc = "Copilot Chat: Explain code" }) 
+keymap.set("n", "<leader>ce", ":CopilotChatExplain<CR>", { desc = "Copilot Chat: Explain code" })
+
+-- Paste HTML as Markdown using pandoc
+keymap.set("n", "<leader>p", function()
+  vim.cmd("read !pbpaste -Prefer html | pandoc -f html -t gfm")
+end, { desc = "Paste HTML clipboard as Markdown" })

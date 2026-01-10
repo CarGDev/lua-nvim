@@ -6,7 +6,7 @@
 
 -- 0. Setup LuaRocks path for rest.nvim dependencies (Lua 5.1 - Neovim uses LuaJIT)
 local function setup_luarocks_path()
-  local luarocks_path = vim.fn.system("luarocks path --lr-path --lua-version=5.1 --local"):gsub("\n", "")
+  local luarocks_path = vim.fn.system("luarocks path --lr-path --lua-version=5.1 --local 2>/dev/null"):gsub("\n", "")
   if luarocks_path and luarocks_path ~= "" then
     package.path = package.path .. ";" .. luarocks_path
   end
@@ -37,7 +37,7 @@ end
 vim.api.nvim_create_autocmd("BufRead", {
   pattern = "*",
   callback = function()
-    vim.cmd("filetype detect")
+    vim.cmd("silent filetype detect")
   end,
 })
 

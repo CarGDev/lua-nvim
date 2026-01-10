@@ -303,8 +303,6 @@ function M.setup()
   
   -- Don't override vim.notify here to avoid circular dependency
   -- Let the system handle notifications naturally
-  
-  print("Notification manager initialized")
 end
 
 -- Initialize notification manager

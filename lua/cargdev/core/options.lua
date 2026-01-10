@@ -1,6 +1,7 @@
 -- Core options and settings
 local opt = vim.opt
 local g = vim.g
+local fn = vim.fn
 
 -- Disable deprecated API warnings
 vim.deprecate = function() end
@@ -16,6 +17,10 @@ opt.swapfile = false -- Don't create swap files
 opt.completeopt = "menuone,noselect" -- Better completion
 opt.undofile = true -- Persistent undo
 opt.undodir = vim.fn.stdpath("data") .. "/undodir"
+
+-- Suppress startup messages to avoid "Press ENTER" prompts
+opt.shortmess = "aoOtTIcFWS" -- Suppress various messages
+opt.cmdheight = 1 -- Set command height to avoid prompts
 
 -- Search settings
 opt.ignorecase = true -- Case insensitive search
@@ -130,18 +135,19 @@ g.loaded_perl_provider = 0 -- Disable Perl provider
 g.loaded_ruby_provider = 0 -- Disable Ruby provider (optional)
 
 -- Python provider configuration
-g.python3_host_prog = "/opt/homebrew/bin/python3.12" -- Explicit Python path
+
+g.python3_host_prog = fn.expand("~/.local/pipx/venvs/pynvim/bin/python")
 
 -- Clipboard provider optimization (macOS)
 g.clipboard = {
-  name = "xclip",
+  name = "macOS-clipboard",
   copy = {
-    ["+"] = "xclip -selection clipboard",
-    ["*"] = "xclip -selection primary",
+    ["+"] = "pbcopy",
+    ["*"] = "pbcopy",
   },
   paste = {
-    ["+"] = "xclip -selection clipboard -o",
-    ["*"] = "xclip -selection primary -o",
+    ["+"] = "pbpaste",
+    ["*"] = "pbpaste",
   },
 }
 

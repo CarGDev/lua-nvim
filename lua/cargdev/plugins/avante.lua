@@ -1,25 +1,34 @@
 return {
   {
-    "yetone/avante.nvim",
+    dir = "/Users/carlos/Documents/projects/avante.nvim",
+    -- "yetone/avante.nvim",
     event = "VeryLazy",
     lazy = false,
     version = false, -- Always pull the latest change
+    build = "make",  -- This will build on first load
     opts = {
-      provider = "claude", -- API provider configuration
+      provider = "cargdev", -- API provider configuration
+      mode = "agentic", -- Enable agentic mode for tool support
+      debug = true, -- Enable debug logging to troubleshoot tools
       providers = {
-        claude = {
-          endpoint = "https://api.anthropic.com",
-          model = "claude-3-haiku-20240307",
-          timeout = 30000, -- Timeout in milliseconds
-          extra_request_body = {
-            temperature = 0.75,
-            max_tokens = 4096,
-          },
+        cargdev = {
+          name = "cargdev", -- Optional
+          endpoint = "http://localhost:5001", -- endpoint = "https://api-ai.cargdev.io", -- API endpoint
+          api_key_name = "CARGDEV_API_KEY", -- reference the ENV VAR below
+          model = "qwen2.5-coder:7b",
+          __inherited_from = "ollama", -- ensures compatibility
+          max_tokens = 8192,
+          -- Explicitly ensure tools are enabled
+          disable_tools = false,
+          -- Tool format: false = function calling (JSON tools in request), true = XML tool format (tools in prompt)
+          use_ReAct_prompt = false, -- Use function calling format (OpenAI-compatible)
         },
       },
     },
-    -- Optional: Build from source if required
-    build = "make",
+    -- Build from source for development
+    -- Run `make BUILD_FROM_SOURCE=true` to build Rust components
+    -- You can also build manually: cd /Users/carlos/Documents/projects/avante.nvim && make
+    build = "make BUILD_FROM_SOURCE=true",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-lua/plenary.nvim",
@@ -32,14 +41,31 @@ return {
       {
         "folke/snacks.nvim", -- for input provider snacks
         lazy = false,
-        priority = 1000,
+        priority = 1001, -- Higher than dressing to override it
+        dependencies = {
+          "stevearc/dressing.nvim", -- Load after dressing to override it
+        },
         config = function()
           require("snacks").setup({
             -- Enable all snacks modules
             bigfile = { enabled = true },
-            dashboard = { enabled = true },
+            dashboard = { 
+              enabled = true,
+              autostart = true,
+              -- Ensure dashboard setup runs
+              auto_open = false,
+            },
             explorer = { enabled = true },
-            image = { enabled = true },
+            image = { 
+              enabled = true,
+              -- Auto-detect terminal (will try: kitty, wezterm, ghostty in order)
+              -- If none found, image rendering will be disabled with warnings
+              -- Note: LaTeX and Mermaid features require external tools:
+              --   - LaTeX: tectonic or pdflatex
+              --   - Mermaid: mmdc (Mermaid CLI)
+              -- These warnings are informational and won't prevent basic image rendering
+              terminal = nil, -- nil = auto-detect
+            },
             input = { enabled = true },
             lazygit = { enabled = true },
             notifier = { enabled = true },
@@ -57,9 +83,24 @@ return {
             },
           })
           
+          -- Force dashboard module initialization
+          -- Access the dashboard module to ensure its setup function runs
+          vim.defer_fn(function()
+            pcall(function()
+              local dashboard = require("snacks.dashboard")
+              -- Access the module to trigger lazy initialization if needed
+              if dashboard and type(dashboard) == "table" then
+                -- Module loaded successfully
+              end
+            end)
+          end, 100)
+          
           -- Set up vim.ui.input and vim.ui.select for snacks
-          vim.ui.input = require("snacks.input").input
-          vim.ui.select = require("snacks.picker").select
+          -- Use vim.schedule to ensure this runs after all plugins are loaded
+          vim.schedule(function()
+            vim.ui.input = require("snacks.input").input
+            vim.ui.select = require("snacks.picker").select
+          end)
         end,
       },
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
@@ -85,6 +126,15 @@ return {
           require("render-markdown").setup({
             file_types = { "markdown", "Avante" },
             latex = { enabled = false }, -- Disable latex to avoid warning
+            html = { enabled = false }, -- Disable html support to avoid warnings
+            yaml = { enabled = false }, -- Disable yaml support to avoid warnings
+          })
+          -- Enable treesitter highlighter for markdown buffers
+          vim.api.nvim_create_autocmd("FileType", {
+            pattern = { "markdown", "Avante" },
+            callback = function()
+              vim.treesitter.start()
+            end,
           })
         end,
       },

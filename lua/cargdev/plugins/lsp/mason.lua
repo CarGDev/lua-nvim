@@ -49,6 +49,7 @@ return {
         "black", -- python formatter
         "pylint",
         "eslint_d",
+        "tree-sitter-cli", -- required for nvim-treesitter parser compilation
       },
     })
   end,
