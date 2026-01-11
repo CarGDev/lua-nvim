@@ -11,6 +11,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - **Avante.nvim AI Assistant**: Added Avante.nvim with local LLM support to README documentation
 - **Bash Treesitter Parser**: Installed bash parser for noice.nvim cmdline highlighting
+- **Local Configuration Support**: `local.lua` is now loaded at startup and exposed via `vim.g.cargdev_local`
+  - Enables machine-specific paths without hardcoding
+  - Safe loading with `pcall` (won't error if file doesn't exist)
+  - Plugins gracefully skip if required config is missing
+
+### Changed
+- **Avante Plugin**: Now uses `local.lua` for all paths and settings
+  - `avante_dev_path` for plugin directory
+  - `avante_endpoint`, `avante_api_key_name`, `avante_model` for provider config
+- **IdeaDrop Plugin**: Now uses `IDEA_DIR` from `local.lua` instead of environment variable
+
+### Removed
+- **Hardcoded Paths**: Removed all hardcoded user paths from plugin configs
+  - `avante.lua` - uses `local.lua` values
+  - `ideaMap.lua` - uses `local.lua` values
+  - `leetcode.lua` - removed commented hardcoded path
+  - `lazygit.lua` - removed commented hardcoded path
 
 ### Fixed
 - **Auto-session Lazy Loading**: Changed from `event = "VeryLazy"` to `lazy = false` to enable session auto-restore on startup
@@ -150,7 +167,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 | `lua/cargdev/core/keymaps/plugins.lua` | Fixed session/substitute keymap conflicts |
 | `lua/cargdev/core/keymaps/general.lua` | Added vault_path validation, removed commented code |
 | `lua/cargdev/core/keymaps/window.lua` | Centralized window management keymaps |
-| `lua/cargdev/core/init.lua` | Fixed double loading, added diagnostic hover, config validation |
+| `lua/cargdev/core/init.lua` | Fixed double loading, added diagnostic hover, config validation, loads `local.lua` |
+| `lua/cargdev/plugins/avante.lua` | Uses `local.lua` for paths and settings, removed hardcoded values |
+| `lua/cargdev/plugins/ideaMap.lua` | Uses `local.lua` for `IDEA_DIR`, removed env var fallback |
+| `lua/cargdev/plugins/leetcode.lua` | Removed commented hardcoded path |
+| `lua/cargdev/plugins/lazygit.lua` | Removed commented hardcoded path |
 | `lua/cargdev/core/options.lua` | Removed duplicate settings (synmaxcol, foldmethod, foldlevel) |
 | `lua/cargdev/plugins/which-key.lua` | Added group names configuration |
 | `lua/cargdev/plugins/formatting.lua` | Enabled auto-format on save with smart filtering |
@@ -195,4 +216,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
-*Last Updated: January 2026*
+*Last Updated: January 10, 2026*

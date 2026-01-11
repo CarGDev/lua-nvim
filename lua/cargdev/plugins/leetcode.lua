@@ -1,5 +1,4 @@
 return {
-  --[[ dir = '/Users/carlos/Documents/SSD_Documents/personals/leetcode.nvim', ]]
   "kawre/leetcode.nvim",
   dependencies = {
     "nvim-telescope/telescope.nvim",

@@ -4,7 +4,22 @@
 -- Main core initialization for cargdev Neovim config
 -- =============================================================================
 
--- 0. Setup LuaRocks path for rest.nvim dependencies (Lua 5.1 - Neovim uses LuaJIT)
+-- 0. Load local configuration (gitignored, contains personal paths)
+local function load_local_config()
+  local ok, local_config = pcall(require, "cargdev.core.local")
+  if ok then
+    -- Make local config available globally
+    vim.g.cargdev_local = local_config
+    return local_config
+  else
+    -- Provide empty defaults if local.lua doesn't exist
+    vim.g.cargdev_local = {}
+    return {}
+  end
+end
+load_local_config()
+
+-- 1. Setup LuaRocks path for rest.nvim dependencies (Lua 5.1 - Neovim uses LuaJIT)
 local function setup_luarocks_path()
   local luarocks_path = vim.fn.system("luarocks path --lr-path --lua-version=5.1 --local 2>/dev/null"):gsub("\n", "")
   if luarocks_path and luarocks_path ~= "" then
@@ -13,14 +28,14 @@ local function setup_luarocks_path()
 end
 setup_luarocks_path()
 
--- 1. Compatibility Layer
+-- 2. Compatibility Layer
 require("cargdev.core.compatibility").setup()
 
--- 2. Core Options and Keymaps
+-- 3. Core Options and Keymaps
 require("cargdev.core.options")
 require("cargdev.core.keymaps")
 
--- 3. Utility: Load all Lua files inside `cargdev/core/function/` AFTER plugins are loaded
+-- 4. Utility: Load all Lua files inside `cargdev/core/function/` AFTER plugins are loaded
 local function load_functions()
   local function_path = vim.fn.stdpath("config") .. "/lua/cargdev/core/function"
   local scan = vim.fn.globpath(function_path, "*.lua", false, true)
@@ -33,7 +48,7 @@ local function load_functions()
   end
 end
 
--- 4. Fix: Force filetype detection on BufRead (fix for nvim-tree/plain text issue)
+-- 5. Fix: Force filetype detection on BufRead (fix for nvim-tree/plain text issue)
 -- Only run if filetype is not already detected to avoid redundant calls
 vim.api.nvim_create_autocmd("BufRead", {
   pattern = "*",
@@ -44,7 +59,7 @@ vim.api.nvim_create_autocmd("BufRead", {
   end,
 })
 
--- 5. Load functions on VimEnter to ensure plugins are loaded first
+-- 6. Load functions on VimEnter to ensure plugins are loaded first
 -- Using a flag to prevent double-loading
 local functions_loaded = false
 vim.api.nvim_create_autocmd("VimEnter", {
@@ -59,7 +74,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
   once = true,
 })
 
--- 6. Diagnostic float on hover (show diagnostics when cursor holds)
+-- 7. Diagnostic float on hover (show diagnostics when cursor holds)
 vim.api.nvim_create_autocmd("CursorHold", {
   callback = function()
     local opts = {
@@ -74,7 +89,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
   end,
 })
 
--- 7. Configuration validation on startup
+-- 8. Configuration validation on startup
 local function validate_config()
   local warnings = {}
 
@@ -107,7 +122,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
   once = true,
 })
 
--- 8. Custom health check command
+-- 9. Custom health check command
 vim.api.nvim_create_user_command("CheckConfig", function()
   vim.cmd("checkhealth")
 end, { desc = "Run Neovim health check" })

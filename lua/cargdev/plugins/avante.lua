@@ -1,6 +1,14 @@
+-- Get local config (loaded in core/init.lua)
+local local_cfg = vim.g.cargdev_local or {}
+
+-- Skip plugin if local config is missing required values
+if not local_cfg.avante_dev_path then
+  return {}
+end
+
 return {
   {
-    dir = "/Users/carlos/Documents/projects/avante.nvim",
+    dir = local_cfg.avante_dev_path,
     -- "yetone/avante.nvim",
     event = "VeryLazy",
     lazy = false,
@@ -13,9 +21,9 @@ return {
       providers = {
         cargdev = {
           name = "cargdev", -- Optional
-          endpoint = "http://localhost:5001", -- endpoint = "https://api-ai.cargdev.io", -- API endpoint
-          api_key_name = "CARGDEV_API_KEY", -- reference the ENV VAR below
-          model = "qwen2.5-coder:7b",
+          endpoint = local_cfg.avante_endpoint,
+          api_key_name = local_cfg.avante_api_key_name,
+          model = local_cfg.avante_model,
           __inherited_from = "ollama", -- ensures compatibility
           max_tokens = 8192,
           -- Explicitly ensure tools are enabled
@@ -27,7 +35,7 @@ return {
     },
     -- Build from source for development
     -- Run `make BUILD_FROM_SOURCE=true` to build Rust components
-    -- You can also build manually: cd /Users/carlos/Documents/projects/avante.nvim && make
+    -- You can also build manually: cd <avante_dev_path> && make
     build = "make BUILD_FROM_SOURCE=true",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",

@@ -1,3 +1,11 @@
+-- Get local config (loaded in core/init.lua)
+local local_cfg = vim.g.cargdev_local or {}
+
+-- Skip plugin if IDEA_DIR is not configured
+if not local_cfg.IDEA_DIR then
+  return {}
+end
+
 return {
   "CarGDev/ideadrop.nvim",
   name = "ideaDrop",
@@ -7,7 +15,7 @@ return {
   },
   config = function()
     require("ideaDrop").setup({
-      idea_dir = vim.env.IDEA_DIR,
+      idea_dir = vim.g.cargdev_local.IDEA_DIR,
     })
     
     -- Set up convenient keymaps for ideaDrop
