@@ -50,16 +50,8 @@ end, { desc = "Copilot: Refresh panel" })
 keymap.set("n", "<M-CR>", ":Copilot panel<CR>", { desc = "Copilot: Open panel" })
 
 -- Copilot suggestion keymaps (insert mode)
-keymap.set("i", "<Tab>", function()
-  local suggestion = get_copilot_suggestion()
-  if suggestion and suggestion.is_visible() then
-    suggestion.accept()
-  else
-    -- Feed Tab through so nvim-cmp can handle it for completion menu/snippets
-    -- Use 't' flag to avoid remapping, 'n' flag for normal mode keycodes
-    vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "nt")
-  end
-end, { desc = "Copilot: Accept suggestion" })
+-- Note: Tab mapping is handled in nvim-cmp.lua to avoid conflicts
+-- Tab is reserved exclusively for Copilot inline suggestions
 
 keymap.set("i", "<leader>]", function()
   local suggestion = get_copilot_suggestion()

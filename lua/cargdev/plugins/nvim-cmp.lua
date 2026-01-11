@@ -47,32 +47,26 @@ return {
         ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
         ["<C-e>"] = cmp.mapping.abort(), -- close completion window
         ["<CR>"] = cmp.mapping.confirm({ select = false }),
-        -- Tab for completion menu and snippet expansion
-        -- Note: Copilot suggestion acceptance is handled in keymaps/copilot.lua
+        -- Tab is reserved for Copilot inline suggestions ONLY
+        -- Use <C-j>/<C-k> to navigate cmp menu, <CR> to confirm
         ["<Tab>"] = cmp.mapping(function(fallback)
-          -- Handle nvim-cmp completion menu
-          if cmp.visible() then
-            local entry = cmp.get_selected_entry()
-            -- If Copilot suggestion is available and selected, accept it
-            if entry and entry.source.name == "copilot" then
-              cmp.confirm({ select = true })
-            else
-              -- Confirm the current selection
-              cmp.confirm({ select = true })
-            end
-          elseif luasnip.expand_or_jumpable() then
-            -- Expand snippet or jump to next placeholder
+          -- Check for Copilot inline suggestion first (highest priority)
+          local copilot_ok, copilot_suggestion = pcall(require, "copilot.suggestion")
+          if copilot_ok and copilot_suggestion.is_visible() then
+            copilot_suggestion.accept()
+            return
+          end
+          -- If no Copilot suggestion, handle snippet jumping
+          if luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
           else
-            -- Fallback to default Tab behavior
+            -- Default Tab behavior (insert tab character)
             fallback()
           end
         end, { "i", "s" }),
         -- Shift-Tab to go back in snippets
         ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
+          if luasnip.jumpable(-1) then
             luasnip.jump(-1)
           else
             fallback()
