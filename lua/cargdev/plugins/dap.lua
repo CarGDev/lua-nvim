@@ -77,7 +77,7 @@ return {
 
     -- 🧠 Mason DAP
     require("mason-nvim-dap").setup({
-      ensure_installed = { "js-debug-adapter", "firefox" },
+      ensure_installed = { "js-debug-adapter", "firefox", "javadbg", "javatest" },
       automatic_setup = true,
     })
 
@@ -140,18 +140,9 @@ return {
     })
 
     -- ☕ Java Debug Adapter
-    dap.adapters.java = function(callback)
-      callback({ type = "server", host = "127.0.0.1", port = { port } })
-    end
-    dap.configurations.java = {
-      {
-        name = "Attach to running Java process",
-        type = "java",
-        request = "attach",
-        hostName = "127.0.0.1",
-        port = { port },
-      },
-    }
+    -- Note: Java DAP is configured by nvim-jdtls in ftplugin/java.lua
+    -- via jdtls.setup_dap() which automatically sets up the adapter
+    -- The configurations are dynamically discovered from the project
 
     -- 🧠 Node.js (NestJS / TypeScript) - Using js-debug-adapter
     dap.adapters.node = {

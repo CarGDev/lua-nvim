@@ -9,6 +9,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+- **Java Debug & Run Keymaps**: New keybindings for Java development
+  - `<leader>jd` - Debug Class (DAP)
+  - `<leader>jt` - Test Class
+  - `<leader>jn` - Test Nearest Method
+  - `<leader>jr` - Run Java File
+  - `<leader>jm` - Run Maven Project
+  - `<leader>jg` - Run Gradle Project
+- **Java Debug Dependencies**: Added `java-debug-adapter` and `java-test` to Mason ensure_installed
+
+### Fixed
+- **Java DAP Configuration**: Fixed debug adapter not loading
+  - Changed `bundles = {}` to `bundles = bundles` to properly load debug JARs
+  - Added `on_attach` callback to setup DAP after JDTLS attaches
+  - Enables hot code replacement during debugging
+- **Broken Java DAP Adapter**: Removed manual Java adapter with undefined `port` variable
+  - Now handled automatically by nvim-jdtls via `jdtls.setup_dap()`
+
+---
+
+## [2026-01-10]
+
+### Added
+- **Custom Colorscheme**: Using `cargdev-cyberpunk` theme
+  - Vibrant, high-contrast cyberpunk aesthetic with neon colors
+  - Hot pink keywords, electric purple types, cyan strings, green functions
+  - Full TypeScript/LSP/Treesitter support
+  - Deep blue backgrounds with neon accents
+  - Loaded with high priority for consistent UI
 - **Which-Key Group Names**: Added organized group names for better keymap discoverability
   - Groups: Buffer, Code/Copilot, Debug, Explorer, Find/Files, Git, LSP, Format, Quickfix, Session, Tab/Terminal, Trouble, Copilot Chat
 - **Auto-Format on Save**: Enabled smart auto-formatting with conform.nvim

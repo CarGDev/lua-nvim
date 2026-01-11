@@ -50,6 +50,8 @@ return {
         "pylint",
         "eslint_d",
         "tree-sitter-cli", -- required for nvim-treesitter parser compilation
+        "java-debug-adapter", -- Java debugger
+        "java-test", -- Java test runner
       },
     })
   end,
