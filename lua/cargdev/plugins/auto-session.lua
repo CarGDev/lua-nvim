@@ -1,6 +1,6 @@
 return {
   "rmagatti/auto-session",
-  event = "VeryLazy",
+  lazy = false,
   opts = {
     log_level = "error",
     auto_session_suppress_dirs = { "~/", "~/Dev/", "~/Downloads", "~/Documents", "~/Desktop/" },

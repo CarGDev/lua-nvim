@@ -64,7 +64,7 @@ nvim
 - **File Navigation**: Snacks.nvim (modern) + Telescope (git features)
 - **File Explorer**: nvim-tree
 - **Git Integration**: LazyGit, Gitsigns
-- **AI Assistant**: GitHub Copilot with Copilot Chat
+- **AI Assistants**: GitHub Copilot + [Avante.nvim](https://github.com/yetone/avante.nvim) (local LLM support)
 - **Debugging**: DAP with UI
 - **Formatting**: Conform.nvim with auto-format on save
 - **Diagnostics**: Trouble.nvim for organized diagnostics view

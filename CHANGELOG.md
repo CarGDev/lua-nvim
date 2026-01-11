@@ -9,6 +9,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+- **Avante.nvim AI Assistant**: Added Avante.nvim with local LLM support to README documentation
+- **Bash Treesitter Parser**: Installed bash parser for noice.nvim cmdline highlighting
+
+### Fixed
+- **Auto-session Lazy Loading**: Changed from `event = "VeryLazy"` to `lazy = false` to enable session auto-restore on startup
+- **Alpha Dashboard Config**: Fixed `enable` to `enabled` (correct lazy.nvim spec key)
+- **Snacks vs Alpha Conflict**: Disabled `Snacks.dashboard` in favor of `alpha-nvim` for CARGDEV branding
+
+### Added
 - **Java Debug & Run Keymaps**: New keybindings for Java development
   - `<leader>jd` - Debug Class (DAP)
   - `<leader>jt` - Test Class

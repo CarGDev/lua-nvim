@@ -50,10 +50,7 @@ return {
             -- Enable all snacks modules
             bigfile = { enabled = true },
             dashboard = { 
-              enabled = true,
-              autostart = true,
-              -- Ensure dashboard setup runs
-              auto_open = false,
+              enabled = false, -- Disabled: using alpha-nvim for CARGDEV branding
             },
             explorer = { enabled = true },
             image = { 
@@ -82,19 +79,7 @@ return {
               hl = { enabled = true },
             },
           })
-          
-          -- Force dashboard module initialization
-          -- Access the dashboard module to ensure its setup function runs
-          vim.defer_fn(function()
-            pcall(function()
-              local dashboard = require("snacks.dashboard")
-              -- Access the module to trigger lazy initialization if needed
-              if dashboard and type(dashboard) == "table" then
-                -- Module loaded successfully
-              end
-            end)
-          end, 100)
-          
+
           -- Set up vim.ui.input and vim.ui.select for snacks
           -- Use vim.schedule to ensure this runs after all plugins are loaded
           vim.schedule(function()
