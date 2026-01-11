@@ -25,17 +25,7 @@ keymap.set("n", "<leader>no", ":noh <CR>", { desc = "Reset search a word" })
 keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
 keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
 
--- window management
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
-keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
-keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
-
-keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
-keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
-keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) -- go to next tab
-keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
-keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
+-- Window management keymaps are centralized in lua/cargdev/core/keymaps/window.lua
 
 -- sintax fixer
 keymap.set("n", "<leader>sy", "gg=G<CR>", { desc = "Format current file" })
@@ -43,8 +33,26 @@ keymap.set("n", "<leader>sy", "gg=G<CR>", { desc = "Format current file" })
 keymap.set("n", "<C-e>", "10<C-e>", { noremap = true, silent = true })
 keymap.set("n", "<C-y>", "10<C-y>", { noremap = true, silent = true })
 
--- close current file on buffer
-keymap.set("n", "<leader>bd", ":bd<CR>", { desc = "Close current file on buffer" })
+-- Buffer management with safe close (confirms if unsaved changes)
+keymap.set("n", "<leader>bd", function()
+  if vim.bo.modified then
+    vim.ui.select({ "Save & Close", "Discard & Close", "Cancel" }, {
+      prompt = "Buffer has unsaved changes:",
+    }, function(choice)
+      if choice == "Save & Close" then
+        vim.cmd("w")
+        vim.cmd("bd")
+      elseif choice == "Discard & Close" then
+        vim.cmd("bd!")
+      end
+    end)
+  else
+    vim.cmd("bd")
+  end
+end, { desc = "Buffer: Close (safe)" })
+
+-- Force close buffer without confirmation
+keymap.set("n", "<leader>bD", ":bd!<CR>", { desc = "Buffer: Force close" })
 
 -- Set buftabline mappings
 keymap.set("n", "<C-p>", ":bnext<CR>", { noremap = true, silent = true })
@@ -62,17 +70,7 @@ keymap.set("n", "<leader>;", "$a;<ESC>", { desc = "Adding ';' at the end of the 
 keymap.set("n", "<leader>con", "oconsole.log()<ESC>0w$h", { desc = "Adding console.log() on the line below" })
 keymap.set("n", "<leader>x", ":!node %<CR>", { desc = "Running current project using node" })
 
--- Move between Tmux and Neovim splits using Alt + Arrow keys
--- keymap.set("n", "<A-h>", ":TmuxNavigateLeft<CR>", { noremap = true, silent = true })
--- keymap.set("n", "<A-j>", ":TmuxNavigateDown<CR>", { noremap = true, silent = true })
--- keymap.set("n", "<A-k>", ":TmuxNavigateUp<CR>", { noremap = true, silent = true })
--- keymap.set("n", "<A-l>", ":TmuxNavigateRight<CR>", { noremap = true, silent = true })
-
--- Resize splits using Ctrl + Arrow keys
-keymap.set("n", "<C-l>", ":vertical resize -5<CR>", { noremap = true, silent = true })
-keymap.set("n", "<C-h>", ":vertical resize +5<CR>", { noremap = true, silent = true })
-keymap.set("n", "<C-k>", ":resize +5<CR>", { noremap = true, silent = true })
-keymap.set("n", "<C-j>", ":resize -5<CR>", { noremap = true, silent = true })
+-- Resize splits keymaps are centralized in lua/cargdev/core/keymaps/window.lua
 
 -- Run and Debug Project
 keymap.set("n", "<leader>pr", ":RunProject<CR>", { desc = "Run Project" })
@@ -91,3 +89,20 @@ keymap.set("v", "<leader>zd", ":CopilotChatDocs<CR>", { desc = "Generate docs (C
 keymap.set("n", "<leader>p", function()
   vim.cmd("read !pbpaste -Prefer html | pandoc -f html -t gfm")
 end, { desc = "Paste HTML clipboard as Markdown" })
+
+-- =============================================================================
+-- QUICKFIX NAVIGATION
+-- =============================================================================
+
+keymap.set("n", "<leader>qn", ":cnext<CR>zz", { desc = "Quickfix: Next item" })
+keymap.set("n", "<leader>qp", ":cprev<CR>zz", { desc = "Quickfix: Previous item" })
+keymap.set("n", "<leader>qo", ":copen<CR>", { desc = "Quickfix: Open list" })
+keymap.set("n", "<leader>qq", ":cclose<CR>", { desc = "Quickfix: Close list" })
+keymap.set("n", "<leader>qf", ":cfirst<CR>zz", { desc = "Quickfix: First item" })
+keymap.set("n", "<leader>ql", ":clast<CR>zz", { desc = "Quickfix: Last item" })
+
+-- Location list navigation
+keymap.set("n", "<leader>ln", ":lnext<CR>zz", { desc = "Location: Next item" })
+keymap.set("n", "<leader>lp", ":lprev<CR>zz", { desc = "Location: Previous item" })
+keymap.set("n", "<leader>lo", ":lopen<CR>", { desc = "Location: Open list" })
+keymap.set("n", "<leader>lq", ":lclose<CR>", { desc = "Location: Close list" })

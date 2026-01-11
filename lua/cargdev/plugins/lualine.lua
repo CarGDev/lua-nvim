@@ -49,7 +49,7 @@ return {
       },
     }
 
-    -- Custom word/character counter function
+    -- Custom word counter function
     local function word_count()
       -- Skip for very large files to avoid performance issues
       local line_count = vim.api.nvim_buf_line_count(0)
@@ -58,7 +58,6 @@ return {
       end
       
       local words = 0
-      local chars = 0
       
       -- Get all lines at once for better performance
       local all_lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
@@ -69,13 +68,11 @@ return {
           for _ in line:gmatch("%S+") do
             words = words + 1
           end
-          -- Count characters (excluding newline)
-          chars = chars + #line
         end
       end
       
-      -- Format: show words and characters
-      return string.format("%d words, %d chars", words, chars)
+      -- Format: show only word count
+      return string.format("%d words", words)
     end
 
     -- configure lualine with modified theme

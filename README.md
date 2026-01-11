@@ -1,119 +1,178 @@
 # Neovim Configuration
 
-> **📋 Documentation:**
-> - **[IMPROVEMENTS.md](./IMPROVEMENTS.md)** - Comprehensive analysis of configuration improvements and recommendations
-> - **[keyboard_mappings.md](./keyboard_mappings.md)** - Complete keymap reference
-> - **[NATIVE_AUTO_WRAPPER_GUIDE.md](./NATIVE_AUTO_WRAPPER_GUIDE.md)** - Text wrapping configuration guide
+A modern, fast, and well-organized Neovim configuration built with Lua.
 
----
+## Requirements
 
-# Vim and Tmux Keymaps
+- **Neovim**: 0.9+ (0.10+ recommended)
+- **Git**: For plugin management
+- **Node.js**: For LSP servers and tooling
+- **ripgrep** (`rg`): For fast file searching
+- **Python 3**: With `pynvim` package for Python support
 
-## Tmux Keymaps
+### Optional Dependencies
 
-### General Settings
-- **Enable mouse support**: `set -g mouse on` (Allows scrolling, selecting panes, resizing)
-- **Set scrollback buffer**: `set -g history-limit 2000`
-- **Copy selected text to clipboard**: `set-option -g set-clipboard on`
-- **Use vi-style key bindings**: `setw -g mode-keys vi`
+- **Pandoc**: For HTML to Markdown conversion
+- **Prettier**: For code formatting
+- **Stylua**: For Lua formatting
 
-### Reload Configuration
-- **Reload tmux config**: `prefix + r` (Reloads tmux configuration)
+## Installation
 
-### Pane Navigation
-- **Move panes**:
-  - `Alt + Left` → Move left
-  - `Alt + Right` → Move right
-  - `Alt + Up` → Move up
-  - `Alt + Down` → Move down
-- **Split panes**:
-  - `prefix + |` → Vertical split
-  - `prefix + -` → Horizontal split
-- **Sync panes**:
-  - `prefix + y` → Enable pane synchronization
-  - `prefix + y` → Disable pane synchronization
+```bash
+# Backup existing config (if any)
+mv ~/.config/nvim ~/.config/nvim.bak
 
-### Status Bar and UI Enhancements
-- **Battery and time status**: `set -g status-right '#{battery_status_bg} battery: #{battery_percentage}% | %Y-%m-%d %H:%M '`
-- **Pane border colors**:
-  - Inactive: `set -g pane-border-style fg=colour240`
-  - Active: `set -g pane-active-border-style fg=colour33`
+# Clone this configuration
+git clone <your-repo-url> ~/.config/nvim
 
-### Resize Panes
-- **Resize using Ctrl + Option + Arrow keys (macOS friendly)**:
-  - `Ctrl + Option + Left` → Resize left
-  - `Ctrl + Option + Right` → Resize right
-  - `Ctrl + Option + Up` → Resize up
-  - `Ctrl + Option + Down` → Resize down
+# Start Neovim (plugins will auto-install)
+nvim
+```
 
-## Vim Keymaps
+## Structure
 
-### File Management
-- **Save file**: `space + w`
-- **Save and close all files**: `space + x + a`
-- **Close all files**: `space + q`
-- **Reload Neovim config**: `space + s + o`
-- **Clear search highlights**: `space + n + o`
+```
+~/.config/nvim/
+├── init.lua                 # Entry point
+├── lua/cargdev/
+│   ├── core/
+│   │   ├── init.lua         # Core initialization
+│   │   ├── options.lua      # Neovim options
+│   │   ├── keymaps/         # Keymap modules
+│   │   │   ├── init.lua     # Keymap loader
+│   │   │   ├── general.lua  # General keymaps
+│   │   │   ├── personal.lua # Personal workflow keymaps
+│   │   │   ├── plugins.lua  # Plugin-specific keymaps
+│   │   │   ├── window.lua   # Window management
+│   │   │   ├── lsp.lua      # LSP keymaps
+│   │   │   ├── copilot.lua  # Copilot keymaps
+│   │   │   └── ...
+│   │   └── function/        # Custom functions
+│   ├── plugins/             # Plugin configurations
+│   │   ├── lsp/             # LSP-related plugins
+│   │   └── ...
+│   └── lazy.lua             # Lazy.nvim setup
+└── ftplugin/                # Filetype-specific settings
+```
 
-### Number Increment/Decrement
-- **Increase number**: `space + +`
-- **Decrease number**: `space + -`
+## Key Features
 
-### Window Management
-- **Split window vertically**: `space + s + v`
-- **Split window horizontally**: `space + s + h`
-- **Make splits equal size**: `space + s + e`
-- **Close split**: `space + s + x`
+- **Plugin Manager**: [lazy.nvim](https://github.com/folke/lazy.nvim) with auto-update notifications
+- **LSP**: Full LSP support with Mason for easy server management
+- **Completion**: nvim-cmp with multiple sources
+- **File Navigation**: Snacks.nvim (modern) + Telescope (git features)
+- **File Explorer**: nvim-tree
+- **Git Integration**: LazyGit, Gitsigns
+- **AI Assistant**: GitHub Copilot with Copilot Chat
+- **Debugging**: DAP with UI
+- **Formatting**: Conform.nvim with auto-format on save
+- **Diagnostics**: Trouble.nvim for organized diagnostics view
 
-### Tabs
-- **Open new tab**: `space + t + o`
-- **Close tab**: `space + t + x`
-- **Next tab**: `space + t + n`
-- **Previous tab**: `space + t + p`
-- **Move current buffer to new tab**: `space + t + f`
+## Documentation
 
-### Syntax Formatting
-- **Format current file**: `space + s + y`
+| Document | Description |
+|----------|-------------|
+| [CHANGELOG.md](./CHANGELOG.md) | Version history and changes |
+| [keyboard_mappings.md](./keyboard_mappings.md) | QMK keyboard configuration |
+| [NATIVE_AUTO_WRAPPER_GUIDE.md](./NATIVE_AUTO_WRAPPER_GUIDE.md) | Text wrapping configuration |
+| [TELESCOPE_TO_SNACKS_MIGRATION.md](./TELESCOPE_TO_SNACKS_MIGRATION.md) | Migration notes |
 
-### Buffer Management
-- **Close current buffer**: `space + b + d`
+## Quick Reference - Essential Keymaps
+
+### Leader Key: `<Space>`
+
+### File Operations
+| Keymap | Description |
+|--------|-------------|
+| `<leader>w` | Save file |
+| `<leader>q` | Close file |
+| `<leader>xa` | Save and close all |
+| `<leader>bd` | Close buffer (safe) |
+| `<leader>bD` | Force close buffer |
 
 ### Navigation
-- **Next buffer**: `Ctrl + p`
-- **Previous buffer**: `Ctrl + n`
+| Keymap | Description |
+|--------|-------------|
+| `<leader>ff` | Find files |
+| `<leader>fs` | Live grep (search text) |
+| `<leader>fr` | Recent files |
+| `<leader>fb` | Find buffers |
+| `<leader>e` | Toggle file explorer |
 
-### Coding Enhancements
-- **Add import React**: `space + r + e`
-- **Add comma at end of line**: `space + ,`
-- **Add semicolon at end of line**: `space + ;`
-- **Insert console.log() below**: `space + c + o + n`
-- **Run current file with Node.js**: `space + x`
+### Window Management
+| Keymap | Description |
+|--------|-------------|
+| `<leader>sv` | Split vertical |
+| `<leader>sh` | Split horizontal |
+| `<leader>se` | Equal splits |
+| `<leader>sx` | Close split |
+| `<C-h/j/k/l>` | Resize splits |
 
-### Resize Splits
-- **Decrease vertical split**: `Ctrl + l`
-- **Increase vertical split**: `Ctrl + h`
-- **Increase horizontal split**: `Ctrl + k`
-- **Decrease horizontal split**: `Ctrl + j`
+### LSP
+| Keymap | Description |
+|--------|-------------|
+| `gd` | Go to definition |
+| `gr` | Show references |
+| `K` | Hover documentation |
+| `<leader>ca` | Code actions |
+| `<leader>rn` | Rename symbol |
+| `<leader>f` | Format buffer |
+| `<leader>mm` | Format (conform) |
 
-### LSP and Navigation
-- **Show references**: `g + R`
-- **Go to declaration**: `g + D`
-- **Show definitions**: `g + d`
-- **Show implementations**: `g + i`
-- **Show type definitions**: `g + t`
-- **See available code actions**: `space + c + a`
-- **Rename variable**: `space + r + n`
-- **Show buffer diagnostics**: `space + D`
-- **Show line diagnostics**: `space + d`
-- **Previous diagnostic**: `[ + d`
-- **Next diagnostic**: `] + d`
-- **Show documentation for cursor**: `K`
-- **Restart LSP**: `space + r + s`
+### Git
+| Keymap | Description |
+|--------|-------------|
+| `<leader>gg` | LazyGit |
+| `<leader>gs` | Git status |
+| `<leader>gb` | Git blame |
 
-### File Explorer (Nvim-Tree)
-- **Toggle file explorer**: `space + e + e`
-- **Toggle explorer on current file**: `space + n + t`
-- **Collapse explorer**: `space + e + c`
-- **Refresh explorer**: `space + e + r`
+### Diagnostics & Quickfix
+| Keymap | Description |
+|--------|-------------|
+| `<leader>xx` | Toggle Trouble |
+| `<leader>xd` | Document diagnostics |
+| `<leader>qn/qp` | Next/prev quickfix |
+| `<leader>qo/qq` | Open/close quickfix |
 
-This README provides an organized list of Vim and Tmux keymaps for efficient navigation and workflow.
+### Session
+| Keymap | Description |
+|--------|-------------|
+| `<leader>sS` | Save session |
+| `<leader>sR` | Restore session |
+
+### Copilot
+| Keymap | Description |
+|--------|-------------|
+| `<Tab>` | Accept suggestion |
+| `<leader>zc` | Open Copilot Chat |
+| `<leader>ze` | Explain code (visual) |
+| `<leader>zf` | Fix code (visual) |
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `:Lazy` | Open plugin manager |
+| `:Mason` | Open LSP server manager |
+| `:checkhealth` | Run health checks |
+| `:CheckConfig` | Run config validation |
+| `:FormatToggle` | Toggle auto-format on save |
+
+## Troubleshooting
+
+### Check Configuration Health
+```vim
+:checkhealth
+:CheckConfig
+```
+
+### Common Issues
+
+1. **Plugins not loading**: Run `:Lazy sync`
+2. **LSP not working**: Run `:Mason` and install required servers
+3. **Formatting not working**: Ensure formatters are installed (prettier, stylua, etc.)
+4. **Slow startup**: Check `:Lazy profile` for slow plugins
+
+## License
+
+MIT License - Feel free to use and modify as needed.

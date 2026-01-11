@@ -40,7 +40,7 @@ opt.smartindent = true -- Smart indent
 opt.updatetime = 100 -- Faster completion (reduced from 250)
 opt.timeoutlen = 200 -- Faster key sequence completion (reduced from 300)
 opt.redrawtime = 1500 -- Allow more time for loading syntax
-opt.synmaxcol = 240 -- Only highlight the first 240 columns
+opt.synmaxcol = 200 -- Only highlight the first 200 columns (conservative for performance)
 opt.maxmempattern = 1000 -- Reduce memory for pattern matching
 opt.hidden = true -- Allow switching buffers without saving
 opt.scrolljump = 1 -- Minimal number of screen lines to scroll
@@ -49,9 +49,7 @@ opt.sidescrolloff = 3 -- Keep 3 columns left/right of cursor (reduced from 8)
 
 -- Syntax loading optimizations
 opt.syntax = "on" -- Enable syntax highlighting
-opt.synmaxcol = 200 -- Reduce syntax highlighting column limit
 opt.lazyredraw = false -- Don't use lazy redraw (can cause issues)
-opt.foldmethod = "syntax" -- Use syntax-based folding for better performance
 opt.foldlevel = 99 -- Don't fold by default
 
 -- Filetype plugin optimizations
@@ -101,9 +99,8 @@ opt.formatoptions:append("j") -- Remove comment leader when joining lines
 opt.showmatch = true -- Show matching brackets
 opt.matchtime = 2 -- How long to show matching brackets
 
--- Folding
+-- Folding (indent-based is generally faster than syntax-based)
 opt.foldmethod = "indent" -- Fold based on indentation
-opt.foldlevel = 99 -- Don't fold by default
 opt.foldnestmax = 10 -- Maximum nesting level
 
 -- Backup and swap

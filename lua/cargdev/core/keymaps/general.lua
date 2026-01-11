@@ -11,14 +11,16 @@ local opts = { noremap = true, silent = true }
 -- "jj" is much less likely to appear in normal typing and won't interfere
 keymap.set("i", "jj", "<ESC>", opts) -- Exit insert mode with jj
 keymap.set("n", "<leader>nh", ":nohl<CR>", opts) -- Clear search highlights
--- Removed: keymap.set("n", "x", '"_x', opts) -- Delete character without copying into register
--- This was causing single character deletions to not be copied to the default register
 
 -- Save and quit (additional)
 keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Quit all" })
 
--- Put this in your init.lua
+-- Obsidian vault path with validation
 local vault_path = vim.env.IDEA_DIR
+if not vault_path or vault_path == "" then
+  -- Silently skip Obsidian link setup if IDEA_DIR is not configured
+  return
+end
 
 
 
