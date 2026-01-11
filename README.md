@@ -57,6 +57,7 @@ nvim
 
 ## Key Features
 
+- **Colorscheme**: [cargdev-cyberpunk](https://github.com/CarGDev/cargdev-cyberpunk) - Vibrant cyberpunk theme with neon colors and full TypeScript/LSP support
 - **Plugin Manager**: [lazy.nvim](https://github.com/folke/lazy.nvim) with auto-update notifications
 - **LSP**: Full LSP support with Mason for easy server management
 - **Completion**: nvim-cmp with multiple sources
