@@ -18,6 +18,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - `<leader>jg` - Run Gradle Project
 - **Java Debug Dependencies**: Added `java-debug-adapter` and `java-test` to Mason ensure_installed
 
+### Changed
+- **Colorscheme Configuration**: Enhanced `cargdev-cyberpunk` setup
+  - Enabled transparency
+  - Enabled italic comments
+  - Enabled bold keywords, functions, and types
+  - Enabled terminal colors
+
 ### Fixed
 - **Java DAP Configuration**: Fixed debug adapter not loading
   - Changed `bundles = {}` to `bundles = bundles` to properly load debug JARs
