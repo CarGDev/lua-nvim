@@ -44,7 +44,7 @@ return {
         provider = "ollama",
         ollama = {
           host = "http://localhost:11434",
-          model = "deepseek-coder:6.7b",
+          model = "qwen3-coder:30b",
         },
       },
       window = {
