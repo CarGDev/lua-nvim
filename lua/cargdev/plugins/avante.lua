@@ -54,21 +54,31 @@ return {
           "stevearc/dressing.nvim", -- Load after dressing to override it
         },
         config = function()
+          local dashboard_config = require("cargdev.core.dashboard_config")
           require("snacks").setup({
             -- Enable all snacks modules
             bigfile = { enabled = true },
-            dashboard = { 
-              enabled = false, -- Disabled: using alpha-nvim for CARGDEV branding
+            dashboard = {
+              enabled = true,
+              width = 60,
+              row = nil,
+              col = nil,
+              pane_gap = 4,
+              autokeys = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+              preset = {
+                keys = dashboard_config.get_snacks_keys(),
+                header = dashboard_config.get_header_string(),
+              },
+              sections = {
+                { section = "header" },
+                { padding = 1 },
+                { section = "keys", gap = 1, padding = 1 },
+                { section = "startup" },
+              },
             },
             explorer = { enabled = true },
-            image = { 
+            image = {
               enabled = true,
-              -- Auto-detect terminal (will try: kitty, wezterm, ghostty in order)
-              -- If none found, image rendering will be disabled with warnings
-              -- Note: LaTeX and Mermaid features require external tools:
-              --   - LaTeX: tectonic or pdflatex
-              --   - Mermaid: mmdc (Mermaid CLI)
-              -- These warnings are informational and won't prevent basic image rendering
               terminal = nil, -- nil = auto-detect
             },
             input = { enabled = true },
@@ -81,9 +91,9 @@ return {
             statuscolumn = { enabled = true },
             terminal = { enabled = true },
             toggle = { enabled = true },
-            words = { 
+            words = {
               enabled = true,
-              lsp = { enabled = false }, -- Disable LSP to prevent crashes
+              lsp = { enabled = false },
               hl = { enabled = true },
             },
           })

@@ -1,5 +1,7 @@
 return {
-  "CarGDev/codetyper.nvim",
+  -- Codetyper.nvim - AI-powered coding partner
+  -- Local development version
+  dir = "/Volumes/Carlos_SSD/Documents/projects/nvim.plugins/codetyper.nvim",
   name = "codetyper.nvim",
   lazy = false, -- Load on startup to create .coder folder
   priority = 100, -- Load early
@@ -44,7 +46,7 @@ return {
         provider = "ollama",
         ollama = {
           host = "http://localhost:11434",
-          model = "qwen3-coder:30b",
+          model = "deepseek-coder:6.7b",
         },
       },
       window = {
@@ -59,6 +61,7 @@ return {
       },
       auto_gitignore = true,
       auto_open_ask = false, -- Always open Ask panel on startup
+      agent_mode = false,
     })
   end,
 }

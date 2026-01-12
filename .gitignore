@@ -24,3 +24,7 @@ session.vim
 
 # Local configuration overrides
 local.lua
+
+# Codetyper.nvim - AI coding partner files
+*.coder.*
+.coder/

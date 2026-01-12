@@ -242,3 +242,57 @@ vim.api.nvim_create_autocmd("FileType", {
     end
   end,
 })
+
+-- =============================================================================
+-- RETURN TO DASHBOARD ON LAST BUFFER CLOSE
+-- =============================================================================
+
+-- When closing the last buffer, return to dashboard instead of quitting
+vim.api.nvim_create_autocmd("BufDelete", {
+  callback = function()
+    local bufs = vim.tbl_filter(function(b)
+      return vim.api.nvim_buf_is_valid(b)
+        and vim.bo[b].buflisted
+        and vim.api.nvim_buf_get_name(b) ~= ""
+    end, vim.api.nvim_list_bufs())
+
+    -- If this is the last listed buffer, open dashboard
+    if #bufs <= 1 then
+      vim.schedule(function()
+        local ok, snacks = pcall(require, "snacks")
+        if ok and snacks.dashboard then
+          snacks.dashboard()
+        end
+      end)
+    end
+  end,
+})
+
+-- =============================================================================
+-- MODERN UI: GLOBAL ROUNDED BORDERS
+-- =============================================================================
+
+-- Rounded border style for all floating windows
+local border = "rounded"
+
+-- Override default floating window border
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+
+-- Diagnostic floating window border
+vim.diagnostic.config({
+  float = {
+    border = border,
+    source = "always",
+    header = "",
+    prefix = "",
+  },
+})
+
+-- Set global float border highlight
+vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#7aa2f7", bg = "NONE" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1a1b26" })
+
+-- Modern cursor line (subtle highlight)
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#292e42" })
+vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#7aa2f7", bold = true })
