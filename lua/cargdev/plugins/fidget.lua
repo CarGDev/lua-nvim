@@ -1,1 +1,17 @@
-return { "j-hui/fidget.nvim", opts = {} }
+return {
+  "j-hui/fidget.nvim",
+  opts = {
+    notification = {
+      window = {
+        winblend = 0,
+        border = "rounded",
+        align = "bottom",
+      },
+      view = {
+        stack_upwards = true,
+      },
+      filter = vim.log.levels.INFO,
+      override_vim_notify = false,
+    },
+  },
+}

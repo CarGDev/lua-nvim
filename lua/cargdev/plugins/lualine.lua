@@ -14,7 +14,8 @@ return {
       orange = "#d19a66",
       red = "#e06c75",
       yellow = "#e5c07b",
-      fg = "#abb2bf",
+      fg = "#98c379",  -- Bright green for better visibility
+      fg_dim = "#7ec8e3",  -- Light blue for secondary text
       bg = "#282c34",
       bg_dark = "#21252b",
       white = "#ffffff",
@@ -25,38 +26,38 @@ return {
     local theme = {
       normal = {
         a = { bg = colors.blue, fg = colors.black, gui = "bold" },
-        b = { bg = colors.bg, fg = colors.blue },
-        c = { bg = colors.bg_dark, fg = colors.fg },
+        b = { bg = colors.bg, fg = colors.cyan },
+        c = { bg = colors.bg_dark, fg = colors.green },
         z = { bg = colors.blue, fg = colors.black, gui = "bold" },
       },
       insert = {
         a = { bg = colors.green, fg = colors.black, gui = "bold" },
-        b = { bg = colors.bg, fg = colors.green },
-        c = { bg = colors.bg_dark, fg = colors.fg },
+        b = { bg = colors.bg, fg = colors.cyan },
+        c = { bg = colors.bg_dark, fg = colors.green },
         z = { bg = colors.green, fg = colors.black, gui = "bold" },
       },
       visual = {
         a = { bg = colors.magenta, fg = colors.black, gui = "bold" },
-        b = { bg = colors.bg, fg = colors.magenta },
-        c = { bg = colors.bg_dark, fg = colors.fg },
+        b = { bg = colors.bg, fg = colors.cyan },
+        c = { bg = colors.bg_dark, fg = colors.green },
         z = { bg = colors.magenta, fg = colors.black, gui = "bold" },
       },
       command = {
         a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
-        b = { bg = colors.bg, fg = colors.yellow },
-        c = { bg = colors.bg_dark, fg = colors.fg },
+        b = { bg = colors.bg, fg = colors.cyan },
+        c = { bg = colors.bg_dark, fg = colors.green },
         z = { bg = colors.yellow, fg = colors.black, gui = "bold" },
       },
       replace = {
         a = { bg = colors.red, fg = colors.black, gui = "bold" },
-        b = { bg = colors.bg, fg = colors.red },
-        c = { bg = colors.bg_dark, fg = colors.fg },
+        b = { bg = colors.bg, fg = colors.cyan },
+        c = { bg = colors.bg_dark, fg = colors.green },
         z = { bg = colors.red, fg = colors.black, gui = "bold" },
       },
       inactive = {
-        a = { bg = colors.bg_dark, fg = colors.fg },
-        b = { bg = colors.bg_dark, fg = colors.fg },
-        c = { bg = colors.bg_dark, fg = colors.fg },
+        a = { bg = colors.bg_dark, fg = colors.cyan },
+        b = { bg = colors.bg_dark, fg = colors.cyan },
+        c = { bg = colors.bg_dark, fg = colors.cyan },
       },
     }
 

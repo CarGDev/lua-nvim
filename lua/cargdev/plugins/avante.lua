@@ -9,116 +9,47 @@ end
 return {
   {
     dir = local_cfg.avante_dev_path,
-    -- "yetone/avante.nvim",
     event = "VeryLazy",
     lazy = false,
-    version = false, -- Always pull the latest change
-    build = "make",  -- This will build on first load
+    version = false,
+    build = "make BUILD_FROM_SOURCE=true",
     opts = {
-      provider = "cargdev", -- API provider configuration
-      mode = "agentic", -- Enable agentic mode for tool support
-      debug = true, -- Enable debug logging to troubleshoot tools
+      provider = "cargdev",
+      mode = "agentic",
+      debug = true,
       providers = {
         cargdev = {
-          name = "cargdev", -- Optional
+          name = "cargdev",
           endpoint = local_cfg.avante_endpoint,
           api_key_name = local_cfg.avante_api_key_name,
           model = local_cfg.avante_model,
-          __inherited_from = "ollama", -- ensures compatibility
+          __inherited_from = "ollama",
           max_tokens = 8192,
-          -- Explicitly ensure tools are enabled
           disable_tools = false,
-          -- Tool format: false = function calling (JSON tools in request), true = XML tool format (tools in prompt)
-          use_ReAct_prompt = false, -- Use function calling format (OpenAI-compatible)
+          use_ReAct_prompt = false,
         },
       },
     },
-    -- Build from source for development
-    -- Run `make BUILD_FROM_SOURCE=true` to build Rust components
-    -- You can also build manually: cd <avante_dev_path> && make
-    build = "make BUILD_FROM_SOURCE=true",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
-      "echasnovski/mini.pick", -- for file_selector provider mini.pick
-      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-      "ibhagwan/fzf-lua", -- for file_selector provider fzf
-      "stevearc/dressing.nvim", -- for input provider dressing
+      "echasnovski/mini.pick",
+      "nvim-telescope/telescope.nvim",
+      "hrsh7th/nvim-cmp",
+      "ibhagwan/fzf-lua",
+      "stevearc/dressing.nvim",
+      "folke/snacks.nvim",
+      "nvim-tree/nvim-web-devicons",
       {
-        "folke/snacks.nvim", -- for input provider snacks
-        lazy = false,
-        priority = 1001, -- Higher than dressing to override it
-        dependencies = {
-          "stevearc/dressing.nvim", -- Load after dressing to override it
-        },
-        config = function()
-          local dashboard_config = require("cargdev.core.dashboard_config")
-          require("snacks").setup({
-            -- Enable all snacks modules
-            bigfile = { enabled = true },
-            dashboard = {
-              enabled = true,
-              width = 60,
-              row = nil,
-              col = nil,
-              pane_gap = 4,
-              autokeys = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-              preset = {
-                keys = dashboard_config.get_snacks_keys(),
-                header = dashboard_config.get_header_string(),
-              },
-              sections = {
-                { section = "header" },
-                { padding = 1 },
-                { section = "keys", gap = 1, padding = 1 },
-                { section = "startup" },
-              },
-            },
-            explorer = { enabled = true },
-            image = {
-              enabled = true,
-              terminal = nil, -- nil = auto-detect
-            },
-            input = { enabled = true },
-            lazygit = { enabled = true },
-            notifier = { enabled = true },
-            picker = { enabled = true },
-            quickfile = { enabled = true },
-            scope = { enabled = true },
-            scroll = { enabled = true },
-            statuscolumn = { enabled = true },
-            terminal = { enabled = true },
-            toggle = { enabled = true },
-            words = {
-              enabled = true,
-              lsp = { enabled = false },
-              hl = { enabled = true },
-            },
-          })
-
-          -- Set up vim.ui.input and vim.ui.select for snacks
-          -- Use vim.schedule to ensure this runs after all plugins are loaded
-          vim.schedule(function()
-            vim.ui.input = require("snacks.input").input
-            vim.ui.select = require("snacks.picker").select
-          end)
-        end,
-      },
-      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      {
-        "HakonHarnes/img-clip.nvim", -- Image pasting support
+        "HakonHarnes/img-clip.nvim",
         event = "VeryLazy",
         opts = {
-          -- Recommended settings
           default = {
             embed_image_as_base64 = false,
             prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            use_absolute_path = true, -- For Windows users
+            drag_and_drop = { insert_mode = true },
+            use_absolute_path = true,
           },
         },
       },
@@ -128,11 +59,10 @@ return {
         config = function()
           require("render-markdown").setup({
             file_types = { "markdown", "Avante" },
-            latex = { enabled = false }, -- Disable latex to avoid warning
-            html = { enabled = false }, -- Disable html support to avoid warnings
-            yaml = { enabled = false }, -- Disable yaml support to avoid warnings
+            latex = { enabled = false },
+            html = { enabled = false },
+            yaml = { enabled = false },
           })
-          -- Enable treesitter highlighter for markdown buffers
           vim.api.nvim_create_autocmd("FileType", {
             pattern = { "markdown", "Avante" },
             callback = function()
