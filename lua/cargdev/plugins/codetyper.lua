@@ -7,8 +7,8 @@ return {
   priority = 100, -- Load early
   dependencies = {
     "nvim-lua/plenary.nvim", -- Required: async utilities
-    "nvim-treesitter/nvim-treesitter", -- Required: scope detection via Tree-sitter
-    "nvim-treesitter/nvim-treesitter-textobjects", -- Optional: better text object support
+    -- "nvim-treesitter/nvim-treesitter", -- Required: scope detection via Tree-sitter
+    -- "nvim-treesitter/nvim-treesitter-textobjects", -- Optional: better text object support
     "MunifTanjim/nui.nvim", -- Optional: UI components
   },
   event = {
