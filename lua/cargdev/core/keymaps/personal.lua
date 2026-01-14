@@ -68,7 +68,7 @@ keymap.set(
 keymap.set("n", "<leader>,", "$a,<ESC>", { desc = "Adding ',' at the end of the line" })
 keymap.set("n", "<leader>;", "$a;<ESC>", { desc = "Adding ';' at the end of the line" })
 keymap.set("n", "<leader>con", "oconsole.log()<ESC>0w$h", { desc = "Adding console.log() on the line below" })
-keymap.set("n", "<leader>x", ":!node %<CR>", { desc = "Running current project using node" })
+keymap.set("n", "<leader>xr", ":!node %<CR>", { desc = "Run file with node" })
 
 -- Resize splits keymaps are centralized in lua/cargdev/core/keymaps/window.lua
 
@@ -91,15 +91,15 @@ keymap.set("n", "<leader>p", function()
 end, { desc = "Paste HTML clipboard as Markdown" })
 
 -- =============================================================================
--- QUICKFIX NAVIGATION
+-- QUICKFIX NAVIGATION (under <leader>x for Trouble/Diagnostics group)
 -- =============================================================================
 
-keymap.set("n", "<leader>qn", ":cnext<CR>zz", { desc = "Quickfix: Next item" })
-keymap.set("n", "<leader>qp", ":cprev<CR>zz", { desc = "Quickfix: Previous item" })
-keymap.set("n", "<leader>qo", ":copen<CR>", { desc = "Quickfix: Open list" })
-keymap.set("n", "<leader>qq", ":cclose<CR>", { desc = "Quickfix: Close list" })
-keymap.set("n", "<leader>qf", ":cfirst<CR>zz", { desc = "Quickfix: First item" })
-keymap.set("n", "<leader>ql", ":clast<CR>zz", { desc = "Quickfix: Last item" })
+keymap.set("n", "<leader>xn", ":cnext<CR>zz", { desc = "Quickfix: Next item" })
+keymap.set("n", "<leader>xp", ":cprev<CR>zz", { desc = "Quickfix: Previous item" })
+keymap.set("n", "<leader>xo", ":copen<CR>", { desc = "Quickfix: Open list" })
+keymap.set("n", "<leader>xq", ":cclose<CR>", { desc = "Quickfix: Close list" })
+keymap.set("n", "<leader>xf", ":cfirst<CR>zz", { desc = "Quickfix: First item" })
+keymap.set("n", "<leader>xl", ":clast<CR>zz", { desc = "Quickfix: Last item" })
 
 -- Location list navigation
 keymap.set("n", "<leader>ln", ":lnext<CR>zz", { desc = "Location: Next item" })

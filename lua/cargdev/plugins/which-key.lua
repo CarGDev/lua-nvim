@@ -32,10 +32,11 @@ return {
       { "<leader>m", group = "Format" },
       { "<leader>n", group = "Notifications" },
       { "<leader>p", group = "Project" },
-      { "<leader>q", group = "Quickfix" },
+      { "<leader>q", group = "Quit" },
       { "<leader>s", group = "Session/Split/Substitute" },
       { "<leader>t", group = "Tab/Terminal/Text" },
-      { "<leader>x", group = "Trouble/Diagnostics" },
+      { "<leader>w", group = "Save" },
+      { "<leader>x", group = "Trouble/Quickfix" },
       { "<leader>z", group = "Copilot Chat" },
     })
   end,

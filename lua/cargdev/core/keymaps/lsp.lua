@@ -13,7 +13,7 @@ keymap.set("n", "gt", "<cmd>FzfLua lsp_typedefs<cr>", { desc = "Go to type defin
 
 -- Symbol search
 keymap.set("n", "<leader>ds", "<cmd>FzfLua lsp_document_symbols<cr>", { desc = "Document symbols" })
-keymap.set("n", "<leader>ws", "<cmd>FzfLua lsp_workspace_symbols<cr>", { desc = "Workspace symbols" })
+keymap.set("n", "<leader>lw", "<cmd>FzfLua lsp_workspace_symbols<cr>", { desc = "LSP: Workspace symbols" })
 
 -- Code actions and documentation
 keymap.set("n", "<leader>ca", "<cmd>FzfLua lsp_code_actions<cr>", { desc = "Code actions" })

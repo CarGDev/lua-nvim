@@ -14,8 +14,8 @@ return {
       orange = "#d19a66",
       red = "#e06c75",
       yellow = "#e5c07b",
-      fg = "#98c379",  -- Bright green for better visibility
-      fg_dim = "#7ec8e3",  -- Light blue for secondary text
+      fg = "#98c379", -- Bright green for better visibility
+      fg_dim = "#7ec8e3", -- Light blue for secondary text
       bg = "#282c34",
       bg_dark = "#21252b",
       white = "#ffffff",
@@ -25,34 +25,34 @@ return {
     -- P10k rainbow style theme with solid backgrounds
     local theme = {
       normal = {
-        a = { bg = colors.blue, fg = colors.black, gui = "bold" },
+        a = { bg = colors.blue, fg = colors.white, gui = "bold" },
         b = { bg = colors.bg, fg = colors.cyan },
         c = { bg = colors.bg_dark, fg = colors.green },
-        z = { bg = colors.blue, fg = colors.black, gui = "bold" },
+        z = { bg = colors.blue, fg = colors.white, gui = "bold" },
       },
       insert = {
-        a = { bg = colors.green, fg = colors.black, gui = "bold" },
+        a = { bg = colors.green, fg = colors.white, gui = "bold" },
         b = { bg = colors.bg, fg = colors.cyan },
         c = { bg = colors.bg_dark, fg = colors.green },
-        z = { bg = colors.green, fg = colors.black, gui = "bold" },
+        z = { bg = colors.green, fg = colors.white, gui = "bold" },
       },
       visual = {
-        a = { bg = colors.magenta, fg = colors.black, gui = "bold" },
+        a = { bg = colors.magenta, fg = colors.white, gui = "bold" },
         b = { bg = colors.bg, fg = colors.cyan },
         c = { bg = colors.bg_dark, fg = colors.green },
-        z = { bg = colors.magenta, fg = colors.black, gui = "bold" },
+        z = { bg = colors.magenta, fg = colors.white, gui = "bold" },
       },
       command = {
-        a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
+        a = { bg = colors.yellow, fg = colors.white, gui = "bold" },
         b = { bg = colors.bg, fg = colors.cyan },
         c = { bg = colors.bg_dark, fg = colors.green },
-        z = { bg = colors.yellow, fg = colors.black, gui = "bold" },
+        z = { bg = colors.yellow, fg = colors.white, gui = "bold" },
       },
       replace = {
-        a = { bg = colors.red, fg = colors.black, gui = "bold" },
+        a = { bg = colors.red, fg = colors.white, gui = "bold" },
         b = { bg = colors.bg, fg = colors.cyan },
         c = { bg = colors.bg_dark, fg = colors.green },
-        z = { bg = colors.red, fg = colors.black, gui = "bold" },
+        z = { bg = colors.red, fg = colors.white, gui = "bold" },
       },
       inactive = {
         a = { bg = colors.bg_dark, fg = colors.cyan },
