@@ -67,7 +67,6 @@ keymap.set(
 )
 keymap.set("n", "<leader>,", "$a,<ESC>", { desc = "Adding ',' at the end of the line" })
 keymap.set("n", "<leader>;", "$a;<ESC>", { desc = "Adding ';' at the end of the line" })
-keymap.set("n", "<leader>con", "oconsole.log()<ESC>0w$h", { desc = "Adding console.log() on the line below" })
 keymap.set("n", "<leader>xr", ":!node %<CR>", { desc = "Run file with node" })
 
 -- Resize splits keymaps are centralized in lua/cargdev/core/keymaps/window.lua

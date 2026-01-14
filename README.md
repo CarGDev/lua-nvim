@@ -65,7 +65,7 @@ nvim
 - **File Explorer**: nvim-tree
 - **Git Integration**: LazyGit, Gitsigns
 - **AI Assistants**: GitHub Copilot + [Avante.nvim](https://github.com/yetone/avante.nvim) (local LLM support)
-- **Debugging**: DAP with UI
+- **Debugging**: DAP with UI (Java, Node.js/NestJS, Python)
 - **Formatting**: Conform.nvim with auto-format on save
 - **Diagnostics**: Trouble.nvim for organized diagnostics view
 
@@ -149,6 +149,33 @@ nvim
 | `<leader>ze` | Explain code (visual) |
 | `<leader>zf` | Fix code (visual) |
 
+### Debugging (DAP)
+| Keymap | Description |
+|--------|-------------|
+| `<leader>dcr` | Start/Continue Debugging |
+| `<leader>db` | Toggle Breakpoint |
+| `<leader>dB` | Conditional Breakpoint |
+| `<leader>do` | Step Over |
+| `<leader>di` | Step Into |
+| `<leader>dot` | Step Out |
+| `<leader>du` | Toggle DAP UI |
+| `<leader>dq` | Stop Debugging |
+| `<leader>dr` | Open REPL |
+| `<leader>dl` | Run Last Debug |
+| `<leader>dcf` | DAP Configurations |
+| `<leader>dcb` | List Breakpoints |
+| `<leader>dco` | DAP Commands |
+
+### Java Debugging
+| Keymap | Description |
+|--------|-------------|
+| `<leader>jd` | Debug Class (DAP) |
+| `<leader>jt` | Test Class |
+| `<leader>jn` | Test Nearest Method |
+| `<leader>jr` | Run Java File |
+| `<leader>jm` | Run Maven Project |
+| `<leader>jg` | Run Gradle Project |
+
 ## Commands
 
 | Command | Description |
@@ -158,6 +185,48 @@ nvim
 | `:checkhealth` | Run health checks |
 | `:CheckConfig` | Run config validation |
 | `:FormatToggle` | Toggle auto-format on save |
+
+## Debugging Setup
+
+This configuration includes full debugging support for multiple languages using DAP (Debug Adapter Protocol).
+
+### Supported Languages
+
+| Language | Debug Adapter | Configuration |
+|----------|---------------|---------------|
+| **Java** | java-debug-adapter | Auto-configured via nvim-jdtls |
+| **Node.js/NestJS/TypeScript** | js-debug-adapter (pwa-node) | Launch & Attach configurations |
+| **Python** | debugpy | Django, FastAPI, Flask, and general Python |
+
+### Debug Configurations
+
+#### Node.js/NestJS/TypeScript
+- **Launch NestJS** - Runs `dist/main.js` with source maps
+- **Launch Current File** - Debug the current TypeScript/JavaScript file
+- **Launch with ts-node** - Debug TypeScript directly without compilation
+- **Attach to NestJS** - Attach to running process on port 9229
+- **Attach to Process** - Pick from running Node.js processes
+
+#### Python
+- **Launch File** - Debug current Python file
+- **Launch with Arguments** - Debug with custom arguments
+- **Attach Remote** - Attach to debugpy server (port 5678)
+- **Django** - Debug Django with `manage.py runserver`
+- **FastAPI** - Debug FastAPI with uvicorn
+- **Flask** - Debug Flask application
+
+#### Java
+- Auto-discovers main classes and test methods
+- Hot code replacement enabled
+- Use `<leader>jd` to debug the current class
+
+### Installation
+
+Debug adapters are automatically installed via Mason. Run `:Mason` to verify:
+- `debugpy` - Python debugger
+- `js-debug-adapter` - Node.js/TypeScript debugger
+- `java-debug-adapter` - Java debugger
+- `java-test` - Java test runner
 
 ## Troubleshooting
 

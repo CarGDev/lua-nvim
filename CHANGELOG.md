@@ -9,6 +9,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+- **Python Debugger (debugpy)**: Full Python debugging support with multiple configurations
+  - Launch File - Debug current Python file
+  - Launch with Arguments - Debug with custom arguments
+  - Attach Remote - Attach to debugpy server (port 5678)
+  - Django - Debug Django with `manage.py runserver`
+  - FastAPI - Debug FastAPI with uvicorn
+  - Flask - Debug Flask application
+- **Node.js/NestJS Debug Configurations**: Extended TypeScript/JavaScript debugging
+  - Launch NestJS (`dist/main.js`) with source maps
+  - Launch Current File
+  - Launch with ts-node (debug TypeScript directly)
+  - Attach to NestJS (port 9229)
+  - Attach to Process (pick from running processes)
+- **Mason Debug Adapters**: Added `debugpy` and `js-debug-adapter` to auto-install list
+- **README Documentation**: Added comprehensive "Debugging Setup" section with all configurations
 - **Avante.nvim AI Assistant**: Added Avante.nvim with local LLM support to README documentation
 - **Bash Treesitter Parser**: Installed bash parser for noice.nvim cmdline highlighting
 - **Local Configuration Support**: `local.lua` is now loaded at startup and exposed via `vim.g.cargdev_local`
@@ -30,6 +45,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - `lazygit.lua` - removed commented hardcoded path
 
 ### Fixed
+- **Java Debug Adapter Paths**: Fixed incorrect paths in `ftplugin/java.lua`
+  - Changed `java-debug` → `java-debug-adapter/extension/server/`
+  - Changed `vscode-java-test` → `java-test/extension/server/`
+- **Node.js DAP Adapter**: Fixed js-debug-adapter configuration in `dap.lua`
+  - Changed adapter type from `executable` to `server` (required by js-debug-adapter)
+  - Renamed adapter from `node` to `pwa-node` (standard DAP name)
+  - Added proper source map resolution and skipFiles patterns
 - **Auto-session Lazy Loading**: Changed from `event = "VeryLazy"` to `lazy = false` to enable session auto-restore on startup
 - **Alpha Dashboard Config**: Fixed `enable` to `enabled` (correct lazy.nvim spec key)
 - **Snacks vs Alpha Conflict**: Disabled `Snacks.dashboard` in favor of `alpha-nvim` for CARGDEV branding
@@ -163,6 +185,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Modified Files
 | File | Changes |
 |------|---------|
+| `lua/cargdev/plugins/dap.lua` | Fixed Node.js adapter, added Python debugpy config |
+| `ftplugin/java.lua` | Fixed java-debug-adapter and java-test paths |
+| `lua/cargdev/plugins/lsp/mason.lua` | Added debugpy and js-debug-adapter to ensure_installed |
+| `README.md` | Added Debugging Setup section with keymaps and configurations |
+| `lua/cargdev/core/keymaps/README.md` | Added dap.lua and other keymap files to structure |
 | `lua/cargdev/core/keymaps/personal.lua` | Removed duplicates, added quickfix/location keymaps, safe buffer close |
 | `lua/cargdev/core/keymaps/plugins.lua` | Fixed session/substitute keymap conflicts |
 | `lua/cargdev/core/keymaps/general.lua` | Added vault_path validation, removed commented code |
@@ -216,4 +243,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
-*Last Updated: January 10, 2026*
+*Last Updated: January 13, 2026*

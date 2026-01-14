@@ -54,6 +54,8 @@ return {
         "tree-sitter-cli", -- required for nvim-treesitter parser compilation
         "java-debug-adapter", -- Java debugger
         "java-test", -- Java test runner
+        "debugpy", -- Python debugger
+        "js-debug-adapter", -- Node.js/TypeScript debugger
       },
     })
   end,

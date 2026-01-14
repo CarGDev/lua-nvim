@@ -77,8 +77,9 @@ return {
 
     -- 🧠 Mason DAP
     require("mason-nvim-dap").setup({
-      ensure_installed = { "js-debug-adapter", "firefox", "javadbg", "javatest" },
-      automatic_setup = true,
+      ensure_installed = { "python", "js", "javadbg", "javatest" },
+      automatic_installation = true,
+      handlers = {},
     })
 
     -- 🔍 Virtual Text
@@ -144,45 +145,160 @@ return {
     -- via jdtls.setup_dap() which automatically sets up the adapter
     -- The configurations are dynamically discovered from the project
 
-    -- 🧠 Node.js (NestJS / TypeScript) - Using js-debug-adapter
-    dap.adapters.node = {
-      type = "executable",
-      command = "node",
-      args = {
-        os.getenv("HOME") .. "/.local/share/nvim/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
-        "${port}",
+    -- 🐍 Python (debugpy)
+    local debugpy_path = os.getenv("HOME") .. "/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
+    require("dap-python").setup(debugpy_path)
+
+    dap.configurations.python = {
+      {
+        name = "Launch File",
+        type = "python",
+        request = "launch",
+        program = "${file}",
+        console = "integratedTerminal",
+        cwd = fn.getcwd(),
+      },
+      {
+        name = "Launch File with Arguments",
+        type = "python",
+        request = "launch",
+        program = "${file}",
+        args = function()
+          local args_string = vim.fn.input("Arguments: ")
+          return vim.split(args_string, " +")
+        end,
+        console = "integratedTerminal",
+        cwd = fn.getcwd(),
+      },
+      {
+        name = "Attach Remote",
+        type = "python",
+        request = "attach",
+        connect = {
+          host = "127.0.0.1",
+          port = 5678,
+        },
+      },
+      {
+        name = "Django",
+        type = "python",
+        request = "launch",
+        program = "${workspaceFolder}/manage.py",
+        args = { "runserver", "--noreload" },
+        console = "integratedTerminal",
+        django = true,
+      },
+      {
+        name = "FastAPI",
+        type = "python",
+        request = "launch",
+        module = "uvicorn",
+        args = { "main:app", "--reload" },
+        console = "integratedTerminal",
+        cwd = fn.getcwd(),
+      },
+      {
+        name = "Flask",
+        type = "python",
+        request = "launch",
+        module = "flask",
+        env = { FLASK_APP = "app.py", FLASK_DEBUG = "1" },
+        args = { "run", "--no-debugger", "--no-reload" },
+        console = "integratedTerminal",
+      },
+    }
+
+    -- 🧠 Node.js (NestJS / TypeScript) - Using js-debug-adapter (pwa-node)
+    dap.adapters["pwa-node"] = {
+      type = "server",
+      host = "localhost",
+      port = "${port}",
+      executable = {
+        command = "node",
+        args = {
+          os.getenv("HOME") .. "/.local/share/nvim/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+          "${port}",
+        },
       },
     }
 
     dap.configurations.typescript = {
       {
-        name = "Launch NestJS",
-        type = "node",
+        name = "Launch NestJS (dist/main.js)",
+        type = "pwa-node",
         request = "launch",
         program = "${workspaceFolder}/dist/main.js",
-        args = {},
-        console = "integratedTerminal",
-        outFiles = { "${workspaceFolder}/dist/**/*.js" },
+        cwd = "${workspaceFolder}",
         sourceMaps = true,
-        protocol = "inspector",
-        cwd = fn.getcwd(),
-        runtimeArgs = { "--inspect-brk" },
+        outFiles = { "${workspaceFolder}/dist/**/*.js" },
+        resolveSourceMapLocations = { "${workspaceFolder}/**", "!**/node_modules/**" },
+        console = "integratedTerminal",
+        skipFiles = { "<node_internals>/**", "node_modules/**" },
+      },
+      {
+        name = "Launch Current File",
+        type = "pwa-node",
+        request = "launch",
+        program = "${file}",
+        cwd = "${workspaceFolder}",
+        sourceMaps = true,
+        console = "integratedTerminal",
+        skipFiles = { "<node_internals>/**", "node_modules/**" },
+      },
+      {
+        name = "Launch with ts-node",
+        type = "pwa-node",
+        request = "launch",
+        runtimeExecutable = "node",
+        runtimeArgs = { "--loader", "ts-node/esm" },
+        program = "${file}",
+        cwd = "${workspaceFolder}",
+        sourceMaps = true,
+        console = "integratedTerminal",
+        skipFiles = { "<node_internals>/**", "node_modules/**" },
+      },
+      {
+        name = "Attach to NestJS (port 9229)",
+        type = "pwa-node",
+        request = "attach",
+        port = 9229,
+        cwd = "${workspaceFolder}",
+        sourceMaps = true,
+        outFiles = { "${workspaceFolder}/dist/**/*.js" },
+        resolveSourceMapLocations = { "${workspaceFolder}/**", "!**/node_modules/**" },
+        skipFiles = { "<node_internals>/**", "node_modules/**" },
         restart = true,
       },
       {
-        name = "Attach to NestJS (start:debug)",
-        type = "node",
+        name = "Attach to Process",
+        type = "pwa-node",
         request = "attach",
-        port = 9229,
-        protocol = "inspector",
-        cwd = fn.getcwd(),
+        processId = require("dap.utils").pick_process,
+        cwd = "${workspaceFolder}",
         sourceMaps = true,
-        outFiles = { "${workspaceFolder}/dist/**/*.js" },
-        skipFiles = { "<node_internals>/**" },
+        skipFiles = { "<node_internals>/**", "node_modules/**" },
       },
     }
 
-    -- Also add JavaScript configurations
-    dap.configurations.javascript = dap.configurations.typescript
+    -- JavaScript uses same configurations as TypeScript
+    dap.configurations.javascript = {
+      {
+        name = "Launch Current File",
+        type = "pwa-node",
+        request = "launch",
+        program = "${file}",
+        cwd = "${workspaceFolder}",
+        console = "integratedTerminal",
+        skipFiles = { "<node_internals>/**", "node_modules/**" },
+      },
+      {
+        name = "Attach to Process",
+        type = "pwa-node",
+        request = "attach",
+        processId = require("dap.utils").pick_process,
+        cwd = "${workspaceFolder}",
+        skipFiles = { "<node_internals>/**", "node_modules/**" },
+      },
+    }
   end,
 }

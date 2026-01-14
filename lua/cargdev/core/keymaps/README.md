@@ -9,9 +9,13 @@ keymaps/
 ├── README.md          # This file
 ├── general.lua        # General keymaps (leader, basic navigation)
 ├── personal.lua       # Personal workflow keymaps
-├── lsp.lua           # LSP and function navigation keymaps
-├── snacks.lua        # Snacks search and navigation keymaps (replacing Telescope)
-└── plugins.lua       # Plugin-specific keymaps
+├── lsp.lua            # LSP and function navigation keymaps
+├── dap.lua            # DAP debugging keymaps
+├── snacks.lua         # Snacks search and navigation keymaps (replacing Telescope)
+├── window.lua         # Window management keymaps
+├── copilot.lua        # Copilot AI keymaps
+├── gitconflict.lua    # Git conflict resolution keymaps
+└── plugins.lua        # Plugin-specific keymaps
 ```
 
 ## 🔧 How It Works
@@ -35,6 +39,13 @@ The main `keymaps.lua` file automatically loads all `.lua` files from this folde
 - Symbol search (`<leader>ds`, `<leader>ws`)
 - Code actions and documentation
 - Diagnostics
+
+### **dap.lua**
+- Debug session control (`<leader>dcr`, `<leader>dq`)
+- Breakpoints (`<leader>db`, `<leader>dB`)
+- Step navigation (`<leader>do`, `<leader>di`, `<leader>dot`)
+- DAP UI toggle (`<leader>du`)
+- REPL and configuration pickers
 
 ### **snacks.lua**
 - File search (`<leader>ff`, `<leader>fs`)
@@ -71,7 +82,11 @@ To add new keymaps:
 | General | `general.lua` | Basic setup and utilities |
 | Personal | `personal.lua` | Your workflow shortcuts |
 | LSP | `lsp.lua` | Function navigation and LSP features |
+| Debugging | `dap.lua` | DAP debugging (Java, Node.js, Python) |
 | Search | `snacks.lua` | File and text search |
+| Window | `window.lua` | Window/split management |
+| Copilot | `copilot.lua` | AI assistant keymaps |
+| Git Conflicts | `gitconflict.lua` | Conflict resolution |
 | Plugins | `plugins.lua` | Plugin-specific functionality |
 
 ## 🔄 Benefits
