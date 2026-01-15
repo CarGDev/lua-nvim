@@ -14,9 +14,16 @@ return {
           },
         },
         suggestion = {
-          enabled = true,
-          auto_trigger = true, -- Enable auto-trigger suggestions as you type
+          enabled = true, -- Codetyper will use copilot when available
+          auto_trigger = true,
           debounce = 75,
+          keymap = {
+            -- Let codetyper handle keymaps for unified experience
+            accept = false,
+            next = false,
+            prev = false,
+            dismiss = false,
+          },
         },
         filetypes = {
           markdown = true,

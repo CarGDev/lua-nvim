@@ -47,20 +47,20 @@ return {
         ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
         ["<C-e>"] = cmp.mapping.abort(), -- close completion window
         ["<CR>"] = cmp.mapping.confirm({ select = false }),
-        -- Tab is reserved for Copilot inline suggestions ONLY
-        -- Use <C-j>/<C-k> to navigate cmp menu, <CR> to confirm
+        -- Tab: codetyper suggestion > cmp selection > snippet jump > fallback
         ["<Tab>"] = cmp.mapping(function(fallback)
-          -- Check for Copilot inline suggestion first (highest priority)
-          local copilot_ok, copilot_suggestion = pcall(require, "copilot.suggestion")
-          if copilot_ok and copilot_suggestion.is_visible() then
-            copilot_suggestion.accept()
+          -- Check for codetyper ghost text suggestion first
+          local ok, suggestion = pcall(require, "codetyper.suggestion")
+          if ok and suggestion.is_visible() then
+            suggestion.accept()
             return
           end
-          -- If no Copilot suggestion, handle snippet jumping
-          if luasnip.expand_or_jumpable() then
+          -- Then cmp menu
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
           else
-            -- Default Tab behavior (insert tab character)
             fallback()
           end
         end, { "i", "s" }),
@@ -74,9 +74,9 @@ return {
         end, { "i", "s" }),
       }),
       -- sources for autocompletion
+      -- Note: codetyper uses ghost text suggestions (Copilot-style), not cmp source
       sources = cmp.config.sources({
-        { name = "nvim_lsp", priority = 1000},
-        { name = "copilot", priority = 900 }, -- GitHub Copilot suggestions
+        { name = "nvim_lsp", priority = 1000 },
         { name = "luasnip", priority = 750 }, -- snippets
         { name = "buffer", priority = 500, keyword_length = 3 }, -- text within current buffer
         { name = "path", priority = 250 }, -- file system paths
