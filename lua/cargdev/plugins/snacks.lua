@@ -24,7 +24,7 @@ return {
           { section = "startup" },
         },
       },
-      explorer = { enabled = true },
+      explorer = { enabled = false },
       image = {
         enabled = true,
         terminal = nil,
@@ -51,5 +51,6 @@ return {
       vim.ui.input = require("snacks.input").input
       vim.ui.select = require("snacks.picker").select
     end)
+
   end,
 }

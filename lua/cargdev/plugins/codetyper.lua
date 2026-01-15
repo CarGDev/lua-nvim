@@ -50,7 +50,7 @@ return {
     require("codetyper").setup({
       llm = {
         -- Available providers: "ollama", "claude", "openai", "gemini", "copilot"
-        provider = "ollama",
+        provider = "copilot", -- Using GitHub Copilot
 
         -- Ollama (local LLM)
         ollama = {
@@ -84,10 +84,10 @@ return {
         --   -- model = "gemini-2.0-flash-exp",
         -- },
 
-        -- GitHub Copilot (requires copilot.vim or copilot.lua plugin)
-        -- copilot = {
-        --   enabled = true,
-        -- },
+        -- GitHub Copilot (uses OAuth from copilot.vim/copilot.lua)
+        copilot = {
+          model = "gpt-4o", -- or "gpt-4", "gpt-3.5-turbo"
+        },
       },
       window = {
         width = 0.25, -- 1/4 of window
@@ -104,7 +104,7 @@ return {
       agent_mode = false,
       scheduler = {
         enabled = true,
-        ollama_scout = true, -- Use ollama first, escalate if low confidence
+        ollama_scout = false, -- Disabled since using Copilot directly
         escalation_threshold = 0.7,
         max_concurrent = 2,
         completion_delay_ms = 100, -- Delay before checking completion visibility
