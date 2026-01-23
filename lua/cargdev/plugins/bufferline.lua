@@ -74,15 +74,15 @@ return {
         },
         tab_selected = {
           fg = "#c0caf5",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
         },
         tab_separator = {
           fg = "#16161e",
           bg = "#16161e",
         },
         tab_separator_selected = {
-          fg = "#1a1b26",
-          bg = "#1a1b26",
+          fg = "#1f2a48",
+          bg = "#1f2a48",
         },
         buffer_visible = {
           fg = "#565f89",
@@ -90,7 +90,7 @@ return {
         },
         buffer_selected = {
           fg = "#c0caf5",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           bold = true,
           italic = false,
         },
@@ -104,7 +104,7 @@ return {
         },
         numbers_selected = {
           fg = "#c0caf5",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           bold = true,
           italic = false,
         },
@@ -118,7 +118,7 @@ return {
         },
         diagnostic_selected = {
           fg = "#c0caf5",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           bold = true,
           italic = false,
         },
@@ -132,7 +132,7 @@ return {
         },
         hint_selected = {
           fg = "#1abc9c",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           bold = true,
           italic = false,
         },
@@ -146,7 +146,7 @@ return {
         },
         hint_diagnostic_selected = {
           fg = "#1abc9c",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           bold = true,
           italic = false,
         },
@@ -160,7 +160,7 @@ return {
         },
         info_selected = {
           fg = "#0db9d7",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           bold = true,
           italic = false,
         },
@@ -174,7 +174,7 @@ return {
         },
         info_diagnostic_selected = {
           fg = "#0db9d7",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           bold = true,
           italic = false,
         },
@@ -188,7 +188,7 @@ return {
         },
         warning_selected = {
           fg = "#e0af68",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           bold = true,
           italic = false,
         },
@@ -202,7 +202,7 @@ return {
         },
         warning_diagnostic_selected = {
           fg = "#e0af68",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           bold = true,
           italic = false,
         },
@@ -216,7 +216,7 @@ return {
         },
         error_selected = {
           fg = "#f7768e",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           bold = true,
           italic = false,
         },
@@ -230,7 +230,7 @@ return {
         },
         error_diagnostic_selected = {
           fg = "#f7768e",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           bold = true,
           italic = false,
         },
@@ -244,11 +244,11 @@ return {
         },
         modified_selected = {
           fg = "#e0af68",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
         },
         duplicate_selected = {
           fg = "#c0caf5",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           italic = true,
         },
         duplicate_visible = {
@@ -263,7 +263,7 @@ return {
         },
         separator_selected = {
           fg = "#16161e",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
         },
         separator_visible = {
           fg = "#16161e",
@@ -275,7 +275,7 @@ return {
         },
         indicator_selected = {
           fg = "#7aa2f7",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
         },
         indicator_visible = {
           fg = "#16161e",
@@ -283,7 +283,7 @@ return {
         },
         pick_selected = {
           fg = "#f7768e",
-          bg = "#1a1b26",
+          bg = "#1f2a48",
           bold = true,
           italic = false,
         },

@@ -47,15 +47,8 @@ return {
         ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
         ["<C-e>"] = cmp.mapping.abort(), -- close completion window
         ["<CR>"] = cmp.mapping.confirm({ select = false }),
-        -- Tab: codetyper suggestion > cmp selection > snippet jump > fallback
+        -- Tab: cmp selection > snippet jump > fallback
         ["<Tab>"] = cmp.mapping(function(fallback)
-          -- Check for codetyper ghost text suggestion first
-          local ok, suggestion = pcall(require, "codetyper.suggestion")
-          if ok and suggestion.is_visible() then
-            suggestion.accept()
-            return
-          end
-          -- Then cmp menu
           if cmp.visible() then
             cmp.select_next_item()
           elseif luasnip.expand_or_jumpable() then
@@ -74,7 +67,6 @@ return {
         end, { "i", "s" }),
       }),
       -- sources for autocompletion
-      -- Note: codetyper uses ghost text suggestions (Copilot-style), not cmp source
       sources = cmp.config.sources({
         { name = "nvim_lsp", priority = 1000 },
         { name = "luasnip", priority = 750 }, -- snippets

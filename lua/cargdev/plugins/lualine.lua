@@ -74,6 +74,18 @@ return {
       return " " .. table.concat(names, ", ")
     end
 
+    -- Word counter (excluding symbols)
+    local function word_count()
+      local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+      local text = table.concat(lines, " ")
+      local clean_text = text:gsub("[^%w%s]", "")
+      local count = 0
+      for _ in clean_text:gmatch("%w+") do
+        count = count + 1
+      end
+      return "words: " .. count
+    end
+
     lualine.setup({
       options = {
         theme = theme,
@@ -125,6 +137,7 @@ return {
           { lsp_client, color = { fg = colors.cyan, bg = colors.bg_dark } },
         },
         lualine_y = {
+          { word_count, color = { fg = colors.cyan } },
           { "encoding", icon = "" },
           { "fileformat", icons_enabled = true },
           { "filetype", colored = true, icon_only = false },

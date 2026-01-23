@@ -9,8 +9,13 @@ return {
         sqlfluff = {
           command = "sqlfluff",
           args = { "format", "--dialect", "postgres", "-" },
-          stdin = true, -- Ensure it uses stdin
+          stdin = true,
           cwd = require("conform.util").root_file({ ".git" }),
+        },
+        xmllint = {
+          command = "xmllint",
+          args = { "--format", "-" },
+          stdin = true,
         },
       },
       formatters_by_ft = {
@@ -27,10 +32,12 @@ return {
         markdown = { "prettier" },
         graphql = { "prettier" },
         liquid = { "prettier" },
+        xml = { "xmllint" },
+        tex = { "latexindent" },
         lua = { "stylua" },
         python = { "isort", "black" },
-        dbml = { "dbml" }, -- DBML formatting
         sql = { "sqlfluff" }, -- SQL formatting
+        java = { "google-java-format" },
       },
       format_on_save = function(bufnr)
         -- Disable autoformat for certain filetypes

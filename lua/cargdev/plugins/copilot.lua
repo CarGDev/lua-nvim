@@ -18,11 +18,10 @@ return {
           auto_trigger = true,
           debounce = 75,
           keymap = {
-            -- Let codetyper handle keymaps for unified experience
-            accept = false,
-            next = false,
-            prev = false,
-            dismiss = false,
+            accept = "<C-l>",
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-]>",
           },
         },
         filetypes = {

@@ -63,7 +63,13 @@ return {
       python = { "pylint" },
       dbml = { "dbml" },
       sql = { "sqlfluff" },
+      html = { "htmlhint" },
+      java = { "checkstyle" },
+      tex = { "chktex" },
     }
+
+    -- Set full path for chktex (TeX binaries may not be in Neovim's PATH)
+    lint.linters.chktex.cmd = "/Library/TeX/texbin/chktex"
 
     local lint_augroup = api.nvim_create_augroup("lint", { clear = true })
 

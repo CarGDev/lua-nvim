@@ -151,6 +151,14 @@ g.clipboard = {
 -- Lua specific settings
 opt.runtimepath:append(vim.fn.stdpath("config") .. "/lua")
 
+-- Custom file type associations
+vim.filetype.add({
+  extension = {
+    strata = "html",
+    sts = "typescript",
+  },
+})
+
 -- Better diff
 opt.diffopt:append("algorithm:patience")
 opt.diffopt:append("indent-heuristic")
@@ -296,3 +304,30 @@ vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1a1b26" })
 -- Modern cursor line (subtle highlight)
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#292e42" })
 vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#7aa2f7", bold = true })
+
+-- =============================================================================
+-- WORD COUNTER (EXCLUDING SYMBOLS)
+-- =============================================================================
+
+-- Function to count words excluding symbols
+local function count_words_no_symbols()
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local text = table.concat(lines, " ")
+  -- Remove all non-alphanumeric characters except spaces
+  local clean_text = text:gsub("[^%w%s]", "")
+  -- Count words (sequences of alphanumeric characters)
+  local count = 0
+  for _ in clean_text:gmatch("%w+") do
+    count = count + 1
+  end
+  return count
+end
+
+-- Make it globally accessible for statusline
+_G.word_count_no_symbols = count_words_no_symbols
+
+-- Create user command to display word count
+vim.api.nvim_create_user_command("WordCount", function()
+  local count = count_words_no_symbols()
+  vim.notify("Words (excluding symbols): " .. count, vim.log.levels.INFO)
+end, { desc = "Count words excluding symbols" })
