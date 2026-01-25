@@ -257,16 +257,40 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- When closing the last buffer, return to dashboard instead of quitting
 vim.api.nvim_create_autocmd("BufDelete", {
-  callback = function()
+  callback = function(args)
+    -- Count listed buffers excluding the one being deleted
     local bufs = vim.tbl_filter(function(b)
       return vim.api.nvim_buf_is_valid(b)
         and vim.bo[b].buflisted
         and vim.api.nvim_buf_get_name(b) ~= ""
+        and b ~= args.buf -- Exclude the buffer being deleted
     end, vim.api.nvim_list_bufs())
 
-    -- If this is the last listed buffer, open dashboard
-    if #bufs <= 1 then
+    -- If no listed buffers remain, open dashboard
+    if #bufs == 0 then
       vim.schedule(function()
+        -- Skip if any special windows are open
+        local dominated_filetypes = {
+          "NvimTree", "neo-tree", "Trouble", "qf", "help",
+          "dap-repl", "dapui_watches", "dapui_stacks",
+          "dapui_breakpoints", "dapui_scopes", "dapui_console",
+          "snacks_dashboard", "lazygit", "terminal",
+        }
+
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          local ft = vim.bo[buf].filetype
+          if vim.tbl_contains(dominated_filetypes, ft) then
+            return
+          end
+        end
+
+        -- Don't open if dashboard is already visible
+        local current_ft = vim.bo.filetype
+        if current_ft == "snacks_dashboard" then
+          return
+        end
+
         local ok, snacks = pcall(require, "snacks")
         if ok and snacks.dashboard then
           snacks.dashboard()
