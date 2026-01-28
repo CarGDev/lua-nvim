@@ -31,9 +31,15 @@ return {
     "CoderProcess",
     "CoderTree",
     "CoderTreeView",
+    -- Ask commands
     "CoderAsk",
     "CoderAskToggle",
     "CoderAskClear",
+    -- Agent commands
+    "CoderAgent",
+    "CoderAgentToggle",
+    "CoderAgentStop",
+    "CoderMode",
   },
   keys = {
     -- Coder view commands
@@ -49,6 +55,11 @@ return {
     { "<leader>ca", "<cmd>Coder ask<cr>", desc = "Coder: Open Ask panel" },
     { "<leader>cA", "<cmd>Coder ask-toggle<cr>", desc = "Coder: Toggle Ask panel" },
     { "<leader>cx", "<cmd>Coder ask-clear<cr>", desc = "Coder: Clear Ask history" },
+    -- Agent panel commands
+    { "<leader>cg", "<cmd>Coder agent<cr>", desc = "Coder: Open Agent panel" },
+    { "<leader>cG", "<cmd>Coder agent-toggle<cr>", desc = "Coder: Toggle Agent panel" },
+    { "<leader>cS", "<cmd>Coder agent-stop<cr>", desc = "Coder: Stop Agent" },
+    { "<leader>cd", "<cmd>CoderDiffReview<cr>", desc = "Coder: Open Diff Review" },
     -- Transform commands (inline /@ @/ replacement)
     { "<leader>ctt", mode = "n", desc = "Coder: Transform tag at cursor" },
     { "<leader>ctt", mode = "v", desc = "Coder: Transform selected tags" },
@@ -84,8 +95,7 @@ return {
         file_pattern = "*.coder.*",
       },
       auto_gitignore = true,
-      auto_open_ask = false, -- Always open Ask panel on startup
-      agent_mode = false,
+      auto_open_ask = false, -- Don't auto-open Ask panel on startup
       scheduler = {
         enabled = true,
         ollama_scout = false, -- Disabled since using Copilot directly
