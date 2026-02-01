@@ -1,14 +1,20 @@
 return {
   "kristijanhusak/vim-dadbod-ui",
   dependencies = {
-    { "tpope/vim-dadbod", lazy = true },
-    { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+    { "tpope/vim-dadbod" }, -- Remove lazy = true, needs to load with UI
+    { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" } },
   },
   cmd = {
     "DBUI",
     "DBUIToggle",
     "DBUIAddConnection",
     "DBUIFindBuffer",
+    "DBUIRenameBuffer",
+    "DBUILastQueryInfo",
+  },
+  keys = {
+    { "<leader>Du", "<cmd>DBUIToggle<CR>", desc = "Toggle Database UI" },
+    { "<leader>Da", "<cmd>DBUIAddConnection<CR>", desc = "Add DB Connection" },
   },
   init = function()
     -- Database UI configuration
@@ -142,12 +148,25 @@ return {
     vim.api.nvim_create_autocmd("FileType", {
       pattern = { "sql", "mysql", "plsql" },
       callback = function()
-        require("cmp").setup.buffer({
-          sources = {
-            { name = "vim-dadbod-completion" },
-            { name = "buffer" },
-          },
-        })
+        local ok, cmp = pcall(require, "cmp")
+        if ok then
+          cmp.setup.buffer({
+            sources = {
+              { name = "vim-dadbod-completion" },
+              { name = "buffer" },
+            },
+          })
+        end
+      end,
+    })
+
+    -- Also setup completion for dbui buffers
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "dbui" },
+      callback = function()
+        -- Enable line numbers in dbui
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
       end,
     })
   end,

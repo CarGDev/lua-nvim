@@ -35,34 +35,14 @@ return {
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
     -- Enhanced error handling for LSP diagnostics
+    -- NOTE: tiny-inline-diagnostic handles the display, so we disable virtual_text and float here
     vim.diagnostic.config({
-      signs = {
-        severity = {
-          min = vim.diagnostic.severity.WARN,
-        },
-        icons = {
-          Error = " ",
-          Warn = " ",
-          Hint = "󰠠 ",
-          Info = " ",
-        },
-      },
-      -- Performance optimizations
-      update_in_insert = false, -- Don't update diagnostics in insert mode
-      virtual_text = false, -- Disable virtual text for better performance
-      underline = true, -- Keep underline for errors
-      severity_sort = true, -- Sort diagnostics by severity
-      -- Error handling
-      float = {
-        border = "rounded",
-        source = "always",
-        format = function(diagnostic)
-          if diagnostic.source == "LSP" then
-            return string.format("%s [%s]", diagnostic.message, diagnostic.source)
-          end
-          return diagnostic.message
-        end,
-      },
+      signs = true,
+      update_in_insert = false,
+      virtual_text = false,
+      underline = true,
+      severity_sort = true,
+      float = false, -- Disabled - use <leader>sl for manual diagnostic float
     })
 
     -- Only attach to sensible buffers

@@ -9,18 +9,38 @@ local status, jdtls = pcall(require, "jdtls")
 if not status then
   return
 end
-local extendedClientCapabilities = jdtls.extendedClientCapabilities
 
-local bundles = {
-  vim.fn.glob(
-    home .. "/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
-    true
-  ),
-}
-vim.list_extend(
-  bundles,
-  vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/packages/java-test/extension/server/*.jar", true), "\n")
+-- Ensure DAP is loaded before setting up Java debugging
+local dap_ok, _ = pcall(require, "dap")
+if not dap_ok then
+  vim.notify("nvim-dap not loaded yet. Debug features may not work.", vim.log.levels.WARN)
+end
+
+local extendedClientCapabilities = jdtls.extendedClientCapabilities
+extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
+
+-- Build bundles for java-debug-adapter and java-test
+local bundles = {}
+
+-- Add java-debug-adapter
+local debug_jar = vim.fn.glob(
+  home .. "/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
+  true
 )
+if debug_jar ~= "" then
+  table.insert(bundles, debug_jar)
+end
+
+-- Add java-test jars
+local test_jars = vim.split(
+  vim.fn.glob(home .. "/.local/share/nvim/mason/packages/java-test/extension/server/*.jar", true),
+  "\n"
+)
+for _, jar in ipairs(test_jars) do
+  if jar ~= "" then
+    table.insert(bundles, jar)
+  end
+end
 
 local config = {
   cmd = {
@@ -79,8 +99,25 @@ local config = {
 local function jdtls_on_attach(client, bufnr)
   -- Setup DAP after language server is ready
   if #bundles > 0 then
+    -- Ensure DAP is loaded
+    local dap_loaded, dap = pcall(require, "dap")
+    if not dap_loaded then
+      vim.notify("DAP not available for Java debugging", vim.log.levels.WARN)
+      return
+    end
+
+    -- Setup DAP with hot code replace
     require("jdtls").setup_dap({ hotcodereplace = "auto" })
-    require("jdtls.dap").setup_dap_main_class_configs()
+
+    -- Defer main class config discovery to allow JDTLS to fully initialize
+    vim.defer_fn(function()
+      local ok, err = pcall(function()
+        require("jdtls.dap").setup_dap_main_class_configs()
+      end)
+      if not ok then
+        vim.notify("Failed to setup Java DAP main configs: " .. tostring(err), vim.log.levels.DEBUG)
+      end
+    end, 2000)
   end
 end
 

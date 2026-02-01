@@ -6,7 +6,7 @@ local keymap = vim.keymap
 -- =============================================================================
 
 keymap.set("n", "<leader>u", function()
-  vim.cmd("normal! ggVG")
+  vim.cmd("normal! ggVG$")
 end, { desc = "Select the whole file" })
 keymap.set("n", "<leader>4", function()
   -- Copy current line and paste below

@@ -43,7 +43,7 @@ return {
         -- Binaries
         "exe", "dll", "so", "dylib", "bin", "app", "dmg", "deb", "rpm",
         -- Other problematic files
-        "lock", "log", "tmp", "temp", "cache", "bak", "backup"
+        "lock", "log", "tmp", "temp", "cache", "bca", "backup"
       }
       
       for _, ext in ipairs(skip_extensions) do

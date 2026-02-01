@@ -80,7 +80,7 @@ local function setup_lua_runtime()
     vim.fn.stdpath("data") .. "/lazy/*/lua/?.lua",
     vim.fn.stdpath("data") .. "/lazy/*/lua/?/init.lua",
   }
-  
+
   package.path = table.concat(lua_paths, ";") .. ";" .. package.path
 end
 
@@ -88,7 +88,7 @@ end
 local function setup_lua_ls()
   local lspconfig = require("lspconfig")
   local capabilities = require("cmp_nvim_lsp").default_capabilities()
-  
+
   lspconfig.lua_ls.setup({
     capabilities = capabilities,
     settings = {
@@ -128,16 +128,16 @@ end
 -- Initialize compatibility layer
 function M.setup()
   setup_lua_runtime()
-  
+
   -- Setup Lua LSP when available
   local ok, _ = pcall(require, "lspconfig")
   if ok then
     setup_lua_ls()
   end
-  
+
   -- Disable deprecated API warnings
   vim.deprecate = function() end
-  
+
   -- Set up proper error handling for deprecated functions
   local original_error = error
   error = function(msg, level)
@@ -148,4 +148,5 @@ function M.setup()
   end
 end
 
-return M 
+return M
+

@@ -1,7 +1,8 @@
 return {
   "mfussenegger/nvim-dap",
-  event = "VeryLazy", -- Changed from immediate loading to lazy loading
+  event = { "VeryLazy", "FileType java" }, -- Load on VeryLazy or when opening Java files
   cmd = { "Dap", "DapUI", "DapContinue", "DapToggleBreakpoint" }, -- Load on command
+  ft = { "java" }, -- Also load for Java filetype
   dependencies = {
     { "nvim-neotest/nvim-nio", lazy = false },
     "rcarriga/nvim-dap-ui",

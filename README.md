@@ -1,248 +1,339 @@
-# Neovim Configuration
+# CargDev Neovim Configuration
 
-A modern, fast, and well-organized Neovim configuration built with Lua.
+A modern, feature-rich Neovim configuration with 80+ plugins, optimized for full-stack development.
+
+```
+  ██████╗ █████╗ ██████╗  ██████╗ ██████╗ ███████╗██╗   ██╗
+  █╔════╝██╔══██╗██╔══██╗██╔════╝ ██╔══██╗██╔════╝██║   ██║
+  █║     ███████║██████╔╝██║  ███╗██║  ██║█████╗  ██║   ██║
+  █║     ██╔══██║██╔══██╗██║   ██║██║  ██║██╔══╝  ╚██╗ ██╔╝
+  ██████╗██║  ██║██║  ██║╚██████╔╝██████╔╝███████╗ ╚████╔╝
+  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝  ╚═══╝
+
+  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
+  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
+  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
+  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
+  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
+```
+
+## Features
+
+- **VS Code-like UI** with file explorer on right, breadcrumbs, symbol outline
+- **80+ plugins** carefully configured and optimized
+- **Full LSP support** for TypeScript, Python, Java, Go, Lua, and more
+- **Debugging** with DAP for Node.js/NestJS, Python, Java
+- **Git integration** with LazyGit, Neogit, Diffview, Octo (GitHub PRs)
+- **AI assistance** with GitHub Copilot
+- **HTTP client** for API testing
+- **Task runner** for build/run tasks
+- **Multi-cursor** editing like VS Code
 
 ## Requirements
 
-- **Neovim**: 0.9+ (0.10+ recommended)
-- **Git**: For plugin management
-- **Node.js**: For LSP servers and tooling
-- **ripgrep** (`rg`): For fast file searching
-- **Python 3**: With `pynvim` package for Python support
+```bash
+# Required
+brew install neovim ripgrep fd node python3
 
-### Optional Dependencies
-
-- **Pandoc**: For HTML to Markdown conversion
-- **Prettier**: For code formatting
-- **Stylua**: For Lua formatting
+# Optional but recommended
+brew install lazygit jq
+pip3 install pynvim
+npm install -g neovim
+```
 
 ## Installation
 
 ```bash
-# Backup existing config (if any)
+# Backup existing config
 mv ~/.config/nvim ~/.config/nvim.bak
 
 # Clone this configuration
 git clone <your-repo-url> ~/.config/nvim
 
-# Start Neovim (plugins will auto-install)
+# Start Neovim (plugins auto-install)
 nvim
 ```
-
-## Structure
-
-```
-~/.config/nvim/
-├── init.lua                 # Entry point
-├── lua/cargdev/
-│   ├── core/
-│   │   ├── init.lua         # Core initialization
-│   │   ├── options.lua      # Neovim options
-│   │   ├── keymaps/         # Keymap modules
-│   │   │   ├── init.lua     # Keymap loader
-│   │   │   ├── general.lua  # General keymaps
-│   │   │   ├── personal.lua # Personal workflow keymaps
-│   │   │   ├── plugins.lua  # Plugin-specific keymaps
-│   │   │   ├── window.lua   # Window management
-│   │   │   ├── lsp.lua      # LSP keymaps
-│   │   │   ├── copilot.lua  # Copilot keymaps
-│   │   │   └── ...
-│   │   └── function/        # Custom functions
-│   ├── plugins/             # Plugin configurations
-│   │   ├── lsp/             # LSP-related plugins
-│   │   └── ...
-│   └── lazy.lua             # Lazy.nvim setup
-└── ftplugin/                # Filetype-specific settings
-```
-
-## Key Features
-
-- **Colorscheme**: [cargdev-cyberpunk](https://github.com/CarGDev/cargdev-cyberpunk) - Vibrant cyberpunk theme with neon colors and full TypeScript/LSP support
-- **Plugin Manager**: [lazy.nvim](https://github.com/folke/lazy.nvim) with auto-update notifications
-- **LSP**: Full LSP support with Mason for easy server management
-- **Completion**: nvim-cmp with multiple sources
-- **File Navigation**: Snacks.nvim (modern) + Telescope (git features)
-- **File Explorer**: nvim-tree
-- **Git Integration**: LazyGit, Gitsigns
-- **AI Assistants**: GitHub Copilot + [Avante.nvim](https://github.com/yetone/avante.nvim) (local LLM support)
-- **Debugging**: DAP with UI (Java, Node.js/NestJS, Python)
-- **Formatting**: Conform.nvim with auto-format on save
-- **Diagnostics**: Trouble.nvim for organized diagnostics view
 
 ## Documentation
 
 | Document | Description |
 |----------|-------------|
-| [CHANGELOG.md](./CHANGELOG.md) | Version history and changes |
-| [keyboard_mappings.md](./keyboard_mappings.md) | QMK keyboard configuration |
-| [NATIVE_AUTO_WRAPPER_GUIDE.md](./NATIVE_AUTO_WRAPPER_GUIDE.md) | Text wrapping configuration |
-| [TELESCOPE_TO_SNACKS_MIGRATION.md](./TELESCOPE_TO_SNACKS_MIGRATION.md) | Migration notes |
+| [KEYMAPS.md](./KEYMAPS.md) | **Complete keybinding reference** |
+| [PLUGINS.md](./PLUGINS.md) | All plugins and their purposes |
+| [CHANGELOG.md](./CHANGELOG.md) | Version history |
 
-## Quick Reference - Essential Keymaps
+## Quick Start
 
 ### Leader Key: `<Space>`
 
-### File Operations
-| Keymap | Description |
-|--------|-------------|
-| `<leader>w` | Save file |
-| `<leader>q` | Close file |
-| `<leader>xa` | Save and close all |
-| `<leader>bd` | Close buffer (safe) |
-| `<leader>bD` | Force close buffer |
+### Essential Keymaps
+
+| Key | Action |
+|-----|--------|
+| `<leader>ff` | Find files |
+| `<leader>fs` | Search text in project |
+| `<leader>e` | Toggle file explorer (right side) |
+| `<leader>gg` | Open LazyGit |
+| `s` | Flash jump (type chars to jump) |
+| `<leader>ha` | Harpoon add file |
+| `<leader>1-5` | Jump to harpooned file |
+| `K` | Hover documentation |
+| `gd` | Go to definition |
+| `<leader>ca` | Code actions |
+| `<leader>rn` | Rename symbol (live preview) |
+| `<C-d>` | Multi-cursor (select word) |
 
 ### Navigation
-| Keymap | Description |
-|--------|-------------|
-| `<leader>ff` | Find files |
-| `<leader>fs` | Live grep (search text) |
-| `<leader>fr` | Recent files |
-| `<leader>fb` | Find buffers |
-| `<leader>e` | Toggle file explorer |
 
-### Window Management
-| Keymap | Description |
-|--------|-------------|
-| `<leader>sv` | Split vertical |
-| `<leader>sh` | Split horizontal |
-| `<leader>se` | Equal splits |
-| `<leader>sx` | Close split |
-| `<C-h/j/k/l>` | Resize splits |
-
-### LSP
-| Keymap | Description |
-|--------|-------------|
-| `gd` | Go to definition |
-| `gr` | Show references |
-| `K` | Hover documentation |
-| `<leader>ca` | Code actions |
-| `<leader>rn` | Rename symbol |
-| `<leader>f` | Format buffer |
-| `<leader>mm` | Format (conform) |
+| Key | Action |
+|-----|--------|
+| `s` | Flash jump anywhere |
+| `S` | Flash treesitter select |
+| `<leader>nb` | Navbuddy (code structure popup) |
+| `<leader>cs` | Symbol outline sidebar |
+| `<leader>tu` | Undo tree |
 
 ### Git
-| Keymap | Description |
-|--------|-------------|
+
+| Key | Action |
+|-----|--------|
 | `<leader>gg` | LazyGit |
-| `<leader>gs` | Git status |
-| `<leader>gb` | Git blame |
+| `<leader>gn` | Neogit (magit-like) |
+| `<leader>gd` | Diffview |
+| `<leader>gh` | File history |
+| `<leader>gB` | Toggle git blame |
+| `<leader>oi` | GitHub issues (Octo) |
+| `<leader>op` | GitHub PRs (Octo) |
 
-### Diagnostics & Quickfix
-| Keymap | Description |
-|--------|-------------|
-| `<leader>xx` | Toggle Trouble |
-| `<leader>xd` | Document diagnostics |
-| `<leader>qn/qp` | Next/prev quickfix |
-| `<leader>qo/qq` | Open/close quickfix |
+### Editing
 
-### Session
-| Keymap | Description |
-|--------|-------------|
-| `<leader>sS` | Save session |
-| `<leader>sR` | Restore session |
+| Key | Action |
+|-----|--------|
+| `<C-d>` | Add cursor on word (VS Code style) |
+| `<C-a>` / `<C-x>` | Smart increment/decrement |
+| `<leader>tj` | Toggle split/join code blocks |
+| `<leader>sr` | Search & replace (project-wide) |
+| `<leader>sR` | Structural search/replace |
+| `<leader>yh` | Yank history |
+| `<C-p>` / `<C-n>` | Cycle yank history |
 
-### Copilot
-| Keymap | Description |
-|--------|-------------|
-| `<Tab>` | Accept suggestion |
-| `<leader>zc` | Open Copilot Chat |
-| `<leader>ze` | Explain code (visual) |
-| `<leader>zf` | Fix code (visual) |
+### LSP
 
-### Debugging (DAP)
-| Keymap | Description |
-|--------|-------------|
-| `<leader>dcr` | Start/Continue Debugging |
-| `<leader>db` | Toggle Breakpoint |
-| `<leader>dB` | Conditional Breakpoint |
-| `<leader>do` | Step Over |
-| `<leader>di` | Step Into |
-| `<leader>dot` | Step Out |
+| Key | Action |
+|-----|--------|
+| `K` | Hover documentation |
+| `gd` | Peek definition |
+| `gD` | Go to definition |
+| `gr` | Rename |
+| `gh` | LSP finder (refs, implementations) |
+| `<leader>ca` | Code actions |
+| `<leader>rn` | Rename (live preview) |
+| `<leader>sl` | Line diagnostics |
+| `[d` / `]d` | Prev/next diagnostic |
+
+### Debugging
+
+| Key | Action |
+|-----|--------|
+| `<leader>db` | Toggle breakpoint |
+| `<leader>dcc` | Start/continue debugging |
+| `<leader>di` | Step into |
+| `<leader>do` | Step over |
+| `<leader>dO` | Step out |
 | `<leader>du` | Toggle DAP UI |
-| `<leader>dq` | Stop Debugging |
-| `<leader>dr` | Open REPL |
-| `<leader>dl` | Run Last Debug |
-| `<leader>dcf` | DAP Configurations |
-| `<leader>dcb` | List Breakpoints |
-| `<leader>dco` | DAP Commands |
 
-### Java Debugging
-| Keymap | Description |
-|--------|-------------|
-| `<leader>jd` | Debug Class (DAP) |
-| `<leader>jt` | Test Class |
-| `<leader>jn` | Test Nearest Method |
-| `<leader>jr` | Run Java File |
-| `<leader>jm` | Run Maven Project |
-| `<leader>jg` | Run Gradle Project |
+### Tasks & HTTP
+
+| Key | Action |
+|-----|--------|
+| `<leader>or` | Run task (Overseer) |
+| `<leader>ot` | Toggle task list |
+| `<leader>kr` | Run HTTP request (in .http file) |
+| `<leader>ka` | Run all HTTP requests |
+
+### Productivity
+
+| Key | Action |
+|-----|--------|
+| `<leader>zz` | Zen mode |
+| `<leader>zt` | Twilight (dim inactive code) |
+| `<leader>qs` | Restore session |
+| `<leader>ht` | Toggle Hardtime (learn vim motions) |
+| `<leader>vp` | Toggle Precognition (motion hints) |
+| `<leader>sk` | Toggle Screenkey (show keypresses) |
+
+### Python
+
+| Key | Action |
+|-----|--------|
+| `<leader>vs` | Select Python venv |
+| Debug configs | Django, FastAPI, Flask, Launch file |
+
+### JavaScript/TypeScript
+
+| Key | Action |
+|-----|--------|
+| `<leader>ns` | Show package versions (package.json) |
+| `<leader>nu` | Update package |
+| Debug configs | NestJS, ts-node, Attach |
+
+### Rust
+
+| Key | Action |
+|-----|--------|
+| `<leader>cv` | Show crate versions (Cargo.toml) |
+| `<leader>cu` | Update crate |
+
+## Plugin Categories
+
+### Navigation & Search
+- **telescope** - Fuzzy finder
+- **flash.nvim** - Jump anywhere with minimal keystrokes
+- **harpoon** - Quick file marks
+- **portal.nvim** - Jump through jumplist with preview
+- **nvim-navbuddy** - Code structure navigation
+
+### Git
+- **lazygit** - Terminal UI for git
+- **neogit** - Magit-like git interface
+- **diffview** - Side-by-side diffs
+- **gitsigns** - Git decorations
+- **git-blame** - Inline blame
+- **octo.nvim** - GitHub issues/PRs
+
+### LSP & Coding
+- **nvim-lspconfig** + **mason** - LSP setup
+- **lspsaga** - Pretty LSP UI
+- **nvim-cmp** - Completion
+- **treesitter** - Syntax highlighting
+- **outline.nvim** - Symbol sidebar
+- **inc-rename** - Live rename preview
+- **lightbulb** - Code action indicator
+
+### Editing
+- **vim-visual-multi** - Multi-cursor
+- **yanky.nvim** - Yank ring
+- **treesj** - Split/join blocks
+- **dial.nvim** - Smart increment
+- **nvim-surround** - Surround text
+- **nvim-autopairs** - Auto brackets
+- **Comment.nvim** - Commenting
+
+### UI
+- **snacks.nvim** - Dashboard, notifier, picker
+- **noice.nvim** - UI for messages, cmdline
+- **lualine** - Statusline
+- **bufferline** - Buffer tabs
+- **dropbar** - Breadcrumbs
+- **satellite** - Scrollbar with markers
+- **which-key** - Keybinding hints
+- **trouble** - Diagnostics list
+
+### Debugging
+- **nvim-dap** - Debug Adapter Protocol
+- **nvim-dap-ui** - Debug UI
+- **nvim-dap-python** - Python debugging
+- **nvim-jdtls** - Java debugging
+
+### Productivity
+- **overseer** - Task runner
+- **kulala** - HTTP client
+- **zen-mode** - Distraction-free
+- **persistence** - Session management
+- **grug-far** - Search & replace
+- **ssr.nvim** - Structural search/replace
+
+### Eye Candy
+- **cargdev-cyberpunk** - Custom theme
+- **mini.animate** - Smooth animations
+- **reactive** - Mode-based colors
+- **hlchunk** - Scope highlighting
+- **nvim-highlight-colors** - Color preview
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `:Lazy` | Open plugin manager |
-| `:Mason` | Open LSP server manager |
-| `:checkhealth` | Run health checks |
-| `:CheckConfig` | Run config validation |
-| `:FormatToggle` | Toggle auto-format on save |
+| `:Lazy` | Plugin manager |
+| `:Mason` | LSP server manager |
+| `:Navbuddy` | Code navigation |
+| `:Outline` | Symbol outline |
+| `:Neogit` | Git interface |
+| `:DiffviewOpen` | Open diff view |
+| `:GrugFar` | Search & replace |
+| `:Octo` | GitHub integration |
+| `:OverseerRun` | Run tasks |
+| `:ZenMode` | Distraction-free mode |
+| `:Hardtime toggle` | Toggle vim training |
+| `:Screenkey` | Show keypresses |
 
 ## Debugging Setup
 
-This configuration includes full debugging support for multiple languages using DAP (Debug Adapter Protocol).
+### Python
+```bash
+:Mason  # Install debugpy
+```
+Configs: Launch File, Django, FastAPI, Flask, Attach Remote
 
-### Supported Languages
+### Node.js / TypeScript / NestJS
+```bash
+:Mason  # Install js-debug-adapter
+```
+Configs: Launch NestJS, Launch File, ts-node, Attach
 
-| Language | Debug Adapter | Configuration |
-|----------|---------------|---------------|
-| **Java** | java-debug-adapter | Auto-configured via nvim-jdtls |
-| **Node.js/NestJS/TypeScript** | js-debug-adapter (pwa-node) | Launch & Attach configurations |
-| **Python** | debugpy | Django, FastAPI, Flask, and general Python |
+### Java
+```bash
+:Mason  # Install java-debug-adapter, java-test
+```
+Auto-configured via nvim-jdtls
 
-### Debug Configurations
+## HTTP Client (Kulala)
 
-#### Node.js/NestJS/TypeScript
-- **Launch NestJS** - Runs `dist/main.js` with source maps
-- **Launch Current File** - Debug the current TypeScript/JavaScript file
-- **Launch with ts-node** - Debug TypeScript directly without compilation
-- **Attach to NestJS** - Attach to running process on port 9229
-- **Attach to Process** - Pick from running Node.js processes
+Create a `.http` file:
 
-#### Python
-- **Launch File** - Debug current Python file
-- **Launch with Arguments** - Debug with custom arguments
-- **Attach Remote** - Attach to debugpy server (port 5678)
-- **Django** - Debug Django with `manage.py runserver`
-- **FastAPI** - Debug FastAPI with uvicorn
-- **Flask** - Debug Flask application
+```http
+### Get users
+GET https://api.example.com/users
+Authorization: Bearer {{token}}
 
-#### Java
-- Auto-discovers main classes and test methods
-- Hot code replacement enabled
-- Use `<leader>jd` to debug the current class
+### Create user
+POST https://api.example.com/users
+Content-Type: application/json
 
-### Installation
+{
+  "name": "John"
+}
+```
 
-Debug adapters are automatically installed via Mason. Run `:Mason` to verify:
-- `debugpy` - Python debugger
-- `js-debug-adapter` - Node.js/TypeScript debugger
-- `java-debug-adapter` - Java debugger
-- `java-test` - Java test runner
+Use `<leader>kr` to run request under cursor.
+
+## Tips & Tricks
+
+### Learn Vim Motions
+Enable Hardtime (`<leader>ht`) and Precognition (`<leader>vp`) to improve your vim skills.
+
+### Quick File Switching
+Use Harpoon to mark important files (`<leader>ha`), then jump instantly with `<leader>1-5`.
+
+### Multi-Cursor Editing
+Like VS Code: `<C-d>` to select word, keep pressing for more occurrences.
+
+### Smart Increment
+`<C-a>` on `true` → `false`, on `GET` → `POST`, on dates, colors, etc.
+
+### Split/Join Code
+`<leader>tj` on arrays, objects, function arguments to toggle between single/multi-line.
 
 ## Troubleshooting
 
-### Check Configuration Health
 ```vim
-:checkhealth
-:CheckConfig
+:checkhealth          " Run health checks
+:Lazy sync            " Sync plugins
+:Mason                " Check LSP servers
+:LspInfo              " Check LSP status
 ```
-
-### Common Issues
-
-1. **Plugins not loading**: Run `:Lazy sync`
-2. **LSP not working**: Run `:Mason` and install required servers
-3. **Formatting not working**: Ensure formatters are installed (prettier, stylua, etc.)
-4. **Slow startup**: Check `:Lazy profile` for slow plugins
 
 ## License
 
-MIT License - Feel free to use and modify as needed.
+MIT License
