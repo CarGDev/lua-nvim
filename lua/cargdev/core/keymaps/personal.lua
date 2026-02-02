@@ -34,6 +34,27 @@ keymap.set("n", "<C-e>", "10<C-e>", { noremap = true, silent = true })
 keymap.set("n", "<C-y>", "10<C-y>", { noremap = true, silent = true })
 
 -- Buffer management with safe close (confirms if unsaved changes)
+-- Closes only the current buffer, switches to another buffer instead of quitting
+local function close_buffer(force)
+  local current_buf = vim.api.nvim_get_current_buf()
+  local buffers = vim.tbl_filter(function(buf)
+    return vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted
+  end, vim.api.nvim_list_bufs())
+
+  if #buffers > 1 then
+    -- Switch to previous buffer before closing
+    vim.cmd("bprevious")
+    if force then
+      vim.cmd("bdelete! " .. current_buf)
+    else
+      vim.cmd("bdelete " .. current_buf)
+    end
+  else
+    -- Last buffer: quit Neovim
+    vim.cmd(force and "q!" or "q")
+  end
+end
+
 keymap.set("n", "<leader>bd", function()
   if vim.bo.modified then
     vim.ui.select({ "Save & Close", "Discard & Close", "Cancel" }, {
@@ -41,18 +62,20 @@ keymap.set("n", "<leader>bd", function()
     }, function(choice)
       if choice == "Save & Close" then
         vim.cmd("w")
-        vim.cmd("bd")
+        close_buffer(false)
       elseif choice == "Discard & Close" then
-        vim.cmd("bd!")
+        close_buffer(true)
       end
     end)
   else
-    vim.cmd("bd")
+    close_buffer(false)
   end
 end, { desc = "Buffer: Close (safe)" })
 
 -- Force close buffer without confirmation
-keymap.set("n", "<leader>bD", ":bd!<CR>", { desc = "Buffer: Force close" })
+keymap.set("n", "<leader>bD", function()
+  close_buffer(true)
+end, { desc = "Buffer: Force close" })
 
 -- Set buftabline mappings
 keymap.set("n", "<C-p>", ":bnext<CR>", { noremap = true, silent = true })
