@@ -33,11 +33,6 @@
 |-----|--------|
 | `<leader>ha` | Add current file to harpoon |
 | `<leader>hh` | Open harpoon menu |
-| `<leader>1` | Jump to harpoon file 1 |
-| `<leader>2` | Jump to harpoon file 2 |
-| `<leader>3` | Jump to harpoon file 3 |
-| `<leader>4` | Jump to harpoon file 4 |
-| `<leader>5` | Jump to harpoon file 5 |
 | `<leader>hp` | Previous harpoon file |
 | `<leader>hn` | Next harpoon file |
 
@@ -123,8 +118,6 @@ Inside nvim-tree:
 | `y` | n, x | Yank |
 | `p` | n, x | Put after |
 | `P` | n, x | Put before |
-| `<C-p>` | n | Previous yank in ring |
-| `<C-n>` | n | Next yank in ring |
 | `<leader>yh` | n | Open yank history |
 | `]p` | n | Put indented after |
 | `[p` | n | Put indented before |

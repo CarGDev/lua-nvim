@@ -17,6 +17,7 @@ opt.swapfile = false -- Don't create swap files
 opt.completeopt = "menuone,noselect" -- Better completion
 opt.undofile = true -- Persistent undo
 opt.undodir = vim.fn.stdpath("data") .. "/undodir"
+opt.autoread = true -- Auto-reload files when changed externally
 
 -- Suppress startup messages to avoid "Press ENTER" prompts
 opt.shortmess = "aoOtTIcFWS" -- Suppress various messages
@@ -213,6 +214,28 @@ local disabled_built_ins = {
 for _, plugin in pairs(disabled_built_ins) do
   g["loaded_" .. plugin] = 1
 end
+
+-- =============================================================================
+-- AUTO-RELOAD FILES WHEN CHANGED EXTERNALLY
+-- =============================================================================
+
+-- Trigger checktime when switching buffers or focusing Neovim
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  pattern = "*",
+  callback = function()
+    if vim.fn.mode() ~= "c" then
+      vim.cmd("checktime")
+    end
+  end,
+})
+
+-- Notify when file is reloaded
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+  pattern = "*",
+  callback = function()
+    vim.notify("File changed on disk. Buffer reloaded.", vim.log.levels.WARN)
+  end,
+})
 
 -- =============================================================================
 -- OPTIMIZED AUTO WRAPPER AUTOCMDS
