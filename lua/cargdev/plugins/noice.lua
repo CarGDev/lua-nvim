@@ -8,7 +8,7 @@ return {
   config = function()
     require("notify").setup({
       background_colour = "#1a1b26",
-      fps = 60,
+      fps = 30,
       icons = {
         DEBUG = "",
         ERROR = "",
@@ -19,7 +19,7 @@ return {
       level = 2,
       minimum_width = 50,
       render = "wrapped-compact",
-      stages = "fade_in_slide_out",
+      stages = "static", -- Faster than fade_in_slide_out
       timeout = 3000,
       top_down = true,
     })

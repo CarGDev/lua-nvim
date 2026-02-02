@@ -6,6 +6,7 @@ return {
         winblend = 0,
         border = "rounded",
         align = "bottom",
+        avoid = { "NvimTree" },
       },
       view = {
         stack_upwards = true,
