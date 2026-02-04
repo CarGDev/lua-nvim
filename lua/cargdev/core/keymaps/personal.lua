@@ -17,7 +17,8 @@ end, { desc = "Copy the entire line and paste just below" })
 -- file management
 keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save the current file" })
 keymap.set("n", "<leader>xa", ":xa<CR>", { desc = "Save and close all the files" })
-keymap.set("n", "<leader>q", ":q<CR>", { desc = "Close all the files" })
+keymap.set("n", "<leader>q", ":q<CR>", { desc = "Quit" })
+keymap.set("n", "<leader>Q", ":q!<CR>", { desc = "Force quit" })
 keymap.set("n", "<leader>so", ":source %<CR>", { desc = "Reload nvim" })
 keymap.set("n", "<leader>no", ":noh <CR>", { desc = "Reset search a word" })
 

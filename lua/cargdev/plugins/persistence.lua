@@ -8,8 +8,8 @@ return {
     save_empty = false,
   },
   keys = {
-    { "<leader>qs", function() require("persistence").load() end, desc = "Restore session" },
-    { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore last session" },
-    { "<leader>qd", function() require("persistence").stop() end, desc = "Don't save session" },
+    { "<leader>ss", function() require("persistence").load() end, desc = "Restore session" },
+    { "<leader>sl", function() require("persistence").load({ last = true }) end, desc = "Restore last session" },
+    { "<leader>sd", function() require("persistence").stop() end, desc = "Don't save session" },
   },
 }
