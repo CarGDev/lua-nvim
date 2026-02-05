@@ -25,7 +25,7 @@ M.menu_items = {
   { key = "f", icon = "", desc = "Go to File",         action = ":Telescope find_files" },
   { key = "r", icon = "", desc = "Recent Files",       action = ":Telescope oldfiles" },
   { key = "g", icon = "", desc = "Find in Files",      action = ":Telescope live_grep" },
-  { key = "s", icon = "", desc = "Restore Session",    action = ":lua require('persistence').load()" },
+  { key = "s", icon = "", desc = "Recent Files",        action = ":Telescope oldfiles" },
   { key = "e", icon = "", desc = "Explorer",           action = ":NvimTreeToggle" },
   { key = "l", icon = "󰒲", desc = "Lazy",               action = ":Lazy" },
   { key = "m", icon = "", desc = "Mason",              action = ":Mason" },

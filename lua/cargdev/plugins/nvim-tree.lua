@@ -12,9 +12,39 @@ return {
     -- Disable netrw before it loads (must be in init, not config)
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
+    -- Create empty FileExplorer group to suppress E216 error from nvim-tree
+    vim.api.nvim_create_augroup("FileExplorer", { clear = true })
   end,
   config = function()
     local nvimtree = require("nvim-tree")
+    local api = require("nvim-tree.api")
+
+    -- Handle file deletion: switch to another buffer or create new one
+    local Event = api.events.Event
+    api.events.subscribe(Event.FileRemoved, function(data)
+      vim.schedule(function()
+        -- Close nvim-tree first
+        pcall(function() api.tree.close() end)
+
+        -- Get all listed buffers with real files (excluding deleted one)
+        local deleted_path = data.fname
+        local bufs = vim.tbl_filter(function(b)
+          if not vim.api.nvim_buf_is_valid(b) then return false end
+          if not vim.bo[b].buflisted then return false end
+          local name = vim.api.nvim_buf_get_name(b)
+          if name == "" or name == deleted_path then return false end
+          if vim.bo[b].buftype ~= "" then return false end
+          return true
+        end, vim.api.nvim_list_bufs())
+
+        -- Switch to another buffer or create new one
+        if #bufs > 0 then
+          pcall(function() vim.cmd("buffer " .. bufs[1]) end)
+        else
+          pcall(function() vim.cmd("enew") end)
+        end
+      end)
+    end)
 
     nvimtree.setup({
       view = {
