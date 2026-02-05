@@ -1,3 +1,11 @@
+-- ============================================================================
+-- nvim-treesitter-context: Shows context at top of screen
+-- ============================================================================
+-- Displays the current code context (function, class, etc.) at the top of the
+-- buffer as you scroll. Uses treesitter to determine scope boundaries.
+-- Helps maintain awareness of where you are in deeply nested code structures.
+-- ============================================================================
+
 return {
   "nvim-treesitter/nvim-treesitter-context",
   dependencies = { "nvim-treesitter/nvim-treesitter" },

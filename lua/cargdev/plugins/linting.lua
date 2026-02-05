@@ -1,3 +1,11 @@
+-- ============================================================================
+-- NVIM-LINT: Asynchronous linting for Neovim
+-- ============================================================================
+-- Provides linting via external tools with support for custom linter configs.
+-- Automatically triggers linting on BufEnter, BufWritePost, and InsertLeave.
+-- Includes custom DBML linter and keymaps for manual lint triggers.
+-- ============================================================================
+
 return {
   "mfussenegger/nvim-lint",
   event = { "BufReadPre", "BufNewFile" },

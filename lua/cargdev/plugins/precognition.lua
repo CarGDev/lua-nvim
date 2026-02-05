@@ -1,3 +1,13 @@
+-- ============================================================================
+-- PRECOGNITION: Vim motion hints and navigation helper
+-- ============================================================================
+-- Displays virtual text hints showing where motion keys (w, b, e, W, B, E,
+-- ^, $, 0, %) will take you, helping learn and improve Vim navigation.
+-- Also shows gutter hints for vertical motions (gg, G, {, }).
+-- Starts hidden by default, can be toggled on demand.
+-- Keymaps: <leader>vp (toggle), <leader>vP (peek)
+-- ============================================================================
+
 return {
   "tris203/precognition.nvim",
   event = "VeryLazy",

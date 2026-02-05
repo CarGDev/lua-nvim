@@ -1,3 +1,14 @@
+-- ============================================================================
+-- GIT-BLAME.NVIM: Inline git blame annotations
+-- ============================================================================
+-- Shows git blame information as virtual text at the end of each line.
+-- Displays author, date, and commit summary. Starts disabled by default.
+-- Keymaps:
+--   <leader>gB  - Toggle git blame display
+--   <leader>gbc - Copy commit SHA
+--   <leader>gbo - Open commit URL in browser
+--   <leader>gbf - Open file URL in browser
+-- ============================================================================
 return {
   "f-person/git-blame.nvim",
   event = "VeryLazy",

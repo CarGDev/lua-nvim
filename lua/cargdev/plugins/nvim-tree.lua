@@ -1,20 +1,20 @@
+-- ============================================================================
+-- NVIM-TREE: File explorer sidebar
+-- ============================================================================
+-- Tree-style file browser on the left side. Keymaps: a=create, d=delete,
+-- r=rename, o=open, s=vsplit, i=hsplit, u=parent dir. Has BufWipeout autocmd
+-- to track deleted file buffers. Disables netrw (vim's built-in explorer).
+-- ============================================================================
 return {
   "nvim-tree/nvim-tree.lua",
   dependencies = "ryanoasis/vim-devicons",
-  config = function()
-    local nvimtree = require("nvim-tree")
-
-    -- recommended settings from nvim-tree documentation
+  init = function()
+    -- Disable netrw before it loads (must be in init, not config)
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
-
-    -- 🧼 Remove invalid autocommand (FileExplorer) if it exists
-    vim.api.nvim_create_autocmd("VimEnter", {
-      once = true,
-      callback = function()
-        pcall(vim.cmd, "autocmd! FileExplorer *")
-      end,
-    })
+  end,
+  config = function()
+    local nvimtree = require("nvim-tree")
 
     nvimtree.setup({
       view = {

@@ -1,3 +1,11 @@
+-- ============================================================================
+-- TREESJ: Split/join code blocks
+-- ============================================================================
+-- Treesitter-powered splitting and joining of code blocks (arrays, objects, args).
+-- Toggle between single-line and multi-line formats with smart formatting.
+-- Keymaps: <leader>tj toggle, <leader>ts split, <leader>tJ join.
+-- ============================================================================
+
 return {
   "Wansmer/treesj",
   dependencies = { "nvim-treesitter/nvim-treesitter" },

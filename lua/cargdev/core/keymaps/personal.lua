@@ -35,24 +35,29 @@ keymap.set("n", "<C-e>", "10<C-e>", { noremap = true, silent = true })
 keymap.set("n", "<C-y>", "10<C-y>", { noremap = true, silent = true })
 
 -- Buffer management with safe close (confirms if unsaved changes)
--- Closes only the current buffer, switches to another buffer instead of quitting
+-- Uses snacks.bufdelete for smart buffer deletion, shows dashboard on last buffer
 local function close_buffer(force)
-  local current_buf = vim.api.nvim_get_current_buf()
-  local buffers = vim.tbl_filter(function(buf)
-    return vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted
-  end, vim.api.nvim_list_bufs())
-
-  if #buffers > 1 then
-    -- Switch to previous buffer before closing
-    vim.cmd("bprevious")
-    if force then
-      vim.cmd("bdelete! " .. current_buf)
-    else
-      vim.cmd("bdelete " .. current_buf)
-    end
+  local ok, snacks = pcall(require, "snacks")
+  if ok and snacks.bufdelete then
+    -- snacks.bufdelete handles everything smartly
+    snacks.bufdelete({ force = force })
   else
-    -- Last buffer: quit Neovim
-    vim.cmd(force and "q!" or "q")
+    -- Fallback to manual handling
+    local current_buf = vim.api.nvim_get_current_buf()
+    local buffers = vim.tbl_filter(function(buf)
+      return vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted
+    end, vim.api.nvim_list_bufs())
+
+    if #buffers > 1 then
+      vim.cmd("bprevious")
+      vim.cmd((force and "bdelete! " or "bdelete ") .. current_buf)
+    else
+      -- Last buffer: show dashboard instead of quitting
+      vim.cmd("enew")
+      if ok and snacks.dashboard then
+        snacks.dashboard()
+      end
+    end
   end
 end
 

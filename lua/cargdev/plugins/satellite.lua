@@ -1,3 +1,11 @@
+-- ============================================================================
+-- SATELLITE.NVIM: Decorated scrollbar with diagnostic indicators
+-- ============================================================================
+-- Displays a scrollbar on the right side showing buffer position and markers.
+-- Shows diagnostics, git hunks, search results, and marks in the scrollbar.
+-- Excluded from special buffers like NvimTree, help, terminal, and lazy.
+-- ============================================================================
+
 return {
   "lewis6991/satellite.nvim",
   event = { "BufReadPost", "BufNewFile" },

@@ -1,3 +1,13 @@
+-- ============================================================================
+-- RENDER-MARKDOWN: Beautiful markdown rendering in Neovim
+-- ============================================================================
+-- Renders markdown files with enhanced visual elements including styled
+-- headings, code blocks with syntax highlighting, bullet points, checkboxes,
+-- tables, blockquotes, callouts (NOTE/TIP/WARNING), and links with icons.
+-- Uses conceal and virtual text for a clean, readable document appearance.
+-- Supports markdown, norg, rmd, and org filetypes.
+-- ============================================================================
+
 return {
   "MeanderingProgrammer/render-markdown.nvim",
   dependencies = {

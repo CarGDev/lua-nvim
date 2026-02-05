@@ -1,3 +1,11 @@
+-- ============================================================================
+-- YANKY: Better yank/paste
+-- ============================================================================
+-- Enhanced yank and paste with a persistent yank ring stored in SQLite.
+-- Cycle through yank history with <C-p>/<C-n> after pasting. Preserves yanks
+-- across sessions and syncs with numbered registers for seamless workflow.
+-- ============================================================================
+
 return {
   "gbprod/yanky.nvim",
   dependencies = { "kkharji/sqlite.lua" },

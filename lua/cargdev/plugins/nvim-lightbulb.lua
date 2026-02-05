@@ -1,3 +1,11 @@
+-- ============================================================================
+-- nvim-lightbulb: Code actions indicator
+-- ============================================================================
+-- Shows a lightbulb icon in the sign column when LSP code actions are available.
+-- Triggers on LspAttach event to check for available actions at cursor position.
+-- Provides visual feedback without needing to manually query for code actions.
+-- ============================================================================
+
 return {
   "kosayoda/nvim-lightbulb",
   event = "LspAttach",

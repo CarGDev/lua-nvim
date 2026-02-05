@@ -1,3 +1,11 @@
+-- ============================================================================
+-- nvim-treesitter-textobjects: Text objects based on treesitter
+-- ============================================================================
+-- Provides syntax-aware text objects for selecting, moving, and swapping code.
+-- Enables motions like "select around function" (vaf) or "select inner class" (vic).
+-- Also supports jumping between functions, classes, and other treesitter nodes.
+-- ============================================================================
+
 return {
   {
     "nvim-treesitter/nvim-treesitter-textobjects",

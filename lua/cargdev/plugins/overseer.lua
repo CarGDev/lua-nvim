@@ -1,3 +1,15 @@
+-- ============================================================================
+-- OVERSEER: Task runner and job management plugin
+-- ============================================================================
+-- A task runner and job manager for Neovim with support for various build
+-- systems, shell commands, and custom task templates. Features include:
+-- - Terminal-based task execution with DAP integration
+-- - Task list panel with preview and quick actions
+-- - Custom templates for npm, Python, Flutter, and Go projects
+-- Keymaps: <leader>or (run), <leader>ot (toggle), <leader>oa (action),
+--          <leader>oq (quick action), <leader>ob (build), <leader>oc (cmd)
+-- ============================================================================
+
 return {
   "stevearc/overseer.nvim",
   cmd = {

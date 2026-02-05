@@ -1,3 +1,20 @@
+-- ============================================================================
+-- LEETCODE: Solve LeetCode problems inside Neovim
+-- ============================================================================
+-- A plugin that integrates LeetCode directly into Neovim, allowing you to
+-- browse, solve, and submit coding challenges without leaving your editor.
+-- Uses Telescope for problem picking and supports multiple languages.
+--
+-- Features:
+--   - Browse and search LeetCode problems via Telescope
+--   - Run and test solutions with custom test cases
+--   - Submit solutions directly to LeetCode
+--   - Problem description panel with stats
+--   - Console output for test results
+--
+-- Commands: :Leet (main entry point for all LeetCode operations)
+-- Default language: python3
+-- ============================================================================
 return {
   "kawre/leetcode.nvim",
   dependencies = {

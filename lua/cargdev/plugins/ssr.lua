@@ -1,3 +1,17 @@
+-- ============================================================================
+-- SSR.NVIM: Structural Search and Replace
+-- ============================================================================
+-- Provides syntax-aware search and replace using Treesitter for intelligent
+-- code transformations. Unlike regex-based search/replace, it understands
+-- code structure and can match patterns based on AST nodes.
+--
+-- Keymaps:
+--   <leader>sR - Open structural search/replace (normal and visual mode)
+--   q          - Close the SSR window
+--   n/N        - Navigate to next/previous match
+--   <cr>       - Confirm replacement
+--   <leader><cr> - Replace all matches
+-- ============================================================================
 return {
   "cshuaimin/ssr.nvim",
   keys = {

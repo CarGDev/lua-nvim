@@ -1,3 +1,10 @@
+-- ============================================================================
+-- COLORSCHEME: Custom cyberpunk theme
+-- ============================================================================
+-- Custom color scheme with cyberpunk aesthetics. Supports transparency,
+-- italic comments, bold keywords/functions/types. Loaded first (priority 1000)
+-- to ensure consistent UI colors before other plugins load.
+-- ============================================================================
 return {
   "CarGDev/cargdev-cyberpunk",
   name = "cargdev-cyberpunk",

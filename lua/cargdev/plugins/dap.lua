@@ -1,3 +1,11 @@
+-- ============================================================================
+-- DAP: Debug Adapter Protocol - Interactive debugging
+-- ============================================================================
+-- Full debugging support with breakpoints, stepping, variable inspection.
+-- Includes nvim-dap-ui for visual debugging panels, nvim-dap-python for Python,
+-- persistent-breakpoints to save breakpoints across sessions, and neotest
+-- for running tests. Auto-opens/closes UI on debug events.
+-- ============================================================================
 return {
   "mfussenegger/nvim-dap",
   event = { "VeryLazy", "FileType java" }, -- Load on VeryLazy or when opening Java files

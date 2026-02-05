@@ -1,3 +1,16 @@
+-- ============================================================================
+-- SUBSTITUTE.NVIM: Enhanced Text Substitution
+-- ============================================================================
+-- Provides improved substitution operators for Neovim. Allows quick text
+-- replacement using motions, making it easy to substitute text with the
+-- contents of a register.
+--
+-- Keymaps:
+--   <leader>ss - Substitute entire line
+--   <leader>s  - Substitute with motion
+--   S          - Substitute to end of line
+--   s (visual) - Substitute in visual selection
+-- ============================================================================
 return {
   "gbprod/substitute.nvim",
   event = { "BufReadPre", "BufNewFile" },

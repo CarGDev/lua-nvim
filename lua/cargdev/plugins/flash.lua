@@ -1,3 +1,10 @@
+-- ============================================================================
+-- FLASH: Fast navigation with search labels
+-- ============================================================================
+-- Enhanced motion plugin - type a few chars, then jump directly to any match
+-- using labeled hints. Works across windows. Press 's' to start flash jump,
+-- or use with 'f', 't' motions. Much faster than repeated w/b movements.
+-- ============================================================================
 return {
   "folke/flash.nvim",
   event = "VeryLazy",

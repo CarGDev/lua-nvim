@@ -1,3 +1,10 @@
+-- ============================================================================
+-- AUTOPAIRS: Automatic bracket/quote pairing
+-- ============================================================================
+-- Automatically inserts closing brackets, quotes, and other pairs when you
+-- type the opening character. Integrates with nvim-cmp for smart completion.
+-- Example: typing '(' automatically adds ')' and places cursor between them.
+-- ============================================================================
 return {
   "windwp/nvim-autopairs",
   event = { "InsertEnter" },

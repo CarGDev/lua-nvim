@@ -1,3 +1,16 @@
+-- ============================================================================
+-- REST.NVIM: HTTP client for making API requests from Neovim
+-- ============================================================================
+-- A fork of rest.nvim that allows executing HTTP requests directly from
+-- .http files within Neovim. Features include request highlighting,
+-- automatic response formatting, cookie management, and environment
+-- variable support. Requires LuaRocks dependencies: mimetypes and xml2lua.
+--
+-- Key UI keybinds:
+--   H - Navigate to previous response
+--   L - Navigate to next response
+-- ============================================================================
+
 return {
   "CarGDev/rest.nvim",
   build = function()

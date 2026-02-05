@@ -1,3 +1,11 @@
+-- ============================================================================
+-- NEOGIT: Magit-style Git client for Neovim
+-- ============================================================================
+-- Full-featured Git interface inspired by Emacs Magit with interactive staging.
+-- Integrates with diffview.nvim for side-by-side diffs and telescope for fuzzy finding.
+-- Keymaps: <leader>gn (open), gnc (commit), gnp (push), gnl (pull), gnb (branch).
+-- ============================================================================
+
 return {
   "NeogitOrg/neogit",
   dependencies = {

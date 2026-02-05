@@ -1,3 +1,14 @@
+-- ============================================================================
+-- LSPCONFIG: Language Server Protocol configuration
+-- ============================================================================
+-- Configures LSP servers for code intelligence (completions, diagnostics,
+-- go-to-definition, etc.). Sets up servers for CSS, Emmet, ESLint, Go, GraphQL,
+-- HTML, Lua, Prisma, Python, Svelte, Tailwind, and TypeScript (using vtsls).
+-- Includes smart buffer attachment logic to skip binary files and large files.
+-- Integrates with cmp-nvim-lsp for completion capabilities. Disables virtual
+-- text diagnostics in favor of tiny-inline-diagnostic plugin. Has LspAttach
+-- autocmd for client-specific configuration.
+-- ============================================================================
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPost", "BufNewFile" },
@@ -5,10 +16,6 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
     { "folke/neodev.nvim", opts = {} },
-    {
-      "pmizio/typescript-tools.nvim",
-      dependencies = { "nvim-lua/plenary.nvim" },
-    },
   },
   config = function()
     local lspconfig = require("lspconfig")
@@ -28,7 +35,11 @@ return {
         "pyright",
         "svelte",
         "tailwindcss",
-        "ts_ls",
+        "vtsls", -- VSCode TypeScript Language Server - better moduleResolution support
+      },
+      -- Prevent ts_ls from auto-starting (we use vtsls instead)
+      handlers = {
+        ["ts_ls"] = function() end, -- noop handler to skip ts_ls
       },
     })
 
@@ -173,29 +184,51 @@ return {
           },
         },
       },
-      ts_ls = {
+      -- vtsls - VSCode TypeScript Language Server (better support for moduleResolution: "bundler")
+      vtsls = {
         filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
         settings = {
           typescript = {
             inlayHints = {
-              includeInlayParameterNameHints = "all",
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
+              parameterNames = { enabled = "all" },
+              parameterTypes = { enabled = true },
+              variableTypes = { enabled = true },
+              propertyDeclarationTypes = { enabled = true },
+              functionLikeReturnTypes = { enabled = true },
+              enumMemberValues = { enabled = true },
+            },
+            suggest = {
+              completeFunctionCalls = true,
+            },
+            updateImportsOnFileMove = { enabled = "always" },
+            -- Use project's TypeScript for proper bundler resolution support
+            tsserver = {
+              experimental = {
+                enableProjectDiagnostics = true,
+              },
             },
           },
           javascript = {
             inlayHints = {
-              includeInlayParameterNameHints = "all",
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
+              parameterNames = { enabled = "all" },
+              parameterTypes = { enabled = true },
+              variableTypes = { enabled = true },
+              propertyDeclarationTypes = { enabled = true },
+              functionLikeReturnTypes = { enabled = true },
+              enumMemberValues = { enabled = true },
+            },
+            suggest = {
+              completeFunctionCalls = true,
+            },
+            updateImportsOnFileMove = { enabled = "always" },
+          },
+          vtsls = {
+            enableMoveToFileCodeAction = true,
+            autoUseWorkspaceTsdk = true,
+            experimental = {
+              completion = {
+                enableServerSideFuzzyMatch = true,
+              },
             },
           },
         },
@@ -244,25 +277,6 @@ return {
       capabilities = capabilities,
     })
 
-    -- Set up TypeScript Tools with performance optimizations and error handling
-    require("typescript-tools").setup({
-      settings = {
-        tsserver_plugins = {},
-        tsserver_file_preferences = {},
-        tsserver_format_options = {},
-        -- Performance optimizations
-        tsserver_max_tsc_memory = 4096, -- Limit memory usage
-        tsserver_experimental_enableProjectDiagnostics = false, -- Disable project diagnostics for better performance
-      },
-      -- Add error handling for TypeScript Tools
-      on_attach = function(client, bufnr)
-        if not should_attach_lsp(bufnr) then
-          client.stop()
-          return
-        end
-      end,
-    })
-    
     -- Global LSP error handling
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
       vim.lsp.handlers.hover,

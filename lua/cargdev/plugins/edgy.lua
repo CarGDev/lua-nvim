@@ -1,3 +1,11 @@
+-- ============================================================================
+-- EDGY: Window layout management
+-- ============================================================================
+-- Manages fixed window layouts for sidebars and panels (file tree, outline, etc.).
+-- Keeps special windows docked at consistent positions and sizes.
+-- Configures NvimTree (left), Outline (right), and various bottom panels.
+-- ============================================================================
+
 return {
   "folke/edgy.nvim",
   event = "VeryLazy",

@@ -1,3 +1,20 @@
+-- ============================================================================
+-- VIM-DADBOD-UI: Database client UI for Neovim
+-- ============================================================================
+-- A modern database interface built on vim-dadbod. Supports PostgreSQL, MySQL,
+-- SQLite, and more with a file-tree style UI for exploring databases.
+-- Features: SQL completion, table helpers (Count, List, Schema, Indexes),
+-- saved queries, and quick Docker connection commands.
+-- Keymaps:
+--   <leader>Du - Toggle Database UI
+--   <leader>Da - Add DB Connection
+-- Commands:
+--   :DBPostgresDocker [port user password database] - Connect to Docker PostgreSQL
+--   :MongoDB [connection string] - Open MongoDB shell
+--   :Redis [options] - Open Redis CLI
+--   :MongoDBDocker [container] - MongoDB shell in Docker
+--   :RedisDocker [container] - Redis CLI in Docker
+-- ============================================================================
 return {
   "kristijanhusak/vim-dadbod-ui",
   dependencies = {

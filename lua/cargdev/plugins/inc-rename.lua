@@ -1,3 +1,11 @@
+-- ============================================================================
+-- INC-RENAME.NVIM: Incremental LSP renaming with live preview
+-- ============================================================================
+-- Provides an enhanced rename experience with real-time preview of changes
+-- across the buffer as you type the new name. Uses LSP rename under the hood.
+-- Keymaps:
+--   <leader>rn - Incremental rename (pre-fills with word under cursor)
+-- ============================================================================
 return {
   "smjonas/inc-rename.nvim",
   cmd = "IncRename",

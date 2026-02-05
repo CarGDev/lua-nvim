@@ -1,3 +1,19 @@
+-- ============================================================================
+-- CODETYPER.NVIM: AI-powered coding assistant plugin
+-- ============================================================================
+-- A local development plugin that provides AI-assisted coding capabilities
+-- using various LLM providers (Ollama, Claude, OpenAI, Gemini, Copilot).
+-- Features include: inline code transformation with /@ @/ tags, Ask panel
+-- for interactive queries, Agent panel for autonomous coding tasks,
+-- Tree-sitter integration for scope detection, and diff review.
+--
+-- Key keymaps:
+--   <leader>co - Open Coder view        <leader>ca - Open Ask panel
+--   <leader>ct - Toggle Coder view      <leader>cg - Open Agent panel
+--   <leader>cp - Process prompt         <leader>cd - Open Diff Review
+--   <leader>ctt - Transform tag at cursor (also works in visual mode)
+-- ============================================================================
+
 -- Get local config (loaded in core/init.lua)
 local local_cfg = vim.g.cargdev_local or {}
 

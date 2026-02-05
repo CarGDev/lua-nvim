@@ -1,3 +1,11 @@
+-- ============================================================================
+-- ZEN-MODE: Distraction-free writing and coding
+-- ============================================================================
+-- Centers the buffer in a clean, focused window with customizable dimensions.
+-- Integrates with twilight.nvim to dim inactive code outside the cursor scope.
+-- Toggle with <leader>zz; hides line numbers, signcolumn, and other distractions.
+-- ============================================================================
+
 return {
   "folke/zen-mode.nvim",
   dependencies = { "folke/twilight.nvim" },

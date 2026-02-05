@@ -1,3 +1,11 @@
+-- ============================================================================
+-- VIMTEX: LaTeX editing and compilation support
+-- ============================================================================
+-- Comprehensive LaTeX plugin providing syntax highlighting, compilation with
+-- latexmk, forward/inverse search, and PDF viewing. Configured to use Skim
+-- as the PDF viewer on macOS. Loads automatically for tex, latex, and bib files.
+-- ============================================================================
+
 return {
   "lervag/vimtex",
   ft = { "tex", "latex", "bib" },

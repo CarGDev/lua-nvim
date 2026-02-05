@@ -1,3 +1,10 @@
+-- ============================================================================
+-- TELESCOPE: Fuzzy finder for files, grep, buffers, and more
+-- ============================================================================
+-- The main search interface. Find files, grep text, search buffers, git
+-- commits, LSP symbols, etc. Uses fzf-native for fast matching. Integrates
+-- with many other plugins (todo-comments, dap, etc). <leader>ff for files.
+-- ============================================================================
 return {
   "nvim-telescope/telescope.nvim",
   branch = "0.1.x",

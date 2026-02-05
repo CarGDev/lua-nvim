@@ -1,3 +1,25 @@
+-- ============================================================================
+-- OCTO: GitHub integration for Neovim
+-- ============================================================================
+-- A plugin that brings GitHub functionality directly into Neovim, allowing
+-- you to manage issues, pull requests, and repositories without leaving
+-- your editor. Uses Telescope for browsing and searching.
+--
+-- Keymaps (leader: o):
+--   <leader>oi - List issues
+--   <leader>oI - Create new issue
+--   <leader>op - List pull requests
+--   <leader>oP - Create new pull request
+--   <leader>or - List repositories
+--   <leader>os - Search issues/PRs
+--   <leader>oa - Show available Octo actions
+--
+-- Picker mappings:
+--   <C-b> - Open in browser
+--   <C-y> - Copy URL to clipboard
+--   <C-o> - Checkout PR
+--   <C-r> - Merge PR
+-- ============================================================================
 return {
   "pwntester/octo.nvim",
   dependencies = {

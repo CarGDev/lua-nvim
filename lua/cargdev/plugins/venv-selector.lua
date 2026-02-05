@@ -1,3 +1,16 @@
+-- ============================================================================
+-- VENV-SELECTOR: Python virtual environment manager
+-- ============================================================================
+-- Provides a Telescope-based picker to select and activate Python virtual
+-- environments. Supports multiple venv types: anaconda, pipenv, poetry, hatch,
+-- pyenv, and standard virtualenvs. Automatically activates cached venvs.
+-- Keymaps:
+--   <leader>vs - Open venv selector picker
+--   <leader>vc - Select cached venv
+-- Autocmd:
+--   Auto-retrieves cached venv when opening Python files with pyproject.toml
+-- ============================================================================
+
 return {
   "linux-cultist/venv-selector.nvim",
   branch = "regexp",

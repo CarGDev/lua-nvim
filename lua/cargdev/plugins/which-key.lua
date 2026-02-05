@@ -1,3 +1,10 @@
+-- ============================================================================
+-- WHICH-KEY: Keybinding popup helper
+-- ============================================================================
+-- Shows available keybindings in a popup when you start a key sequence.
+-- Press <leader> and wait to see all leader mappings. Helps discover and
+-- remember keybindings. Also shows marks, registers, and spelling suggestions.
+-- ============================================================================
 return {
   "folke/which-key.nvim",
   event = "VeryLazy",

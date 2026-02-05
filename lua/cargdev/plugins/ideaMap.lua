@@ -1,3 +1,20 @@
+-- ============================================================================
+-- IDEADROP.NVIM: Quick note-taking and idea capture plugin
+-- ============================================================================
+-- A plugin for capturing and organizing ideas/notes within Neovim.
+-- Supports daily notes, named ideas, tree-based browsing, search
+-- functionality, and tag-based organization. Integrates with nvim-tree
+-- for visual browsing of the idea directory.
+--
+-- Key keymaps:
+--   <leader>id - Open today's idea in right buffer
+--   <leader>in - Open named idea in right buffer
+--   <leader>it - Open idea tree browser
+--   <leader>is - Search ideas
+--   <leader>ig - Browse tags
+--   <leader>if - Open today's idea in float
+-- ============================================================================
+
 -- Get local config (loaded in core/init.lua)
 local local_cfg = vim.g.cargdev_local or {}
 

@@ -1,3 +1,10 @@
+-- ============================================================================
+-- LAZYGIT: Terminal UI for git inside Neovim
+-- ============================================================================
+-- Opens lazygit (TUI git client) in a floating terminal. Full git workflow:
+-- staging, committing, branching, rebasing, etc. <leader>lg to open.
+-- Note: snacks.nvim also provides lazygit integration.
+-- ============================================================================
 return {
   "kdheepak/lazygit.nvim",
   cmd = {

@@ -1,3 +1,11 @@
+-- ============================================================================
+-- GRUG-FAR: Search and replace
+-- ============================================================================
+-- Powerful find and replace plugin with live preview and regex support.
+-- Provides project-wide search/replace with ripgrep backend.
+-- Keymaps: <leader>sr for search, <leader>sR for current word search.
+-- ============================================================================
+
 return {
   "MagicDuck/grug-far.nvim",
   cmd = "GrugFar",

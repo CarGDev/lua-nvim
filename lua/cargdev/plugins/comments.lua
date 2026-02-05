@@ -1,3 +1,10 @@
+-- ============================================================================
+-- COMMENTS: Smart code commenting with treesitter support
+-- ============================================================================
+-- Toggle comments with gc (line) or gb (block). Uses treesitter to detect
+-- the correct comment style for embedded languages (e.g., JS inside HTML,
+-- CSS inside JSX). Works with tsx, jsx, svelte, and other mixed-language files.
+-- ============================================================================
 return {
   "numToStr/Comment.nvim",
   event = { "BufReadPre", "BufNewFile" },

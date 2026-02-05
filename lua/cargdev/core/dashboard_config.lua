@@ -27,6 +27,8 @@ M.menu_items = {
   { key = "g", icon = "", desc = "Find in Files",      action = ":Telescope live_grep" },
   { key = "s", icon = "", desc = "Restore Session",    action = ":lua require('persistence').load()" },
   { key = "e", icon = "", desc = "Explorer",           action = ":NvimTreeToggle" },
+  { key = "l", icon = "󰒲", desc = "Lazy",               action = ":Lazy" },
+  { key = "m", icon = "", desc = "Mason",              action = ":Mason" },
   { key = "c", icon = "", desc = "Settings",           action = ":e $MYVIMRC" },
   { key = "q", icon = "", desc = "Quit",               action = ":qa" },
 }

@@ -1,3 +1,11 @@
+-- ============================================================================
+-- OUTLINE.NVIM: Code outline and symbol sidebar
+-- ============================================================================
+-- Displays a tree-view of symbols (functions, classes, variables) from LSP.
+-- Opens on the right side with auto-follow and preview on hover features.
+-- Toggle with <leader>cs to quickly navigate code structure.
+-- ============================================================================
+
 return {
   "hedyhli/outline.nvim",
   cmd = { "Outline", "OutlineOpen" },

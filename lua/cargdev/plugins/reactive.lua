@@ -1,3 +1,11 @@
+-- ============================================================================
+-- reactive: Reactive cursor mode colors
+-- ============================================================================
+-- Changes cursor and cursorline colors dynamically based on the current mode.
+-- Integrates with catppuccin-mocha theme for consistent color schemes.
+-- Provides visual feedback for Normal, Insert, Visual, and other Vim modes.
+-- ============================================================================
+
 return {
   "rasulomaroff/reactive.nvim",
   event = "VeryLazy",

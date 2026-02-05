@@ -1,3 +1,10 @@
+-- ============================================================================
+-- GITSIGNS: Git integration in the sign column
+-- ============================================================================
+-- Shows git diff markers (added/changed/deleted lines) in the gutter.
+-- Navigate hunks with ]h/[h, stage hunks, preview changes inline.
+-- Has VimLeavePre autocmd to save state before exit.
+-- ============================================================================
 return {
   "lewis6991/gitsigns.nvim",
   event = { "BufReadPre", "BufNewFile" },

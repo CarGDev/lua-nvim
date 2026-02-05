@@ -1,3 +1,20 @@
+-- ============================================================================
+-- MCPHUB: Model Context Protocol server manager for Neovim
+-- ============================================================================
+-- A plugin for managing MCP (Model Context Protocol) servers, enabling
+-- integration between Neovim and AI/LLM tools. Acts as a hub for connecting
+-- to various MCP-compatible servers and services.
+--
+-- Features:
+--   - Manages MCP server connections via mcp-hub binary
+--   - Configurable server timeout and auto-approval settings
+--   - Floating window UI for server management
+--   - Integration with chat plugins for AI-assisted coding
+--   - Support for custom native Lua servers
+--
+-- Config location: ~/.config/mcphub/servers.json
+-- Default port: 37373
+-- ============================================================================
 return {
   "ravitemer/mcphub.nvim",
   dependencies = {

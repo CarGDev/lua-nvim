@@ -1,3 +1,17 @@
+-- ============================================================================
+-- TRANSPARENT.NVIM: Background Transparency for Neovim
+-- ============================================================================
+-- Removes background colors from highlight groups to achieve a transparent
+-- background effect, allowing terminal background to show through. Supports
+-- many built-in and plugin highlight groups including NvimTree, Telescope,
+-- WhichKey, BufferLine, NeoTree, and Lualine.
+--
+-- Commands:
+--   :TransparentToggle - Toggle transparency on/off
+--
+-- Automatically clears background for BufferLine, NeoTree, and Lualine
+-- prefixed highlight groups on startup.
+-- ============================================================================
 return {
   "xiyaowong/transparent.nvim",
   event = "VeryLazy",

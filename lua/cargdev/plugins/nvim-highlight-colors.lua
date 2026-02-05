@@ -1,3 +1,11 @@
+-- ============================================================================
+-- nvim-highlight-colors: Color highlighting
+-- ============================================================================
+-- Highlights color codes in your files with their actual colors as background.
+-- Supports hex (#fff, #ffffff), RGB, HSL, CSS named colors, and CSS variables.
+-- Renders colors inline making it easy to visualize color values in stylesheets.
+-- ============================================================================
+
 return {
   "brenoprata10/nvim-highlight-colors",
   event = { "BufReadPre", "BufNewFile" },

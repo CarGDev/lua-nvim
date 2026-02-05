@@ -1,3 +1,10 @@
+-- ============================================================================
+-- DIFFVIEW: Git diff viewer and file history
+-- ============================================================================
+-- Visual git diff interface showing changes side-by-side. View file history,
+-- compare branches, review commits. <leader>gd opens diff, <leader>gh shows
+-- file history. Integrates with neogit for a complete git workflow.
+-- ============================================================================
 return {
   "sindrets/diffview.nvim",
   dependencies = { "nvim-lua/plenary.nvim" },

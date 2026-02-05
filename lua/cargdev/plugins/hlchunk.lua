@@ -1,3 +1,11 @@
+-- ============================================================================
+-- hlchunk: Chunk/scope highlighting
+-- ============================================================================
+-- Highlights code chunks and indentation levels with visual guides and lines.
+-- Uses treesitter to accurately identify scope boundaries for the current chunk.
+-- Draws connecting lines to show which code blocks belong together visually.
+-- ============================================================================
+
 return {
   "shellRaining/hlchunk.nvim",
   event = { "BufReadPre", "BufNewFile" },

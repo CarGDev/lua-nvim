@@ -1,3 +1,11 @@
+-- ============================================================================
+-- PORTAL: Jump list navigation
+-- ============================================================================
+-- Visual popup for navigating jump lists, change lists, and quickfix lists.
+-- Displays preview windows for each jump location before selection.
+-- Keymaps: <leader>pj/pk for jumplist, <leader>pc for changelist, <leader>pq for quickfix.
+-- ============================================================================
+
 return {
   "cbochs/portal.nvim",
   dependencies = { "cbochs/grapple.nvim" },

@@ -1,3 +1,11 @@
+-- ============================================================================
+-- TODO-COMMENTS: Highlight TODOs
+-- ============================================================================
+-- Highlights and searches TODO, FIXME, HACK, NOTE, and other comment keywords.
+-- Jump between todos with ]t and [t. Integrates with Telescope for project-wide
+-- todo searching. Each keyword type gets distinct highlighting and icons.
+-- ============================================================================
+
 return {
   "folke/todo-comments.nvim",
   event = { "BufReadPre", "BufNewFile" },

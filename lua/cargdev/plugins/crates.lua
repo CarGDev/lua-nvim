@@ -1,3 +1,18 @@
+-- ============================================================================
+-- CRATES.NVIM: Rust Cargo.toml dependency management
+-- ============================================================================
+-- Provides inline version information and management for Rust crate dependencies.
+-- Features: Auto-detect outdated/yanked crates, version popups, LSP integration,
+-- and cmp completion for crate names and versions.
+-- Keymaps:
+--   <leader>ct - Toggle crates display
+--   <leader>cr - Reload crates
+--   <leader>cv - Show versions popup
+--   <leader>cf - Show features popup
+--   <leader>cd - Show dependencies popup
+--   <leader>cu - Update crate
+--   <leader>cU - Upgrade crate
+-- ============================================================================
 return {
   "saecki/crates.nvim",
   event = { "BufRead Cargo.toml" },

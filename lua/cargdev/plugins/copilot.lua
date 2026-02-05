@@ -1,3 +1,10 @@
+-- ============================================================================
+-- COPILOT: GitHub AI code completion and chat
+-- ============================================================================
+-- AI-powered code suggestions that appear as ghost text while typing.
+-- Includes copilot-cmp for completion menu integration and codecompanion
+-- for AI chat/refactoring. Disabled for LaTeX files. Accept with <C-l>.
+-- ============================================================================
 return {
   {
     "zbirenbaum/copilot.lua",

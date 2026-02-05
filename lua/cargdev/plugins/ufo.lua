@@ -1,3 +1,10 @@
+-- ============================================================================
+-- UFO: Modern folding with LSP/treesitter support
+-- ============================================================================
+-- Better code folding using LSP or treesitter. Shows fold preview on hover.
+-- zR to open all folds, zM to close all. Includes statuscol for fold icons
+-- in the gutter. Has OptionSet autocmd to track folding option changes.
+-- ============================================================================
 return {
   "kevinhwang91/nvim-ufo",
   dependencies = {

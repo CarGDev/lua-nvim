@@ -1,3 +1,13 @@
+-- ============================================================================
+-- MASON: LSP/DAP/Linter/Formatter package manager
+-- ============================================================================
+-- Manages installation of LSP servers, debuggers, linters, and formatters.
+-- Uses mason-lspconfig for LSP server management and mason-tool-installer
+-- for additional tools. Ensures commonly used language servers are installed:
+-- CSS, Emmet, ESLint, Go, GraphQL, HTML, Java, Lua, Prisma, Python, Svelte,
+-- Tailwind, and TypeScript (vtsls). Also installs formatters (prettier, stylua,
+-- black, isort) and debuggers (debugpy, java-debug-adapter, js-debug-adapter).
+-- ============================================================================
 return {
   "williamboman/mason.nvim",
   dependencies = {
@@ -39,7 +49,11 @@ return {
         "pyright",
         "svelte",
         "tailwindcss",
-        "ts_ls",
+        "vtsls", -- VSCode TypeScript Language Server
+      },
+      -- Prevent ts_ls from auto-starting (we use vtsls instead)
+      handlers = {
+        ["ts_ls"] = function() end, -- noop handler to skip ts_ls
       },
     })
 

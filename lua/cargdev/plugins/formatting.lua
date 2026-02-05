@@ -1,3 +1,11 @@
+-- ============================================================================
+-- CONFORM.NVIM: Code formatting on save and on demand
+-- ============================================================================
+-- Lightweight formatter plugin that supports multiple formatters per filetype.
+-- Configured with format-on-save and custom formatters for SQL, XML, and more.
+-- Provides <leader>mp keymap for manual formatting of selection or buffer.
+-- ============================================================================
+
 return {
   "stevearc/conform.nvim",
   event = { "BufReadPre", "BufNewFile" },

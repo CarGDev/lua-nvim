@@ -1,3 +1,11 @@
+-- ============================================================================
+-- UNDOTREE: Visual undo history
+-- ============================================================================
+-- Visualizes Vim's undo tree as a navigable sidebar. Unlike linear undo, this
+-- lets you access all previous states including branches. Toggle with <leader>tu.
+-- Shows diff panel and timestamps for each change state.
+-- ============================================================================
+
 return {
   "mbbill/undotree",
   cmd = "UndotreeToggle",

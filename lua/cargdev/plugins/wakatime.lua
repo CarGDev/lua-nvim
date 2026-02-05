@@ -1,3 +1,11 @@
+-- ============================================================================
+-- WAKATIME: Coding time tracking
+-- ============================================================================
+-- Automatically tracks your coding activity and time spent in Neovim.
+-- Sends heartbeats to WakaTime dashboard for detailed metrics and insights.
+-- Configured with 2-minute heartbeat frequency and buffering for performance.
+-- ============================================================================
+
 return {
   "wakatime/vim-wakatime",
   lazy = false,

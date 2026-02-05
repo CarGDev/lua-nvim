@@ -1,3 +1,10 @@
+-- ============================================================================
+-- BUFFERLINE: Tab-like buffer management in the top bar
+-- ============================================================================
+-- Displays open buffers as tabs at the top of the screen. Provides visual
+-- buffer switching, close buttons, and LSP diagnostics indicators per buffer.
+-- Uses snacks.bufdelete for smart buffer closing that shows dashboard on last.
+-- ============================================================================
 return {
   "akinsho/bufferline.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -12,8 +19,12 @@ return {
         style_preset = bufferline.style_preset.minimal,
         themable = true,
         numbers = "none",
-        close_command = "bdelete! %d",
-        right_mouse_command = "bdelete! %d",
+        close_command = function(bufnr)
+          require("snacks").bufdelete({ buf = bufnr, force = true })
+        end,
+        right_mouse_command = function(bufnr)
+          require("snacks").bufdelete({ buf = bufnr, force = true })
+        end,
         left_mouse_command = "buffer %d",
         middle_mouse_command = nil,
         indicator = {

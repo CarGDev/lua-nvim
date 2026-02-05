@@ -1,3 +1,10 @@
+-- ============================================================================
+-- LSPSAGA: Enhanced LSP UI with floating windows
+-- ============================================================================
+-- Beautiful UI for LSP features: code actions, hover docs, rename, outline,
+-- diagnostics, call hierarchy. Provides better UX than default LSP handlers.
+-- Has DiagnosticChanged autocmd to update virtual text on diagnostic changes.
+-- ============================================================================
 return {
   "nvimdev/lspsaga.nvim",
   dependencies = {

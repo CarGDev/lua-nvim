@@ -1,3 +1,10 @@
+-- ============================================================================
+-- TINY-INLINE-DIAGNOSTIC: Pretty inline diagnostic messages
+-- ============================================================================
+-- Replaces default virtual text diagnostics with prettier inline messages.
+-- Shows errors/warnings with icons and better formatting. Disables default
+-- diagnostic virtual_text. Has DiagnosticChanged autocmd to update display.
+-- ============================================================================
 return {
   "rachartier/tiny-inline-diagnostic.nvim",
   event = "LspAttach",

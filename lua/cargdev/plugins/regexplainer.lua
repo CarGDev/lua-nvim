@@ -1,3 +1,12 @@
+-- ============================================================================
+-- REGEXPLAINER: Human-readable regex explanations
+-- ============================================================================
+-- Parses regular expressions under the cursor and displays a human-readable
+-- narrative explanation in a popup window. Uses Treesitter for accurate
+-- parsing across multiple languages including JS/TS, Lua, Python, Go, Rust.
+-- Keymap: <leader>rx (toggle explanation popup)
+-- ============================================================================
+
 return {
   "bennypowers/nvim-regexplainer",
   dependencies = {

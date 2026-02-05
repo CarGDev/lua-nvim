@@ -1,3 +1,11 @@
+-- ============================================================================
+-- SNACKS: Collection of small QoL plugins by folke
+-- ============================================================================
+-- All-in-one plugin with: dashboard (start screen), bufdelete (smart buffer
+-- close), bigfile (disable features for large files), notifier, input/select
+-- UI, lazygit integration, terminal, and more. Has BufDelete/BufWipeout
+-- autocmds to show dashboard when last buffer closes.
+-- ============================================================================
 return {
   "folke/snacks.nvim",
   lazy = false,
@@ -6,6 +14,7 @@ return {
     local dashboard_config = require("cargdev.core.dashboard_config")
     require("snacks").setup({
       bigfile = { enabled = true },
+      bufdelete = { enabled = true },
       dashboard = {
         enabled = true,
         width = 40,

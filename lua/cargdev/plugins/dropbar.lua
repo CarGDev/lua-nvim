@@ -1,3 +1,11 @@
+-- ============================================================================
+-- DROPBAR: Winbar with breadcrumb navigation
+-- ============================================================================
+-- Shows current code location as clickable breadcrumbs in the winbar.
+-- Displays file path, class, function, etc. Click to navigate or use
+-- telescope integration. Uses LSP and treesitter for accurate symbols.
+-- Has BufUnload autocmd to clean up LSP references when buffers close.
+-- ============================================================================
 return {
   "Bekaboo/dropbar.nvim",
   event = { "BufReadPost", "BufNewFile" },

@@ -1,3 +1,10 @@
+-- ============================================================================
+-- LUALINE: Statusline with mode, git, diagnostics, and more
+-- ============================================================================
+-- Customizable statusline at the bottom showing: mode, git branch, filename,
+-- diagnostics, encoding, filetype, position. Uses rainbow colors inspired
+-- by powerlevel10k. Shows lazy.nvim update count and word count.
+-- ============================================================================
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },

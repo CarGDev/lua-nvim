@@ -1,3 +1,10 @@
+-- ============================================================================
+-- INDENT-BLANKLINE: Visual indentation guides
+-- ============================================================================
+-- Displays vertical lines at each indentation level. Uses rainbow colors
+-- for different levels. Highlights the current scope/context you're in.
+-- Makes it easier to see code structure, especially in deeply nested code.
+-- ============================================================================
 return {
   "lukas-reineke/indent-blankline.nvim",
   event = { "BufReadPre", "BufNewFile" },

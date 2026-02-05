@@ -1,3 +1,11 @@
+-- ============================================================================
+-- NAVBUDDY: Symbol navigation
+-- ============================================================================
+-- LSP-powered breadcrumb-style symbol navigator with popup interface.
+-- Browse and jump to functions, classes, variables via hierarchical view.
+-- Keymap: <leader>nb to open Navbuddy popup. Requires LSP attachment.
+-- ============================================================================
+
 return {
   "SmiteshP/nvim-navbuddy",
   dependencies = {

@@ -1,3 +1,13 @@
+-- ============================================================================
+-- PACKAGE-INFO: NPM package version viewer and manager
+-- ============================================================================
+-- Displays package version information inline in package.json files.
+-- Shows outdated packages with visual indicators and allows managing
+-- dependencies directly from the editor.
+-- Keymaps: <leader>ns (show), <leader>nh (hide), <leader>nu (update),
+--          <leader>nd (delete), <leader>ni (install), <leader>nc (change ver)
+-- ============================================================================
+
 return {
   "vuki656/package-info.nvim",
   dependencies = { "MunifTanjim/nui.nvim" },

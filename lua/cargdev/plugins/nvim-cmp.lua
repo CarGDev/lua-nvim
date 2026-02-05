@@ -1,3 +1,10 @@
+-- ============================================================================
+-- NVIM-CMP: Autocompletion engine
+-- ============================================================================
+-- Main completion plugin with multiple sources: LSP, buffer, path, snippets,
+-- copilot. Shows completion menu with icons. LuaSnip for snippet expansion.
+-- Tab/Shift-Tab to navigate, Enter to confirm, C-Space to trigger manually.
+-- ============================================================================
 return {
   "hrsh7th/nvim-cmp",
   event = "InsertEnter",

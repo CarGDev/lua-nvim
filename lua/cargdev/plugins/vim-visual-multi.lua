@@ -1,3 +1,10 @@
+-- ============================================================================
+-- VIM-VISUAL-MULTI: Multiple cursors like VS Code
+-- ============================================================================
+-- Select multiple occurrences and edit them simultaneously. <C-d> to select
+-- word under cursor (like VS Code), <C-Down/Up> to add cursors vertically.
+-- q to skip, Q to remove cursor. Vimscript plugin with some verbose log noise.
+-- ============================================================================
 return {
   "mg979/vim-visual-multi",
   branch = "master",
@@ -8,21 +15,17 @@ return {
     vim.g.VM_mouse_mappings = 1
     vim.g.VM_theme = "iceblue"
 
+    -- Only set PERMANENT mappings here to avoid E716 errors
+    -- Buffer mappings (Skip Region, Remove Region, Undo, Redo) use plugin defaults
     vim.g.VM_maps = {
       ["Find Under"] = "<C-d>",           -- Like VS Code Ctrl+D
       ["Find Subword Under"] = "<C-d>",   -- Like VS Code Ctrl+D
       ["Select All"] = "<C-S-l>",         -- Like VS Code Ctrl+Shift+L
       ["Add Cursor Down"] = "<C-Down>",   -- Like VS Code
       ["Add Cursor Up"] = "<C-Up>",       -- Like VS Code
-      ["Skip Region"] = "<C-x>",          -- Skip current and go to next
-      ["Remove Region"] = "<C-S-p>",      -- Remove current cursor (changed from C-p)
-      ["Undo"] = "u",
-      ["Redo"] = "<C-r>",
+      ["Select Cursor Down"] = "",        -- Disable (reserved for buffer navigation)
+      ["Select Cursor Up"] = "",          -- Disable (reserved for buffer navigation)
     }
-
-    -- Disable C-n and C-p in vim-visual-multi (reserved for buffer navigation)
-    vim.g.VM_maps["Select Cursor Down"] = ""
-    vim.g.VM_maps["Select Cursor Up"] = ""
 
     -- Highlight settings
     vim.g.VM_Mono_hl = "DiffText"

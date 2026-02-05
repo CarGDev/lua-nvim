@@ -1,3 +1,10 @@
+-- ============================================================================
+-- TROUBLE: Pretty diagnostics, quickfix, and todo list
+-- ============================================================================
+-- Shows all diagnostics/errors in a clean list view. Navigate and fix issues
+-- quickly. Also shows todo comments, quickfix, and location lists in the
+-- same unified interface. <leader>xw for workspace diagnostics.
+-- ============================================================================
 return {
   "folke/trouble.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons", "folke/todo-comments.nvim" },

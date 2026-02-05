@@ -1,4 +1,10 @@
--- Auto-load all plugin files from the plugins directory
+-- ============================================================================
+-- PLUGINS INIT: Auto-load all plugin configurations
+-- ============================================================================
+-- Automatically discovers and loads all .lua files in the plugins directory.
+-- Includes base plugins (plenary, vim-tmux-navigator) and imports all other
+-- plugin configurations via lazy.nvim's import system. Excludes init.lua itself.
+-- ============================================================================
 local function load_all_plugins()
   local plugins = {}
   

@@ -1,3 +1,10 @@
+-- ============================================================================
+-- MARKS: Enhanced marks with visual indicators
+-- ============================================================================
+-- Shows marks in the sign column and provides better mark management.
+-- Supports bookmarks with annotations. Has BufDelete autocmd to clean up
+-- marks when buffers are deleted (marks._on_delete).
+-- ============================================================================
 return {
   "chentoast/marks.nvim",
   event = "VeryLazy",

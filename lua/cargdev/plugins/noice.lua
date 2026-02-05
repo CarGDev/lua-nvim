@@ -1,3 +1,10 @@
+-- ============================================================================
+-- NOICE: Replaces cmdline, messages, and popupmenu with modern UI
+-- ============================================================================
+-- Complete UI overhaul: floating cmdline at center, message notifications,
+-- LSP progress indicators, search count. Has BufDelete autocmd to clean up
+-- message history when buffers close. Uses nui.nvim for rendering.
+-- ============================================================================
 return {
   "folke/noice.nvim",
   event = "VeryLazy",

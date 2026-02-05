@@ -1,3 +1,11 @@
+-- ============================================================================
+-- HARDTIME: Break bad vim habits
+-- ============================================================================
+-- Helps you break bad Vim habits by limiting repetitive key presses (hjkl, etc.)
+-- Shows hints for better motion alternatives. Disabled by default, toggle with
+-- <leader>ht. Uses "hint" mode to suggest improvements without blocking input.
+-- ============================================================================
+
 return {
   "m4xshen/hardtime.nvim",
   dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },

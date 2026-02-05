@@ -1,3 +1,10 @@
+-- ============================================================================
+-- TREESITTER: Syntax parsing for better highlighting and code understanding
+-- ============================================================================
+-- Core plugin for modern syntax highlighting, code folding, and text objects.
+-- Parses code into AST for accurate highlighting. Many plugins depend on it
+-- (autopairs, comments, autotag, etc). Auto-installs parsers for languages.
+-- ============================================================================
 return {
   "nvim-treesitter/nvim-treesitter",
   event = { "BufReadPost", "BufNewFile" }, -- Changed from BufReadPre to BufReadPost for better performance
