@@ -6,80 +6,101 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
-## [Unreleased]
+## [2026-02-10]
 
 ### Added
-- **Python Debugger (debugpy)**: Full Python debugging support with multiple configurations
-  - Launch File - Debug current Python file
-  - Launch with Arguments - Debug with custom arguments
-  - Attach Remote - Attach to debugpy server (port 5678)
-  - Django - Debug Django with `manage.py runserver`
-  - FastAPI - Debug FastAPI with uvicorn
-  - Flask - Debug Flask application
-- **Node.js/NestJS Debug Configurations**: Extended TypeScript/JavaScript debugging
-  - Launch NestJS (`dist/main.js`) with source maps
-  - Launch Current File
-  - Launch with ts-node (debug TypeScript directly)
-  - Attach to NestJS (port 9229)
-  - Attach to Process (pick from running processes)
-- **Mason Debug Adapters**: Added `debugpy` and `js-debug-adapter` to auto-install list
-- **README Documentation**: Added comprehensive "Debugging Setup" section with all configurations
-- **Avante.nvim AI Assistant**: Added Avante.nvim with local LLM support to README documentation
-- **Bash Treesitter Parser**: Installed bash parser for noice.nvim cmdline highlighting
-- **Local Configuration Support**: `local.lua` is now loaded at startup and exposed via `vim.g.cargdev_local`
-  - Enables machine-specific paths without hardcoding
-  - Safe loading with `pcall` (won't error if file doesn't exist)
-  - Plugins gracefully skip if required config is missing
+- **Documentation restructure**: Moved all documentation into `docs/` directory
+  - `docs/KEYMAPS.md` - Complete keybinding reference (rewritten from actual keymap files)
+  - `docs/PLUGINS.md` - Plugin list and descriptions
+  - `docs/NATIVE_AUTO_WRAPPER_GUIDE.md` - Text wrapping configuration
+  - `docs/TELESCOPE_TO_SNACKS_MIGRATION.md` - Migration notes
+  - `docs/keyboard_mappings.md` - QMK keyboard layout reference
+  - `docs/CHANGELOG_OLD.md` - Previous changelog archive
+- **Keymap conflict detection script**: `scripts/detect_keymap_conflicts.lua`
 
 ### Changed
-- **Avante Plugin**: Now uses `local.lua` for all paths and settings
-  - `avante_dev_path` for plugin directory
-  - `avante_endpoint`, `avante_api_key_name`, `avante_model` for provider config
-- **IdeaDrop Plugin**: Now uses `IDEA_DIR` from `local.lua` instead of environment variable
+- **README.md**: Updated documentation links to point to `docs/`, removed references to deleted plugins (flash, harpoon, dial, screenkey, persistence, mini.animate), updated keymap tables to reflect current state
+- **KEYMAPS.md**: Complete rewrite based on actual current keymap definitions
 
-### Removed
-- **Hardcoded Paths**: Removed all hardcoded user paths from plugin configs
-  - `avante.lua` - uses `local.lua` values
-  - `ideaMap.lua` - uses `local.lua` values
-  - `leetcode.lua` - removed commented hardcoded path
-  - `lazygit.lua` - removed commented hardcoded path
+---
+
+## [2026-02-08]
 
 ### Fixed
-- **Java Debug Adapter Paths**: Fixed incorrect paths in `ftplugin/java.lua`
-  - Changed `java-debug` → `java-debug-adapter/extension/server/`
-  - Changed `vscode-java-test` → `java-test/extension/server/`
-- **Node.js DAP Adapter**: Fixed js-debug-adapter configuration in `dap.lua`
-  - Changed adapter type from `executable` to `server` (required by js-debug-adapter)
-  - Renamed adapter from `node` to `pwa-node` (standard DAP name)
-  - Added proper source map resolution and skipFiles patterns
-- **Auto-session Lazy Loading**: Changed from `event = "VeryLazy"` to `lazy = false` to enable session auto-restore on startup
-- **Alpha Dashboard Config**: Fixed `enable` to `enabled` (correct lazy.nvim spec key)
-- **Snacks vs Alpha Conflict**: Disabled `Snacks.dashboard` in favor of `alpha-nvim` for CARGDEV branding
+- **hlchunk.nvim**: Fixed rendering issues with scope highlighting
+- **lspconfig**: Fixed LSP configuration issues
+- **lualine**: Fixed statusline rendering and word count display
+- **nvim-ufo**: Fixed folding behavior and peek integration
 
-### Added
-- **Java Debug & Run Keymaps**: New keybindings for Java development
-  - `<leader>jd` - Debug Class (DAP)
-  - `<leader>jt` - Test Class
-  - `<leader>jn` - Test Nearest Method
-  - `<leader>jr` - Run Java File
-  - `<leader>jm` - Run Maven Project
-  - `<leader>jg` - Run Gradle Project
-- **Java Debug Dependencies**: Added `java-debug-adapter` and `java-test` to Mason ensure_installed
+---
+
+## [2026-02-05] - Major Cleanup & Refactor
+
+### Removed - Plugins
+- **codetyper.lua**: Removed locally-developed plugin (reduced maintenance surface)
+- **curls.lua**: Removed local HTTP/curl plugin (replaced by kulala)
+- **edgy.lua**: Removed window layout management plugin
+- **flash.lua**: Removed flash.nvim jump plugin
+- **sudoku.lua**: Removed sudoku game plugin
+- **screenkey.lua**: Removed screenkey plugin (show keypresses)
+- **persistence.lua**: Removed persistence session management
+- **auto-session.lua**: Removed auto-session plugin
+- **dial.lua**: Removed smart increment/decrement plugin
+- **mini-animate.lua**: Removed smooth animations plugin
+- **harpoon.lua**: Removed harpoon quick file marks
+- **colorful-winsep.lua**: Removed colorful window separators
+- **dressing.lua**: Removed vim.ui improvements (handled by snacks/noice)
+- **ship.lua**: Removed ship plugin
+- **fileOperations.lua**: Removed file operations plugin
+
+### Removed - Keymaps & Docs
+- **keymaps/README.md**: Removed stale keymaps documentation
+- **keymaps/sudoku.lua**: Removed sudoku keymaps
+- **NVIM_PERFORMANCE_ANALYSIS.md**: Removed performance analysis doc
+
+### Changed - Core Refactors
+- **Notification manager** (`notification_manager.lua`): Major refactor with local aliases, improved docs, dashboard-aware handling, nvim-notify fallback, safer notification tracking and cleanup
+- **Performance monitor** (`performance_monitor.lua`): Refactored with local references and better notify usage
+- **Project commands** (`project_commands.lua`): Added docs, local API/fn/notify aliases, clearer RunProject/DebugProject commands
+- **Terminal helper** (`openTerminal.lua`): Module docs and refactored with local cmd/api aliases
+
+### Changed - Keymaps
+- **Reworked keymap files**: Added docstrings to all keymap modules, renamed/moved mappings to avoid conflicts
+- **DAP keymaps**: Moved all DAP keymaps from `keymaps/dap.lua` into `plugins/dap.lua` config function (ensures nvim-dap is loaded before keybindings reference it)
+- **Quickfix keymaps**: Moved from `<leader>q` prefix to `<leader>x` prefix to avoid conflict with quit
+- **LSP navigation**: Switched from Snacks pickers to fzf-lua for `gd`, `gi`, `gr`, `gt`, symbols, and diagnostics
+
+### Changed - Plugins & Integrations
+- **DAP** (`dap.lua`): Added Bun launch config, dynamic debug attach (`<leader>jd` with port input), moved all DAP keymaps here
+- **Copilot** (`copilot.lua`): Reorganized Copilot/Copilot-cmp/CopilotChat config, added copilot source to nvim-cmp, added CopilotChat keymaps (`<leader>cc`, `<leader>cq`, `<leader>ce`, `<leader>cr`, `<leader>cf`, `<leader>co`, `<leader>cd`, `<leader>ct`, `<leader>cm`)
+- **nvim-cmp** (`nvim-cmp.lua`): Added copilot completion source
+- **Formatting** (`formatting.lua`): Disabled google-java-format fallback for Java (prefer JDTLS formatter)
+- **Java/JDTLS** (`ftplugin/java.lua`): Pinned to JDK 25, switched to mac_arm config, enabled LSP formatter, declared multiple runtimes (JavaSE-17, JavaSE-25)
+- **nvim-tree**: Expanded configuration with more custom mappings
+- **bufferline**: Updated configuration
+- **hlchunk**: Adjusted scope highlighting settings
+- **linting**: Configuration tweaks
+- **vim-visual-multi**: Updated configuration
+
+### Added - Plugin Stubs
+Added minimal plugin configuration stubs for better organization (each plugin in its own file):
+`autopairs`, `colorscheme`, `comments`, `crates`, `dadbod`, `diffview`, `dropbar`, `fidget`, `flutter`, `git-blame`, `gitsigns`, `grug-far`, `hardtime`, `ideaMap`, `inc-rename`, `indent-blankline`, `kulala`, `lazygit`, `leetcode`, `lspsaga`, `marks`, `mcphub`, `modicator`, `navbuddy`, `neogit`, `noice`, `nvim-cmp`, `nvim-highlight-colors`, `nvim-jdtls`, `nvim-lightbulb`, `nvim-treesitter-context`, `nvim-treesitter-text-objects`, `nvim-ts-autotag`, `obsidian`, `octo`, `outline`, `overseer`, `package-info`, `portal`, `precognition`, `reactive`, `regexplainer`, `render-markdown`, `satellite`, `snacks`, `ssr`, `substitute`, `surround`, `telescope`, `termcolor`, `tiny-inline-diagnostic`, `tmux`, `todo-comments`, `transparence`, `treesitter`, `treesj`, `trouble`, `ts-comments`, `twilight`, `undotree`, `venv-selector`, `vim-maximizer`, `vimtex`, `wakatime`, `which-key`, `yaml`, `yanky`, `zen-mode`
+
+---
+
+## [2026-01-15] - Bumping Version
 
 ### Changed
-- **Colorscheme Configuration**: Enhanced `cargdev-cyberpunk` setup
-  - Enabled transparency
-  - Enabled italic comments
-  - Enabled bold keywords, functions, and types
-  - Enabled terminal colors
+- General version bump and plugin updates
+
+---
+
+## [2026-01-13] - Fixing Issues
 
 ### Fixed
-- **Java DAP Configuration**: Fixed debug adapter not loading
-  - Changed `bundles = {}` to `bundles = bundles` to properly load debug JARs
-  - Added `on_attach` callback to setup DAP after JDTLS attaches
-  - Enables hot code replacement during debugging
-- **Broken Java DAP Adapter**: Removed manual Java adapter with undefined `port` variable
-  - Now handled automatically by nvim-jdtls via `jdtls.setup_dap()`
+- Multiple bug fixes across configuration
+- Fixed issues with closing Neovim
+- Fixed rendering issues
 
 ---
 
@@ -87,73 +108,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - **Custom Colorscheme**: Using `cargdev-cyberpunk` theme
-  - Vibrant, high-contrast cyberpunk aesthetic with neon colors
-  - Hot pink keywords, electric purple types, cyan strings, green functions
-  - Full TypeScript/LSP/Treesitter support
-  - Deep blue backgrounds with neon accents
-  - Loaded with high priority for consistent UI
 - **Which-Key Group Names**: Added organized group names for better keymap discoverability
-  - Groups: Buffer, Code/Copilot, Debug, Explorer, Find/Files, Git, LSP, Format, Quickfix, Session, Tab/Terminal, Trouble, Copilot Chat
-- **Auto-Format on Save**: Enabled smart auto-formatting with conform.nvim
-  - Skips certain filetypes (sql, markdown)
-  - Skips files in node_modules
-  - Added `:FormatToggle` command to enable/disable
-- **Diagnostic Float on Hover**: Diagnostics now appear automatically when cursor holds
-- **Safe Buffer Close**: `<leader>bd` now prompts for unsaved changes
-  - Options: Save & Close, Discard & Close, Cancel
-  - `<leader>bD` for force close without confirmation
-- **Quickfix Navigation Keymaps**:
-  - `<leader>qn` - Next quickfix item
-  - `<leader>qp` - Previous quickfix item
-  - `<leader>qo` - Open quickfix list
-  - `<leader>qq` - Close quickfix list
-  - `<leader>qf` - First quickfix item
-  - `<leader>ql` - Last quickfix item
-- **Location List Navigation Keymaps**:
-  - `<leader>ln` - Next location item
-  - `<leader>lp` - Previous location item
-  - `<leader>lo` - Open location list
-  - `<leader>lq` - Close location list
-- **Configuration Validation**: Startup checks for:
-  - Neovim version (0.9+ recommended)
-  - Required executables (git, rg, node)
-- **Plugin Update Notifications**: Lazy.nvim now notifies about available updates (daily check)
-- **CheckConfig Command**: Quick access to health checks
+- **Auto-Format on Save**: Enabled with conform.nvim (skips sql, markdown, node_modules)
+- **Diagnostic Float on Hover**: Diagnostics appear automatically on cursor hold
+- **Safe Buffer Close**: `<leader>bd` prompts for unsaved changes
+- **Quickfix Navigation Keymaps**: `<leader>qn/qp/qo/qq/qf/ql`
+- **Location List Navigation**: `<leader>ln/lp/lo/lq`
+- **Configuration Validation**: Startup checks for Neovim version and required executables
+- **Plugin Update Notifications**: Daily lazy.nvim update check
 
 ### Changed
-- **Session Keymaps**: Renamed to avoid conflicts with substitute
-  - `<leader>ss` → `<leader>sS` (Session Save)
-  - `<leader>sr` → `<leader>sR` (Session Restore)
-- **Substitute Keymaps**: Reorganized to avoid conflicts
-  - `<leader>ss` → `<leader>sl` (Substitute Line)
-  - `<leader>sub` remains for substitute with motion
-  - `<leader>S` remains for substitute to end of line
-- **Keymap Descriptions**: Standardized format (e.g., "Session: Save", "Substitute: Line")
+- **Session Keymaps**: `<leader>ss` -> `<leader>sS`, `<leader>sr` -> `<leader>sR`
+- **Substitute Keymaps**: `<leader>ss` -> `<leader>sl`
 
 ### Fixed
-- **Duplicate Window Management Keymaps**: Removed duplicates from `personal.lua`, centralized in `window.lua`
-- **Duplicate Resize Keymaps**: Removed duplicates, centralized in `window.lua`
-- **Redundant Filetype Detection**: Now only runs if filetype is not already detected
-- **Double Function Loading**: Functions now load once on VimEnter with flag protection
-- **Duplicate synmaxcol Setting**: Removed duplicate (was 240 then 200), kept 200
-- **Duplicate foldmethod Setting**: Removed duplicate, kept `indent` (faster than `syntax`)
-- **Duplicate foldlevel Setting**: Removed duplicate setting
-- **Environment Variable Validation**: `IDEA_DIR` now validated before Obsidian link setup
+- Duplicate window management keymaps (centralized in `window.lua`)
+- Duplicate resize keymaps
+- Redundant filetype detection
+- Double function loading
+- Duplicate settings (synmaxcol, foldmethod, foldlevel)
 
 ### Removed
-- **Temporary Files**:
-  - `kkk` - Unknown purpose temporary file
-  - `cleanup_deprecated_adapters.lua` - Cleanup script no longer needed
-- **IMPROVEMENTS.md**: All issues resolved, file removed
-- **Commented Code**:
-  - Tmux navigation keymaps from `personal.lua`
-  - Commented `x` keymap explanation from `general.lua`
-  - Commented `project_config` bootstrap from `init.lua`
-
-### Performance
-- Optimized filetype detection (conditional execution)
-- Reduced redundant option settings
-- Single function loading instead of double
+- Temporary files (`kkk`, `cleanup_deprecated_adapters.lua`)
+- IMPROVEMENTS.md (all issues resolved)
+- Commented-out code (tmux keymaps, project_config bootstrap)
 
 ---
 
@@ -166,7 +144,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Snacks.nvim + Telescope file navigation
 - nvim-tree file explorer
 - LazyGit integration
-- GitHub Copilot + Copilot Chat
+- GitHub Copilot
 - DAP debugging with UI
 - Conform.nvim formatting
 - Trouble.nvim diagnostics
@@ -174,73 +152,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Custom lualine theme with word count
 
 ### Migration History
-- Migrated from Telescope to Snacks for primary navigation
-- Kept Telescope for git-specific features
-- See [TELESCOPE_TO_SNACKS_MIGRATION.md](./TELESCOPE_TO_SNACKS_MIGRATION.md) for details
+- Migrated from Telescope to Snacks for primary file navigation
+- Kept Telescope for git-specific features and TODOs
+- See [Telescope to Snacks Migration](./docs/TELESCOPE_TO_SNACKS_MIGRATION.md) for details
 
 ---
 
-## File Changes Summary
-
-### Modified Files
-| File | Changes |
-|------|---------|
-| `lua/cargdev/plugins/dap.lua` | Fixed Node.js adapter, added Python debugpy config |
-| `ftplugin/java.lua` | Fixed java-debug-adapter and java-test paths |
-| `lua/cargdev/plugins/lsp/mason.lua` | Added debugpy and js-debug-adapter to ensure_installed |
-| `README.md` | Added Debugging Setup section with keymaps and configurations |
-| `lua/cargdev/core/keymaps/README.md` | Added dap.lua and other keymap files to structure |
-| `lua/cargdev/core/keymaps/personal.lua` | Removed duplicates, added quickfix/location keymaps, safe buffer close |
-| `lua/cargdev/core/keymaps/plugins.lua` | Fixed session/substitute keymap conflicts |
-| `lua/cargdev/core/keymaps/general.lua` | Added vault_path validation, removed commented code |
-| `lua/cargdev/core/keymaps/window.lua` | Centralized window management keymaps |
-| `lua/cargdev/core/init.lua` | Fixed double loading, added diagnostic hover, config validation, loads `local.lua` |
-| `lua/cargdev/plugins/avante.lua` | Uses `local.lua` for paths and settings, removed hardcoded values |
-| `lua/cargdev/plugins/ideaMap.lua` | Uses `local.lua` for `IDEA_DIR`, removed env var fallback |
-| `lua/cargdev/plugins/leetcode.lua` | Removed commented hardcoded path |
-| `lua/cargdev/plugins/lazygit.lua` | Removed commented hardcoded path |
-| `lua/cargdev/core/options.lua` | Removed duplicate settings (synmaxcol, foldmethod, foldlevel) |
-| `lua/cargdev/plugins/which-key.lua` | Added group names configuration |
-| `lua/cargdev/plugins/formatting.lua` | Enabled auto-format on save with smart filtering |
-| `lua/cargdev/lazy.lua` | Enabled plugin update notifications |
-| `README.md` | Complete rewrite with proper documentation |
-
-### Deleted Files
-| File | Reason |
-|------|--------|
-| `kkk` | Temporary file, unknown purpose |
-| `cleanup_deprecated_adapters.lua` | One-time cleanup script, no longer needed |
-| `IMPROVEMENTS.md` | All issues resolved |
-
-### New Files
-| File | Purpose |
-|------|---------|
-| `CHANGELOG.md` | Track configuration changes |
-
----
-
-## Keymap Reference
-
-### New/Changed Keymaps
-
-| Keymap | Action | File |
-|--------|--------|------|
-| `<leader>sS` | Session: Save | plugins.lua |
-| `<leader>sR` | Session: Restore | plugins.lua |
-| `<leader>sl` | Substitute: Line | plugins.lua |
-| `<leader>bd` | Buffer: Close (safe) | personal.lua |
-| `<leader>bD` | Buffer: Force close | personal.lua |
-| `<leader>qn` | Quickfix: Next | personal.lua |
-| `<leader>qp` | Quickfix: Previous | personal.lua |
-| `<leader>qo` | Quickfix: Open | personal.lua |
-| `<leader>qq` | Quickfix: Close | personal.lua |
-| `<leader>qf` | Quickfix: First | personal.lua |
-| `<leader>ql` | Quickfix: Last | personal.lua |
-| `<leader>ln` | Location: Next | personal.lua |
-| `<leader>lp` | Location: Previous | personal.lua |
-| `<leader>lo` | Location: Open | personal.lua |
-| `<leader>lq` | Location: Close | personal.lua |
-
----
-
-*Last Updated: January 13, 2026*
+*Last Updated: February 10, 2026*
