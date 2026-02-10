@@ -75,6 +75,7 @@ return {
       }),
       -- sources for autocompletion
       sources = cmp.config.sources({
+        { name = "copilot", priority = 1100, group_index = 1 }, -- Copilot suggestions in menu
         { name = "nvim_lsp", priority = 1000 },
         { name = "luasnip", priority = 750 }, -- snippets
         { name = "buffer", priority = 500, keyword_length = 3 }, -- text within current buffer
@@ -86,6 +87,7 @@ return {
         format = lspkind.cmp_format({
           maxwidth = 50,
           ellipsis_char = "...",
+          symbol_map = { Copilot = "" },
         }),
       },
       

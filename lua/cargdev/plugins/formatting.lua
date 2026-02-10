@@ -45,7 +45,8 @@ return {
         lua = { "stylua" },
         python = { "isort", "black" },
         sql = { "sqlfluff" }, -- SQL formatting
-        java = { "google-java-format" },
+        -- java: no conform formatter (google-java-format needs JDK 21+)
+        -- falls through to JDTLS LSP via lsp_fallback = true
       },
       format_on_save = function(bufnr)
         -- Disable autoformat for certain filetypes

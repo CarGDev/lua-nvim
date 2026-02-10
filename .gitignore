@@ -28,3 +28,4 @@ local.lua
 *.coder.*
 .coder/
 .vscode/
+.codetyper/

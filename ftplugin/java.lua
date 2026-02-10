@@ -4,6 +4,9 @@ local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = workspace_path .. project_name
 local keymap = vim.keymap.set
 
+-- JDTLS requires JDK 21+ to run; use JDK 25 for the server process
+local jdtls_java = "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home/bin/java"
+
 local status, jdtls = pcall(require, "jdtls")
 
 if not status then
@@ -44,7 +47,7 @@ end
 
 local config = {
   cmd = {
-    "java",
+    jdtls_java,
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
     "-Dosgi.bundles.defaultStartLevel=4",
     "-Declipse.product=org.eclipse.jdt.ls.core.product",
@@ -60,7 +63,7 @@ local config = {
     "-jar",
     vim.fn.glob(home .. "/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
     "-configuration",
-    home .. "/.local/share/nvim/mason/packages/jdtls/config_mac",
+    home .. "/.local/share/nvim/mason/packages/jdtls/config_mac_arm",
     "-data",
     workspace_dir,
   },
@@ -85,7 +88,20 @@ local config = {
         },
       },
       format = {
-        enabled = false,
+        enabled = true,
+      },
+      configuration = {
+        runtimes = {
+          {
+            name = "JavaSE-17",
+            path = "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home",
+          },
+          {
+            name = "JavaSE-25",
+            path = "/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home",
+            default = true,
+          },
+        },
       },
     },
   },

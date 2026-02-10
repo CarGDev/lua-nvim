@@ -1,66 +1,50 @@
--- Personal keymaps (original workflow)
+--- Personal keymaps — custom workflow shortcuts.
+--- Includes text selection helpers, file management (save, quit, source),
+--- number increment/decrement, buffer management with smart close via
+--- snacks.bufdelete, coding shortcuts (React import, semicolons, commas,
+--- console.log), Copilot Chat commands, clipboard HTML-to-Markdown paste,
+--- and quickfix/location list navigation.
+--- @module keymaps.personal
+
 local keymap = vim.keymap
 
 -- =============================================================================
 -- PERSONAL KEYMAPS (ORIGINAL WORKFLOW)
 -- =============================================================================
 
+--- Select the entire file contents (visual mode).
 keymap.set("n", "<leader>u", function()
   vim.cmd("normal! ggVG$")
 end, { desc = "Select the whole file" })
+
+--- Duplicate the current line below.
 keymap.set("n", "<leader>4", function()
   -- Copy current line and paste below
   vim.cmd("normal! yy")
   vim.cmd("normal! p")
 end, { desc = "Copy the entire line and paste just below" })
 
--- file management
+--- File management — save, quit, force quit, source, and clear search.
 keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save the current file" })
 keymap.set("n", "<leader>xa", ":xa<CR>", { desc = "Save and close all the files" })
 keymap.set("n", "<leader>q", ":q<CR>", { desc = "Quit" })
-keymap.set("n", "<leader>Q", ":q!<CR>", { desc = "Force quit" })
 keymap.set("n", "<leader>so", ":source %<CR>", { desc = "Reload nvim" })
 keymap.set("n", "<leader>no", ":noh <CR>", { desc = "Reset search a word" })
 
--- increment/decrement numbers
-keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
-keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
+--- Increment/decrement the number under the cursor.
+keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
+keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" })
 
 -- Window management keymaps are centralized in lua/cargdev/core/keymaps/window.lua
 
--- sintax fixer
+--- Re-indent the entire file using Neovim's built-in `=` operator.
 keymap.set("n", "<leader>sy", "gg=G<CR>", { desc = "Format current file" })
 
+--- Fast scroll — 10 lines at a time with Ctrl+E / Ctrl+Y.
 keymap.set("n", "<C-e>", "10<C-e>", { noremap = true, silent = true })
 keymap.set("n", "<C-y>", "10<C-y>", { noremap = true, silent = true })
 
--- Buffer management with safe close (confirms if unsaved changes)
--- Uses snacks.bufdelete for smart buffer deletion, shows dashboard on last buffer
-local function close_buffer(force)
-  local ok, snacks = pcall(require, "snacks")
-  if ok and snacks.bufdelete then
-    -- snacks.bufdelete handles everything smartly
-    snacks.bufdelete({ force = force })
-  else
-    -- Fallback to manual handling
-    local current_buf = vim.api.nvim_get_current_buf()
-    local buffers = vim.tbl_filter(function(buf)
-      return vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted
-    end, vim.api.nvim_list_bufs())
-
-    if #buffers > 1 then
-      vim.cmd("bprevious")
-      vim.cmd((force and "bdelete! " or "bdelete ") .. current_buf)
-    else
-      -- Last buffer: show dashboard instead of quitting
-      vim.cmd("enew")
-      if ok and snacks.dashboard then
-        snacks.dashboard()
-      end
-    end
-  end
-end
-
+--- Close the current buffer with a confirmation prompt if modified.
 keymap.set("n", "<leader>bd", function()
   if vim.bo.modified then
     vim.ui.select({ "Save & Close", "Discard & Close", "Cancel" }, {
@@ -68,26 +52,24 @@ keymap.set("n", "<leader>bd", function()
     }, function(choice)
       if choice == "Save & Close" then
         vim.cmd("w")
-        close_buffer(false)
+        vim.cmd("bd")
       elseif choice == "Discard & Close" then
-        close_buffer(true)
+        vim.cmd("bd!")
       end
     end)
   else
-    close_buffer(false)
+    vim.cmd("bd")
   end
 end, { desc = "Buffer: Close (safe)" })
 
--- Force close buffer without confirmation
-keymap.set("n", "<leader>bD", function()
-  close_buffer(true)
-end, { desc = "Buffer: Force close" })
+--- Force close the current buffer, discarding unsaved changes.
+keymap.set("n", "<leader>bD", ":db!<CR>", { desc = "Buffer: Force close" })
 
--- Set buftabline mappings
+--- Buftabline navigation — Ctrl+P next buffer, Ctrl+N previous buffer.
 keymap.set("n", "<C-p>", ":bnext<CR>", { noremap = true, silent = true })
 keymap.set("n", "<C-n>", ":bprev<CR>", { noremap = true, silent = true })
 
--- Coding hacks
+--- Coding shortcuts — React import, trailing comma/semicolon, run with Node.
 keymap.set(
   "n",
   "<leader>re",
@@ -100,11 +82,7 @@ keymap.set("n", "<leader>xr", ":!node %<CR>", { desc = "Run file with node" })
 
 -- Resize splits keymaps are centralized in lua/cargdev/core/keymaps/window.lua
 
--- Run and Debug Project
-keymap.set("n", "<leader>pr", ":RunProject<CR>", { desc = "Run Project" })
-keymap.set("n", "<leader>pd", ":DebugProject<CR>", { desc = "Debug Project" })
-
--- Copilot Chat (all Copilot keymaps moved to lua/cargdev/core/keymaps/copilot.lua)
+--- Copilot Chat — rename, explain, review, fix, optimize, and generate docs.
 keymap.set("v", "<leader>zn", ":CopilotChatRename<CR>", { desc = "Rename variable (Copilot Chat)" })
 keymap.set("n", "<leader>zc", ":CopilotChat<CR>", { desc = "Open Copilot Chat" })
 keymap.set("v", "<leader>ze", ":CopilotChatExplain<CR>", { desc = "Explain code (Copilot Chat)" })
@@ -113,15 +91,17 @@ keymap.set("v", "<leader>zf", ":CopilotChatFix<CR>", { desc = "Fix code issues (
 keymap.set("v", "<leader>zo", ":CopilotChatOptimize<CR>", { desc = "Optimize code (Copilot Chat)" })
 keymap.set("v", "<leader>zd", ":CopilotChatDocs<CR>", { desc = "Generate docs (Copilot Chat)" })
 
--- Paste HTML as Markdown using pandoc
-keymap.set("n", "<leader>p", function()
-  vim.cmd("read !pbpaste -Prefer html | pandoc -f html -t gfm")
-end, { desc = "Paste HTML clipboard as Markdown" })
+--- Paste HTML from the system clipboard as GitHub-Flavored Markdown (via pandoc).
+--- TODO: Fix this keymap
+-- keymap.set("n", "<leader>p", function()
+--   vim.cmd("read !pbpaste -Prefer html | pandoc -f html -t gfm")
+-- end, { desc = "Paste HTML clipboard as Markdown" })
 
 -- =============================================================================
 -- QUICKFIX NAVIGATION (under <leader>x for Trouble/Diagnostics group)
 -- =============================================================================
 
+--- Quickfix list navigation — next, previous, open, close, first, last.
 keymap.set("n", "<leader>xn", ":cnext<CR>zz", { desc = "Quickfix: Next item" })
 keymap.set("n", "<leader>xp", ":cprev<CR>zz", { desc = "Quickfix: Previous item" })
 keymap.set("n", "<leader>xo", ":copen<CR>", { desc = "Quickfix: Open list" })
@@ -129,7 +109,7 @@ keymap.set("n", "<leader>xq", ":cclose<CR>", { desc = "Quickfix: Close list" })
 keymap.set("n", "<leader>xf", ":cfirst<CR>zz", { desc = "Quickfix: First item" })
 keymap.set("n", "<leader>xl", ":clast<CR>zz", { desc = "Quickfix: Last item" })
 
--- Location list navigation
+--- Location list navigation — next, previous, open, close.
 keymap.set("n", "<leader>ln", ":lnext<CR>zz", { desc = "Location: Next item" })
 keymap.set("n", "<leader>lp", ":lprev<CR>zz", { desc = "Location: Previous item" })
 keymap.set("n", "<leader>lo", ":lopen<CR>", { desc = "Location: Open list" })

@@ -1,11 +1,22 @@
+--- Performance and LSP health monitoring utilities.
+--- Provides functions to inspect memory usage, startup time, loaded plugins,
+--- active LSP clients, and per-buffer diagnostic summaries.
+--- @module performance_monitor
 local M = {}
 
--- Check overall Neovim performance
+local fn = vim.fn
+local notify = vim.notify
+local lsp = vim.lsp
+
+--- Collect and display overall Neovim performance statistics.
+--- Reports memory usage, open buffer count, active LSP clients, and
+--- (when lazy.nvim is available) loaded plugin count and startup time.
+--- Results are shown via `vim.notify` at INFO level.
 function M.check_performance()
   local stats = {}
 
   -- Startup time
-  stats.startup = vim.fn.reltimefloat(vim.fn.reltime(vim.g.start_time or vim.fn.reltime()))
+  stats.startup = fn.reltimefloat(fn.reltime(vim.g.start_time or fn.reltime()))
 
   -- Memory usage
   local mem = collectgarbage("count")
@@ -13,7 +24,7 @@ function M.check_performance()
   stats.memory_mb = string.format("%.2f", mem / 1024)
 
   -- Buffer count
-  stats.buffers = #vim.fn.getbufinfo({ buflisted = 1 })
+  stats.buffers = #fn.getbufinfo({ buflisted = 1 })
 
   -- Loaded plugins (lazy.nvim)
   local lazy_ok, lazy = pcall(require, "lazy")
@@ -25,7 +36,7 @@ function M.check_performance()
   end
 
   -- Active LSP clients
-  stats.lsp_clients = #vim.lsp.get_clients()
+  stats.lsp_clients = #lsp.get_clients()
 
   -- Display results
   local lines = {
@@ -41,15 +52,19 @@ function M.check_performance()
     table.insert(lines, string.format("Startup Time: %s ms", stats.startup_ms))
   end
 
-  vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO, { title = "Performance" })
+  notify(table.concat(lines, "\n"), vim.log.levels.INFO, { title = "Performance" })
 end
 
--- Check LSP health for current buffer
+--- Check LSP health for the current buffer.
+--- Lists all attached LSP clients with their root directory and
+--- server capabilities (completion, hover, definition, references,
+--- formatting, code_actions), followed by a diagnostic severity summary.
+--- Warns if no LSP clients are attached.
 function M.check_lsp_health()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  local clients = lsp.get_clients({ bufnr = 0 })
 
   if #clients == 0 then
-    vim.notify("No LSP clients attached to this buffer", vim.log.levels.WARN, { title = "LSP Health" })
+    notify("No LSP clients attached to this buffer", vim.log.levels.WARN, { title = "LSP Health" })
     return
   end
 
@@ -103,10 +118,18 @@ function M.check_lsp_health()
   end
 
   table.insert(lines, "")
-  table.insert(lines, string.format("Diagnostics: %d errors, %d warnings, %d hints, %d info",
-    counts.errors, counts.warnings, counts.hints, counts.info))
+  table.insert(
+    lines,
+    string.format(
+      "Diagnostics: %d errors, %d warnings, %d hints, %d info",
+      counts.errors,
+      counts.warnings,
+      counts.hints,
+      counts.info
+    )
+  )
 
-  vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO, { title = "LSP Health" })
+  notify(table.concat(lines, "\n"), vim.log.levels.INFO, { title = "LSP Health" })
 end
 
 return M

@@ -1,24 +1,32 @@
--- Copilot keymaps
+--- Copilot keymaps.
+--- Bindings for GitHub Copilot panel navigation (normal mode) and inline
+--- suggestion cycling (insert mode). All Copilot modules are loaded via
+--- pcall to avoid errors when Copilot is not installed or authenticated.
+--- @module keymaps.copilot
+
 local keymap = vim.keymap
 
--- Helper function to safely get Copilot modules
+--- Safely require the copilot.panel module.
+--- @return table|nil panel The panel module, or nil if unavailable.
 local function get_copilot_panel()
   local ok, panel = pcall(require, "copilot.panel")
   return ok and panel or nil
 end
 
+--- Safely require the copilot.suggestion module.
+--- @return table|nil suggestion The suggestion module, or nil if unavailable.
 local function get_copilot_suggestion()
   local ok, suggestion = pcall(require, "copilot.suggestion")
   return ok and suggestion or nil
 end
 
--- Copilot panel and status
+--- Copilot commands — open panel, disable, enable, and check status.
 keymap.set("n", "<leader>cp", ":Copilot panel<CR>", { desc = "Copilot: Open copilot panel" })
-keymap.set("n", "<leader>cd", ":Copilot disable<CR>", { desc = "Copilot: Disable" })
-keymap.set("n", "<leader>ce", ":Copilot enable<CR>", { desc = "Copilot: Enable" })
+keymap.set("n", "<leader>cD", ":Copilot disable<CR>", { desc = "Copilot: Disable" })
+keymap.set("n", "<leader>cE", ":Copilot enable<CR>", { desc = "Copilot: Enable" })
 keymap.set("n", "<leader>cs", ":Copilot status<CR>", { desc = "Copilot: Status" })
 
--- Copilot panel keymaps
+--- Panel navigation — jump previous/next, accept, refresh, and open.
 keymap.set("n", "[[", function()
   local panel = get_copilot_panel()
   if panel and panel.is_open() then
@@ -40,7 +48,7 @@ keymap.set("n", "<CR>", function()
   end
 end, { desc = "Copilot: Accept suggestion in panel" })
 
-keymap.set("n", "gr", function()
+keymap.set("n", "rp", function()
   local panel = get_copilot_panel()
   if panel and panel.is_open() then
     panel.refresh()
@@ -49,10 +57,7 @@ end, { desc = "Copilot: Refresh panel" })
 
 keymap.set("n", "<M-CR>", ":Copilot panel<CR>", { desc = "Copilot: Open panel" })
 
--- Copilot suggestion keymaps (insert mode)
--- Note: Tab mapping is handled in nvim-cmp.lua to avoid conflicts
--- Tab is reserved exclusively for Copilot inline suggestions
-
+--- Inline suggestion cycling (insert mode) — next, previous, dismiss.
 keymap.set("i", "<leader>]", function()
   local suggestion = get_copilot_suggestion()
   if suggestion and suggestion.is_visible() then
@@ -73,6 +78,3 @@ keymap.set("i", "<C-]>", function()
     suggestion.dismiss()
   end
 end, { desc = "Copilot: Dismiss suggestion" })
-
--- CodeCompanion keymaps
-keymap.set("n", "<leader>cc", ":CodeCompanion<CR>", { desc = "CodeCompanion: Open CodeCompanion" })
