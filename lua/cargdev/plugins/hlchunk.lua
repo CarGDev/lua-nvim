@@ -33,13 +33,7 @@ return {
         delay = 300,
       },
       indent = {
-        enable = true,
-        priority = 10,
-        style = { { fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Whitespace")), "fg", "gui") } },
-        use_treesitter = false,
-        chars = { "│" },
-        ahead_lines = 5,
-        delay = 100,
+        enable = false, -- Disabled: indent-blankline already handles indent guides
       },
       line_num = {
         enable = true,

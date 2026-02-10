@@ -81,16 +81,39 @@ return {
       return " " .. table.concat(names, ", ")
     end
 
-    -- Word counter (excluding symbols)
-    local function word_count()
-      local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    -- Word counter (excluding symbols) - cached to avoid recomputing on every statusline refresh
+    local cached_word_count = 0
+    local word_count_timer = nil
+    local function update_word_count()
+      local buf = vim.api.nvim_get_current_buf()
+      local line_count = vim.api.nvim_buf_line_count(buf)
+      if line_count > 5000 then
+        cached_word_count = -1
+        return
+      end
+      local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
       local text = table.concat(lines, " ")
       local clean_text = text:gsub("[^%w%s]", "")
       local count = 0
       for _ in clean_text:gmatch("%w+") do
         count = count + 1
       end
-      return "words: " .. count
+      cached_word_count = count
+    end
+
+    -- Debounce: only recount on TextChanged/BufEnter, not every statusline refresh
+    vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI", "BufEnter" }, {
+      callback = function()
+        if word_count_timer then
+          word_count_timer:stop()
+        end
+        word_count_timer = vim.defer_fn(update_word_count, 500)
+      end,
+    })
+
+    local function word_count()
+      if cached_word_count < 0 then return "" end
+      return "words: " .. cached_word_count
     end
 
     lualine.setup({

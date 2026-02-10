@@ -190,31 +190,25 @@ return {
         settings = {
           typescript = {
             inlayHints = {
-              parameterNames = { enabled = "all" },
-              parameterTypes = { enabled = true },
-              variableTypes = { enabled = true },
-              propertyDeclarationTypes = { enabled = true },
-              functionLikeReturnTypes = { enabled = true },
+              parameterNames = { enabled = "literals" },
+              parameterTypes = { enabled = false },
+              variableTypes = { enabled = false },
+              propertyDeclarationTypes = { enabled = false },
+              functionLikeReturnTypes = { enabled = false },
               enumMemberValues = { enabled = true },
             },
             suggest = {
               completeFunctionCalls = true,
             },
             updateImportsOnFileMove = { enabled = "always" },
-            -- Use project's TypeScript for proper bundler resolution support
-            tsserver = {
-              experimental = {
-                enableProjectDiagnostics = true,
-              },
-            },
           },
           javascript = {
             inlayHints = {
-              parameterNames = { enabled = "all" },
-              parameterTypes = { enabled = true },
-              variableTypes = { enabled = true },
-              propertyDeclarationTypes = { enabled = true },
-              functionLikeReturnTypes = { enabled = true },
+              parameterNames = { enabled = "literals" },
+              parameterTypes = { enabled = false },
+              variableTypes = { enabled = false },
+              propertyDeclarationTypes = { enabled = false },
+              functionLikeReturnTypes = { enabled = false },
               enumMemberValues = { enabled = true },
             },
             suggest = {
