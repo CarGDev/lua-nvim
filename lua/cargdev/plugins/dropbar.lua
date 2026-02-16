@@ -44,7 +44,34 @@ return {
     icons = {
       enable = true,
       kinds = {
-        use_devicons = true,
+        file_icon = function(path)
+          local file_icon = "󰈙 "
+          local file_icon_hl = "DropBarIconKindFile"
+          local devicons_ok, devicons = pcall(require, "nvim-web-devicons")
+          if not devicons_ok then
+            return file_icon, file_icon_hl
+          end
+          local devicon, devicon_hl = devicons.get_icon(
+            vim.fs.basename(path),
+            vim.fn.fnamemodify(path, ":e"),
+            { default = false }
+          )
+          if not devicon then
+            local buf = vim.iter(vim.api.nvim_list_bufs()):find(function(b)
+              return vim.api.nvim_buf_get_name(b) == path
+            end)
+            if buf then
+              local filetype = vim.api.nvim_get_option_value("filetype", { buf = buf })
+              devicon, devicon_hl = devicons.get_icon_by_filetype(filetype)
+            end
+          end
+          file_icon = devicon and devicon .. " " or file_icon
+          file_icon_hl = devicon_hl or file_icon_hl
+          return file_icon, file_icon_hl
+        end,
+        dir_icon = function(_)
+          return " ", "DropBarIconKindFolder"
+        end,
         symbols = {
           Array = "󰅪 ",
           Boolean = " ",
