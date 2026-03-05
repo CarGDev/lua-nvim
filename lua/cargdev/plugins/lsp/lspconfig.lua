@@ -31,6 +31,7 @@ return {
         "graphql",
         "html",
         "lua_ls",
+        "php",
         "prismals",
         "pyright",
         "svelte",
@@ -156,6 +157,7 @@ return {
       prismals = {
         filetypes = { "prisma" },
       },
+      php_ls = {},
       pyright = { 
         settings = { 
           python = { 

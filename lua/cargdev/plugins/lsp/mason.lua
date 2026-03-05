@@ -45,6 +45,7 @@ return {
         "html",
         "jdtls",
         "lua_ls",
+        "php",
         "prismals",
         "pyright",
         "svelte",

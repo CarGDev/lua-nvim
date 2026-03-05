@@ -28,7 +28,7 @@ return {
         },
         suggestion = {
           enabled = true,
-          auto_trigger = true,
+          auto_trigger = false,
           debounce = 75,
           keymap = {
             accept = "<C-l>",
@@ -98,18 +98,22 @@ return {
     },
     keys = {
       { "<leader>cc", "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat: Toggle chat window" },
-      { "<leader>cq", function()
+      {
+        "<leader>cq",
+        function()
           local input = vim.fn.input("Quick Chat: ")
           if input ~= "" then
             require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
           end
-        end, desc = "CopilotChat: Quick chat (whole buffer)" },
+        end,
+        desc = "CopilotChat: Quick chat (whole buffer)",
+      },
       { "<leader>ce", "<cmd>CopilotChatExplain<cr>", mode = { "n", "v" }, desc = "CopilotChat: Explain code" },
       { "<leader>cr", "<cmd>CopilotChatReview<cr>", mode = { "n", "v" }, desc = "CopilotChat: Review code" },
       { "<leader>cf", "<cmd>CopilotChatFix<cr>", mode = { "n", "v" }, desc = "CopilotChat: Fix code" },
       { "<leader>co", "<cmd>CopilotChatOptimize<cr>", mode = { "n", "v" }, desc = "CopilotChat: Optimize code" },
       { "<leader>cd", "<cmd>CopilotChatDocs<cr>", mode = { "n", "v" }, desc = "CopilotChat: Generate docs" },
-      { "<leader>ct", "<cmd>CopilotChatTests<cr>", mode = { "n", "v" }, desc = "CopilotChat: Generate tests" },
+      { "<leader>ctg", "<cmd>CopilotChatTests<cr>", mode = { "n", "v" }, desc = "CopilotChat: Generate tests" },
       { "<leader>cm", "<cmd>CopilotChatModels<cr>", desc = "CopilotChat: Select model" },
     },
     config = function()

@@ -3,7 +3,7 @@
 -- ============================================================================
 -- Powerful find and replace plugin with live preview and regex support.
 -- Provides project-wide search/replace with ripgrep backend.
--- Keymaps: <leader>sr for search, <leader>sR for current word search.
+-- Keymaps: <leader>sr for search, <leader>[sR for current word search.
 -- ============================================================================
 
 return {
@@ -47,17 +47,17 @@ return {
     windowCreationCommand = "vsplit",
     transitionDuration = 80,
     keymaps = {
-      replace = { n = "<localleader>r" },
-      qflist = { n = "<localleader>q" },
-      syncLocations = { n = "<localleader>s" },
-      syncLine = { n = "<localleader>l" },
+      replace = { n = "<leader>[r" },
+      qflist = { n = "<leader>[q" },
+      syncLocations = { n = "<leader>[s" },
+      syncLine = { n = "<leader>[l" },
       close = { n = "q" },
-      historyOpen = { n = "<localleader>t" },
-      historyAdd = { n = "<localleader>a" },
-      refresh = { n = "<localleader>f" },
-      gotoLocation = { n = "<enter>" },
-      pickHistoryEntry = { n = "<enter>" },
-      abort = { n = "<localleader>b" },
+      historyOpen = { n = "<leader>[t" },
+      historyAdd = { n = "<leader>[a" },
+      refresh = { n = "<leader>[f" },
+      gotoLocation = { n = "<enter>[" },
+      pickHistoryEntry = { n = "<enter>[" },
+      Abort = { n = "<leader>[b" },
     },
   },
 }
