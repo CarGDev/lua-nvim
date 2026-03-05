@@ -136,18 +136,20 @@ g.loaded_ruby_provider = 0 -- Disable Ruby provider (optional)
 
 g.python3_host_prog = fn.expand("~/.local/pipx/venvs/pynvim/bin/python")
 
--- Clipboard provider optimization (macOS)
-g.clipboard = {
-  name = "macOS-clipboard",
-  copy = {
-    ["+"] = "pbcopy",
-    ["*"] = "pbcopy",
-  },
-  paste = {
-    ["+"] = "pbpaste",
-    ["*"] = "pbpaste",
-  },
-}
+-- Clipboard provider optimization (macOS only)
+if vim.fn.has("mac") == 1 then
+  g.clipboard = {
+    name = "macOS-clipboard",
+    copy = {
+      ["+"] = "pbcopy",
+      ["*"] = "pbcopy",
+    },
+    paste = {
+      ["+"] = "pbpaste",
+      ["*"] = "pbpaste",
+    },
+  }
+end
 
 -- Lua specific settings
 opt.runtimepath:append(vim.fn.stdpath("config") .. "/lua")

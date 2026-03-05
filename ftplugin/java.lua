@@ -1,3 +1,9 @@
+-- This ftplugin is currently configured for macOS (Homebrew + Apple Silicon).
+-- Skip on Linux until Linux paths are configured.
+if vim.fn.has("mac") ~= 1 then
+  return
+end
+
 local home = os.getenv("HOME")
 local workspace_path = home .. "/.local/share/nvim/jdtls-workspace/"
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")

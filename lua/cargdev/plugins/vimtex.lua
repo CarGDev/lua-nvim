@@ -10,12 +10,12 @@ return {
   "lervag/vimtex",
   ft = { "tex", "latex", "bib" },
   config = function()
-    -- Use Skim on macOS (or change to your preferred PDF viewer)
-    vim.g.vimtex_view_method = "skim"
-
-    -- Alternatively, use the general viewer (Preview.app)
-    -- vim.g.vimtex_view_method = "general"
-    -- vim.g.vimtex_view_general_viewer = "open"
+    -- PDF viewer: Skim on macOS, zathura elsewhere
+    if vim.fn.has("mac") == 1 then
+      vim.g.vimtex_view_method = "skim"
+    else
+      vim.g.vimtex_view_method = "zathura"
+    end
 
     -- Compiler settings
     vim.g.vimtex_compiler_method = "latexmk"
