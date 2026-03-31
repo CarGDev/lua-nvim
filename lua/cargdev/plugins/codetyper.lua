@@ -17,15 +17,20 @@
 -- Get local config (loaded in core/init.lua)
 local local_cfg = vim.g.cargdev_local or {}
 
--- Skip plugin if local config is missing required values
-if not local_cfg.CODE_TYPER_DIR then
-  return {}
+localDir = "CarGDev/codetyper.nvim"
+
+if local_cfg.RUN_CODETYPER_LOCAL then
+  -- Skip plugin if local config is missing required values
+  if not local_cfg.CODE_TYPER_DIR then
+    return {}
+  end
+  localDir = local_cfg.CODE_TYPER_DIR
 end
 
 return {
   -- Codetyper.nvim - AI-powered coding partner
   -- Local development version
-  dir = local_cfg.CODE_TYPER_DIR,
+  localDir,
   name = "codetyper.nvim",
   lazy = false, -- Load on startup to create .coder folder
   priority = 100, -- Load early
