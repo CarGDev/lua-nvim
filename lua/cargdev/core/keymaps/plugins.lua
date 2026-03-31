@@ -134,9 +134,6 @@ keymap.set(
 -- TELESCOPE KEYMAPS (Enhanced with safe file searching)
 -- =============================================================================
 
---- Unfiltered Telescope file search (may include binaries — use with caution).
-keymap.set("n", "<leader>fF", "<cmd>Telescope find_files<CR>", { desc = "Find files (all)" })
-
 -- =============================================================================
 -- DATABASE KEYMAPS (Temporarily disabled to prevent conflicts)
 -- =============================================================================
