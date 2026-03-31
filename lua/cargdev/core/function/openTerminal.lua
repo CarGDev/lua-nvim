@@ -22,8 +22,8 @@ local function open_terminal()
   cmd("wincmd l")
 
   -- Get current buffer number and type
-  local buf_num = apinvim_get_current_buf()
-  local buf_type = apinvim_buf_get_option(buf_num, "buftype")
+  local buf_num = api.nvim_get_current_buf()
+  local buf_type = api.nvim_get_option_value("buftype", { buf = buf_num })
 
   if buf_type == "terminal" then
     -- If already in a terminal, close it
@@ -36,11 +36,11 @@ local function open_terminal()
     cmd("setlocal nonumber norelativenumber")
 
     -- Auto-start insert mode in terminal
-    apinvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
+    api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
       buffer = 0,
       command = "startinsert!",
     })
-    apinvim_create_autocmd("BufLeave", {
+    api.nvim_create_autocmd("BufLeave", {
       buffer = 0,
       command = "stopinsert!",
     })

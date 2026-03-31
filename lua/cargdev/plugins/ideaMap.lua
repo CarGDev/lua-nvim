@@ -22,8 +22,8 @@ local repo = "CarGDev/ideadrop.nvim"
 local localDir = nil
 
 -- If requested to run ideadrop locally and a path is provided, use it.
-if local_cfg.RUN_IDEA_LOCAL and local_cfg.CODE_TYPER_DIR and #local_cfg.CODE_TYPER_DIR > 0 then
-  localDir = local_cfg.CODE_TYPER_DIR
+if local_cfg.RUN_IDEA_LOCAL and local_cfg.IDEA_DIR and #local_cfg.IDEA_DIR > 0 then
+  localDir = local_cfg.IDEA_DIR
 end
 
 return {

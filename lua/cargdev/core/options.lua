@@ -248,8 +248,17 @@ vim.api.nvim_create_autocmd("FileChangedShellPost", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
   callback = function()
-    local filetype = vim.bo.filetype
+    -- Safely get the primary filetype (handle compound types like "yaml.ansible")
+    local filetype = (vim.bo.filetype or ""):match("^[^.]+") or ""
     local opt = vim.opt_local
+
+    -- If no filetype is detected, apply a sensible default (visual wrapping)
+    if filetype == "" then
+      opt.textwidth = 0
+      opt.wrap = true
+      opt.linebreak = true
+      return
+    end
 
     -- Text/documentation files - visual wrapping only (no hard breaks)
     if vim.tbl_contains({ "text", "markdown", "gitcommit", "mail", "help", "man" }, filetype) then
