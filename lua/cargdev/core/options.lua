@@ -38,7 +38,7 @@ opt.autoindent = true -- Auto indent
 opt.smartindent = true -- Smart indent
 
 -- Performance optimizations
-opt.updatetime = 100 -- Faster completion (reduced from 250)
+-- opt.updatetime = 100 -- Faster completion (reduced from 250)
 opt.timeoutlen = 200 -- Faster key sequence completion (reduced from 300)
 opt.redrawtime = 1500 -- Allow more time for loading syntax
 opt.synmaxcol = 200 -- Only highlight the first 200 columns (conservative for performance)
@@ -250,7 +250,7 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     local filetype = vim.bo.filetype
     local opt = vim.opt_local
-    
+
     -- Text/documentation files - visual wrapping only (no hard breaks)
     if vim.tbl_contains({ "text", "markdown", "gitcommit", "mail", "help", "man" }, filetype) then
       opt.textwidth = 0 -- Disable hard wrapping, use visual wrapping based on window width
@@ -258,16 +258,18 @@ vim.api.nvim_create_autocmd("FileType", {
       opt.linebreak = true
       -- Removed 't' option - we want visual wrapping only, not hard line breaks
     end
-    
+
     -- Code files - visual wrapping only (no hard breaks)
-    if vim.tbl_contains({ "lua", "javascript", "typescript", "python", "java", "cpp", "c", "rust", "go" }, filetype) then
+    if
+      vim.tbl_contains({ "lua", "javascript", "typescript", "python", "java", "cpp", "c", "rust", "go" }, filetype)
+    then
       opt.textwidth = 0 -- Disable hard wrapping, use visual wrapping based on window width
       opt.formatoptions:append("c") -- Auto-wrap comments (only if textwidth > 0, so this won't apply)
       opt.formatoptions:append("r") -- Auto-wrap comments with leader
       opt.formatoptions:append("o") -- Auto-wrap comments with 'o'
       opt.formatoptions:append("q") -- Allow formatting of comments with 'gq'
     end
-    
+
     -- Configuration files - visual wrapping only (no hard breaks)
     if vim.tbl_contains({ "conf", "config", "ini", "toml", "yaml", "json" }, filetype) then
       opt.textwidth = 0 -- Disable hard wrapping, use visual wrapping based on window width

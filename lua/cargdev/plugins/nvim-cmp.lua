@@ -34,6 +34,14 @@ return {
     require("luasnip.loaders.from_vscode").lazy_load()
 
     cmp.setup({
+      enabled = function()
+        local buftype = vim.bo.buftype
+        -- Disable in prompt/nofile buffers (pickers, floating inputs, etc.)
+        if buftype == "prompt" or buftype == "nofile" then
+          return false
+        end
+        return true
+      end,
       completion = {
         completeopt = "menu,menuone,preview,noselect",
         -- Performance optimizations
@@ -90,14 +98,14 @@ return {
           symbol_map = { Copilot = "" },
         }),
       },
-      
+
       -- Performance optimizations
       performance = {
         debounce = 50, -- Debounce completion requests
         throttle = 100, -- Throttle completion requests
         fetching_timeout = 200, -- Timeout for fetching completions
       },
-      
+
       -- Reduce completion menu size for better performance
       window = {
         completion = {

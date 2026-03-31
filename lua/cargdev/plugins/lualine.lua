@@ -101,9 +101,13 @@ return {
       cached_word_count = count
     end
 
-    -- Debounce: only recount on TextChanged/BufEnter, not every statusline refresh
+    -- Debounce: only recount on TextChanged/BufEnter for .tex files
     vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI", "BufEnter" }, {
       callback = function()
+        if vim.bo.filetype ~= "tex" then
+          cached_word_count = -1
+          return
+        end
         if word_count_timer then
           word_count_timer:stop()
         end
