@@ -122,22 +122,6 @@ return {
       folder_level = 1,
       color_mode = true,
     },
-    outline = {
-      win_position = "right",
-      win_width = 30,
-      auto_preview = true,
-      detail = true,
-      auto_close = true,
-      close_after_jump = false,
-      layout = "normal",
-      max_height = 0.5,
-      left_width = 0.3,
-      keys = {
-        toggle_or_jump = "o",
-        quit = "q",
-        jump = "e",
-      },
-    },
     callhierarchy = {
       layout = "float",
       keys = {
@@ -163,21 +147,20 @@ return {
   },
   keys = {
     { "gh", "<cmd>Lspsaga finder<cr>", desc = "LSP Finder" },
-    { "<leader>ca", "<cmd>Lspsaga code_action<cr>", mode = { "n", "v" }, desc = "Code action" },
+    { "<leader>la", "<cmd>Lspsaga code_action<cr>", mode = { "n", "v" }, desc = "LSP: Code action (saga)" },
     { "gr", "<cmd>Lspsaga rename<cr>", desc = "Rename" },
     { "gR", "<cmd>Lspsaga rename ++project<cr>", desc = "Rename (project)" },
     { "gd", "<cmd>Lspsaga peek_definition<cr>", desc = "Peek definition" },
     { "gD", "<cmd>Lspsaga goto_definition<cr>", desc = "Goto definition" },
     { "gt", "<cmd>Lspsaga peek_type_definition<cr>", desc = "Peek type definition" },
     { "gT", "<cmd>Lspsaga goto_type_definition<cr>", desc = "Goto type definition" },
-    { "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<cr>", desc = "Line diagnostics" },
+    -- Line diagnostics handled by native <leader>dd (vim.diagnostic.open_float)
     { "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>", desc = "Cursor diagnostics" },
     { "<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<cr>", desc = "Buffer diagnostics" },
     { "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", desc = "Prev diagnostic" },
     { "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", desc = "Next diagnostic" },
     { "K", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover doc" },
-    { "<leader>ci", "<cmd>Lspsaga incoming_calls<cr>", desc = "Incoming calls" },
-    { "<leader>co", "<cmd>Lspsaga outgoing_calls<cr>", desc = "Outgoing calls" },
-    { "<leader>so", "<cmd>Lspsaga outline<cr>", desc = "Toggle outline" },
+    { "<leader>li", "<cmd>Lspsaga incoming_calls<cr>", desc = "LSP: Incoming calls" },
+    { "<leader>lo", "<cmd>Lspsaga outgoing_calls<cr>", desc = "LSP: Outgoing calls" },
   },
 }

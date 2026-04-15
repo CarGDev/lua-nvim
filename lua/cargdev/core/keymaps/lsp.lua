@@ -20,9 +20,7 @@ keymap.set("n", "gt", "<cmd>FzfLua lsp_typedefs<cr>", { desc = "Go to type defin
 keymap.set("n", "<leader>ds", "<cmd>FzfLua lsp_document_symbols<cr>", { desc = "Document symbols" })
 keymap.set("n", "<leader>lw", "<cmd>FzfLua lsp_workspace_symbols<cr>", { desc = "LSP: Workspace symbols" })
 
---- Code actions, rename, and hover documentation.
-keymap.set("n", "<leader>ca", "<cmd>FzfLua lsp_code_actions<cr>", { desc = "Code actions" })
-keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "Rename" })
+--- Hover docs (code actions handled by lspsaga <leader>la, rename by inc-rename).
 keymap.set("n", "H", "<cmd>lua vim.lsp.buf.hover()<cr>", { desc = "Hover documentation" })
 
 --- Diagnostics — workspace list, line float, and prev/next navigation.

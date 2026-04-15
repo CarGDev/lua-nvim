@@ -21,10 +21,10 @@ local function get_copilot_suggestion()
 end
 
 --- Copilot commands — open panel, disable, enable, and check status.
-keymap.set("n", "<leader>cp", ":Copilot panel<CR>", { desc = "Copilot: Open copilot panel" })
-keymap.set("n", "<leader>cD", ":Copilot disable<CR>", { desc = "Copilot: Disable" })
-keymap.set("n", "<leader>cE", ":Copilot enable<CR>", { desc = "Copilot: Enable" })
-keymap.set("n", "<leader>cs", ":Copilot status<CR>", { desc = "Copilot: Status" })
+keymap.set("n", "<leader>ip", ":Copilot panel<CR>", { desc = "Copilot: Open panel" })
+keymap.set("n", "<leader>iD", ":Copilot disable<CR>", { desc = "Copilot: Disable" })
+keymap.set("n", "<leader>iE", ":Copilot enable<CR>", { desc = "Copilot: Enable" })
+keymap.set("n", "<leader>iS", ":Copilot status<CR>", { desc = "Copilot: Status" })
 
 --- Panel navigation — jump previous/next, accept, refresh, and open.
 keymap.set("n", "[[", function()

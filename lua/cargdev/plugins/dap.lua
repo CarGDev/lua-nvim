@@ -25,7 +25,6 @@ return {
         "nvim-neotest/neotest-jest",
         "nvim-neotest/neotest-python",
         "nvim-lua/plenary.nvim",
-        "antoinemadec/FixCursorHold.nvim",
       },
       config = function()
         require("neotest").setup({

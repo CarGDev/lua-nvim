@@ -51,9 +51,9 @@ keymap.set(
 )
 keymap.set("n", "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", { desc = "ToggleTerm vertical split" })
 
---- Session management — save/restore sessions (uppercase S/R to avoid substitute conflicts).
-keymap.set("n", "<leader>sS", "<cmd>SessionSave<cr>", { desc = "Session: Save" })
-keymap.set("n", "<leader>sR", "<cmd>SessionRestore<cr>", { desc = "Session: Restore" })
+--- Session management — under <leader>S* to keep <leader>s* for search.
+keymap.set("n", "<leader>Ss", "<cmd>SessionSave<cr>", { desc = "Session: Save" })
+keymap.set("n", "<leader>Sr", "<cmd>SessionRestore<cr>", { desc = "Session: Restore" })
 
 --- Format the current buffer using the attached LSP formatter.
 --- TODO: add format buffer keymap
@@ -72,12 +72,8 @@ keymap.set(
   "<cmd>lua require('nvim-surround').surround_delete()<cr>",
   { desc = "Delete surrounding" }
 )
-keymap.set(
-  "n",
-  "<leader>sr",
-  "<cmd>lua require('nvim-surround').surround_replace()<cr>",
-  { desc = "Replace surrounding" }
-)
+-- nvim-surround replace is available via native `cs<from><to>` (e.g. cs"')
+
 
 -- Git conflicts (moved to lua/cargdev/core/keymaps/gitconflict.lua)
 
@@ -91,9 +87,6 @@ keymap.set(
 
 --- Insert a `console.log()` snippet on the line below and enter insert mode.
 keymap.set("n", "<leader>cl", "oconsole.log()<ESC>i", { desc = "Add console.log" })
-
---- Open TODO comments in the Trouble panel.
-keymap.set("n", "<leader>xt", "<cmd>TodoTrouble<cr>", { desc = "Open todos in trouble" })
 
 --- nvim-surround classic-style mappings (ys, yss, yS, ySS).
 keymap.set("n", "ys", "<cmd>lua require('nvim-surround').surround_add()<cr>", { desc = "Add surrounding" })
@@ -209,5 +202,5 @@ keymap.set("n", "<leader>tC", "<cmd>set formatoptions-=c<cr>", { desc = "Disable
 
 --- Indent and wrap — toggle break indent and show/hide break indicator.
 keymap.set("n", "<leader>ti", "<cmd>set breakindent!<cr>", { desc = "Toggle break indent" })
-keymap.set("n", "<leader>ts", "<cmd>set showbreak=↪ <cr>", { desc = "Show break indicator" })
-keymap.set("n", "<leader>tS", "<cmd>set showbreak=<cr>", { desc = "Hide break indicator" })
+keymap.set("n", "<leader>tB", "<cmd>set showbreak=↪ <cr>", { desc = "Show break indicator" })
+keymap.set("n", "<leader>tb", "<cmd>set showbreak=<cr>", { desc = "Hide break indicator" })

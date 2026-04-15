@@ -10,5 +10,5 @@ local keymap = vim.keymap
 -- SNACKS NAVIGATION
 -- =============================================================================
 
---- Search TODO/FIXME/HACK comments (via Telescope — Snacks lacks this picker).
-keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
+--- Search TODO/FIXME/HACK comments (via fzf-lua — Snacks lacks this picker).
+keymap.set("n", "<leader>ft", "<cmd>TodoFzfLua<cr>", { desc = "Find todos" })

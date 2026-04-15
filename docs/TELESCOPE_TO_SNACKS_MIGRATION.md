@@ -1,5 +1,7 @@
 # Telescope to Snacks Migration
 
+> **Historical note (2026-04-14):** Telescope has since been fully removed from this configuration. The current fuzzy finder is **fzf-lua** (see [PLUGINS.md](./PLUGINS.md)). Dashboard entries were migrated to `:FzfLua` and `TodoTelescope` → `TodoFzfLua`. This document is kept for reference only.
+
 ## Overview
 
 Successfully migrated from Telescope to Snacks throughout the project for a more modern, faster, and cleaner interface.

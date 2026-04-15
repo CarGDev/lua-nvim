@@ -41,7 +41,7 @@
 | `<leader>w` | n | Save file |
 | `<leader>q` | n | Quit |
 | `<leader>xa` | n | Save and close all |
-| `<leader>so` | n | Reload nvim (source %) |
+| `<leader>vr` | n | Reload current file (`:source %`) |
 | `<leader>no` | n | Clear search highlight |
 
 ### Editing Shortcuts
@@ -77,16 +77,16 @@
 | `<leader>xn` | n | Next quickfix item |
 | `<leader>xp` | n | Previous quickfix item |
 | `<leader>xo` | n | Open quickfix list |
-| `<leader>xq` | n | Close quickfix list |
+| `<leader>xQ` | n | Close quickfix list |
 | `<leader>xf` | n | First quickfix item |
-| `<leader>xl` | n | Last quickfix item |
+| `<leader>xL` | n | Last quickfix item |
 
 ### Location List Navigation
 | Key | Mode | Action |
 |-----|------|--------|
 | `<leader>ln` | n | Next location item |
 | `<leader>lp` | n | Previous location item |
-| `<leader>lo` | n | Open location list |
+| `<leader>lL` | n | Open location list |
 | `<leader>lq` | n | Close location list |
 
 ---
@@ -149,8 +149,11 @@
 ### Code Actions & Rename
 | Key | Mode | Action |
 |-----|------|--------|
-| `<leader>ca` | n | Code actions |
-| `<leader>rn` | n | Rename symbol |
+| `<leader>la` | n, v | LSP code actions (lspsaga) |
+| `<leader>li` | n | LSP incoming calls |
+| `<leader>lo` | n | LSP outgoing calls |
+| `<leader>ld` | n | LSP cursor/buffer diagnostics (lspsaga) |
+| `<leader>rn` | n | Rename symbol (inc-rename) |
 | `H` | n | Hover documentation |
 
 ### Diagnostics
@@ -224,7 +227,7 @@ Inside nvim-tree:
 |-----|------|--------|
 | `<leader>sa` | n | Add surrounding |
 | `<leader>sd` | n | Delete surrounding |
-| `<leader>sr` | n | Replace surrounding |
+| `cs<from><to>` | n | Replace surrounding (native nvim-surround) |
 | `ys` | n | Add surrounding (classic) |
 | `yss` | n | Add surrounding to line |
 | `yS` | n | Add surrounding on new lines |
@@ -320,10 +323,10 @@ Inside nvim-tree:
 ### Copilot Commands
 | Key | Mode | Action |
 |-----|------|--------|
-| `<leader>cp` | n | Open Copilot panel |
-| `<leader>cD` | n | Disable Copilot |
-| `<leader>cE` | n | Enable Copilot |
-| `<leader>cs` | n | Copilot status |
+| `<leader>ip` | n | Open Copilot panel |
+| `<leader>iD` | n | Disable Copilot |
+| `<leader>iE` | n | Enable Copilot |
+| `<leader>iS` | n | Copilot status |
 
 ### Copilot Panel Navigation
 | Key | Mode | Action |
@@ -341,29 +344,22 @@ Inside nvim-tree:
 | `<leader>[` | i | Previous suggestion |
 | `<C-]>` | i | Dismiss suggestion |
 
-### CopilotChat
+### Codetyper (custom AI assistant)
 | Key | Mode | Action |
 |-----|------|--------|
-| `<leader>cc` | n | Toggle CopilotChat window |
-| `<leader>cq` | n | Quick chat (whole buffer) |
-| `<leader>ce` | n, v | Explain code |
-| `<leader>cr` | n, v | Review code |
-| `<leader>cf` | n, v | Fix code |
-| `<leader>co` | n, v | Optimize code |
-| `<leader>cd` | n, v | Generate docs |
-| `<leader>ct` | n, v | Generate tests |
-| `<leader>cm` | n | Select model |
+| `<leader>co` | n | Open Coder view |
+| `<leader>ct` | n | Toggle Coder view |
+| `<leader>cp` | n | Process prompt |
+| `<leader>cs` | n | Show status |
+| `<leader>cf` | n | Switch focus |
+| `<leader>cv` | n | View tree |
+| `<leader>cr` | n | Refresh tree |
+| `<leader>ca` | n | Open Ask panel |
+| `<leader>cx` | n | Clear Ask history |
+| `<leader>cd` | n | Open Diff Review |
+| `<leader>ctt` | n, v | Transform tag(s) at cursor/selection |
 
-### Copilot Chat (Visual, personal shortcuts)
-| Key | Mode | Action |
-|-----|------|--------|
-| `<leader>zn` | v | Rename variable |
-| `<leader>zc` | n | Open Copilot Chat |
-| `<leader>ze` | v | Explain code |
-| `<leader>zr` | v | Review code |
-| `<leader>zf` | v | Fix code |
-| `<leader>zo` | v | Optimize code |
-| `<leader>zd` | v | Generate docs |
+CopilotChat was removed on 2026-04-14 — use the CLI or codetyper for chat workflows.
 
 ---
 
@@ -399,7 +395,7 @@ Inside nvim-tree:
 | Key | Mode | Action |
 |-----|------|--------|
 | `<leader>to` | n | Open new tab |
-| `<leader>cx` | n | Close current tab |
+| `<leader>xc` | n | Close current tab |
 | `<leader>tn` | n | Next tab |
 | `<leader>tp` | n | Previous tab |
 | `<leader>tt` | n | Open buffer in new tab |
@@ -495,8 +491,8 @@ Inside nvim-tree:
 | `<leader>tc` | n | Enable auto-wrap comments |
 | `<leader>tC` | n | Disable auto-wrap comments |
 | `<leader>ti` | n | Toggle break indent |
-| `<leader>ts` | n | Show break indicator |
-| `<leader>tS` | n | Hide break indicator |
+| `<leader>tB` | n | Show break indicator |
+| `<leader>tb` | n | Hide break indicator |
 
 ---
 
@@ -516,8 +512,8 @@ Inside nvim-tree:
 
 | Key | Mode | Action |
 |-----|------|--------|
-| `<leader>sS` | n | Session: Save |
-| `<leader>sR` | n | Session: Restore |
+| `<leader>Ss` | n | Session: Save |
+| `<leader>Sr` | n | Session: Restore |
 
 ---
 
@@ -527,10 +523,8 @@ Inside nvim-tree:
 |---------|-------------|
 | `:Lazy` | Plugin manager |
 | `:Mason` | LSP server manager |
-| `:Navbuddy` | Code navigation |
 | `:Outline` | Symbol outline |
-| `:Neogit` | Git interface |
-| `:DiffviewOpen` | Diff view |
+| `:LazyGit` | Git TUI (merge conflicts included) |
 | `:GrugFar` | Search & replace |
 | `:Octo` | GitHub PRs/issues |
 | `:OverseerRun` | Run tasks |
@@ -543,4 +537,4 @@ Inside nvim-tree:
 
 ---
 
-*Last Updated: February 10, 2026*
+*Last Updated: April 14, 2026*

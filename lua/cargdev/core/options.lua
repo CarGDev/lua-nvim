@@ -83,7 +83,7 @@ opt.breakindentopt = "shift:2" -- Indent wrapped lines by 2 spaces
 
 -- Text width and formatting
 opt.textwidth = 0 -- Disable hard wrapping (0 = no limit, wraps based on window width)
-opt.colorcolumn = "" -- Disable color column (or set to a high value if you want a guide)
+opt.colorcolumn = "80" -- Visual guide at column 80
 opt.formatoptions = "jcroqln" -- Format options (removed 't' to disable auto-wrap based on textwidth)
 
 -- Format options settings

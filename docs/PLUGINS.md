@@ -1,17 +1,13 @@
 # Plugins Reference
 
-Complete list of all plugins in this configuration.
+Complete list of plugins in this configuration.
 
 ## Navigation & Search
 
 | Plugin | Description |
 |--------|-------------|
-| `nvim-telescope/telescope.nvim` | Fuzzy finder for files, text, buffers |
-| `folke/flash.nvim` | Jump anywhere with minimal keystrokes |
-| `ThePrimeagen/harpoon` | Quick file marks and navigation |
+| `ibhagwan/fzf-lua` | Primary fuzzy finder (files, grep, LSP, diagnostics, todos) |
 | `cbochs/portal.nvim` | Navigate jumplist/changelist with preview |
-| `SmiteshP/nvim-navbuddy` | Code structure navigation popup |
-| `SmiteshP/nvim-navic` | Breadcrumb provider for navbuddy |
 
 ## File Management
 
@@ -24,12 +20,9 @@ Complete list of all plugins in this configuration.
 
 | Plugin | Description |
 |--------|-------------|
-| `kdheepak/lazygit.nvim` | LazyGit integration |
-| `NeogitOrg/neogit` | Magit-like git interface |
-| `sindrets/diffview.nvim` | Side-by-side diff viewer |
-| `lewis6991/gitsigns.nvim` | Git signs in gutter |
-| `f-person/git-blame.nvim` | Inline git blame |
-| `pwntester/octo.nvim` | GitHub issues/PRs in Neovim |
+| `kdheepak/lazygit.nvim` | LazyGit TUI (also handles merge conflicts) |
+| `lewis6991/gitsigns.nvim` | Gutter signs, hunk staging, inline blame |
+| `pwntester/octo.nvim` | GitHub issues/PRs (fzf-lua picker) |
 
 ## LSP & Code Intelligence
 
@@ -38,17 +31,16 @@ Complete list of all plugins in this configuration.
 | `neovim/nvim-lspconfig` | LSP configuration |
 | `williamboman/mason.nvim` | LSP server installer |
 | `williamboman/mason-lspconfig.nvim` | Mason + lspconfig bridge |
-| `nvimdev/lspsaga.nvim` | Pretty LSP UI |
+| `nvimdev/lspsaga.nvim` | Pretty LSP UI (code action, hover, rename, calls) |
 | `hrsh7th/nvim-cmp` | Completion engine |
 | `hrsh7th/cmp-nvim-lsp` | LSP completion source |
 | `hrsh7th/cmp-buffer` | Buffer completion source |
 | `hrsh7th/cmp-path` | Path completion source |
-| `hedyhli/outline.nvim` | Symbol outline sidebar |
-| `smjonas/inc-rename.nvim` | Live rename preview |
+| `hedyhli/outline.nvim` | Symbol outline sidebar (`<leader>so`) |
+| `smjonas/inc-rename.nvim` | Live rename preview (`<leader>rn`) |
 | `kosayoda/nvim-lightbulb` | Code action indicator |
 | `rachartier/tiny-inline-diagnostic.nvim` | Pretty inline diagnostics |
 | `folke/trouble.nvim` | Diagnostics list |
-| `pmizio/typescript-tools.nvim` | Enhanced TypeScript support |
 
 ## Treesitter
 
@@ -67,11 +59,10 @@ Complete list of all plugins in this configuration.
 | `mg979/vim-visual-multi` | Multi-cursor editing |
 | `gbprod/yanky.nvim` | Yank ring with history |
 | `Wansmer/treesj` | Split/join code blocks |
-| `monaqa/dial.nvim` | Smart increment/decrement |
-| `kylechui/nvim-surround` | Surround text objects |
+| `kylechui/nvim-surround` | Surround text objects (native `cs<from><to>`) |
 | `windwp/nvim-autopairs` | Auto close brackets |
 | `numToStr/Comment.nvim` | Commenting |
-| `folke/todo-comments.nvim` | Highlight TODOs |
+| `folke/todo-comments.nvim` | Highlight TODOs (`:TodoFzfLua`) |
 | `gbprod/substitute.nvim` | Substitute operator |
 | `mbbill/undotree` | Visual undo history |
 | `chentoast/marks.nvim` | Better marks |
@@ -81,8 +72,8 @@ Complete list of all plugins in this configuration.
 
 | Plugin | Description |
 |--------|-------------|
-| `MagicDuck/grug-far.nvim` | Project-wide search & replace |
-| `cshuaimin/ssr.nvim` | Structural search/replace |
+| `MagicDuck/grug-far.nvim` | Project-wide search & replace (`<leader>sr` / `<leader>sR`) |
+| `cshuaimin/ssr.nvim` | Structural search/replace (`<leader>sX`) |
 
 ## Debugging
 
@@ -107,28 +98,22 @@ Complete list of all plugins in this configuration.
 
 | Plugin | Description |
 |--------|-------------|
-| `CarGDev/cargdev-cyberpunk` | Custom cyberpunk theme |
-| `folke/snacks.nvim` | Dashboard, notifier, picker, terminal |
-| `folke/noice.nvim` | UI for messages, cmdline, popups |
+| `CarGDev/cargdev-cyberpunk` | Custom cyberpunk theme (owned) |
+| `folke/snacks.nvim` | Dashboard, notifier, terminal |
+| `folke/noice.nvim` | Centered cmdline popup (cmdline-only mode) |
+| `j-hui/fidget.nvim` | LSP progress |
 | `nvim-lualine/lualine.nvim` | Statusline |
 | `akinsho/bufferline.nvim` | Buffer tabs |
 | `Bekaboo/dropbar.nvim` | VS Code-like breadcrumbs |
 | `lewis6991/satellite.nvim` | Scrollbar with markers |
 | `folke/which-key.nvim` | Keybinding hints |
-| `stevearc/dressing.nvim` | Better vim.ui |
-| `rcarriga/nvim-notify` | Notification manager |
-| `j-hui/fidget.nvim` | LSP progress |
-| `folke/edgy.nvim` | Window layout management |
+| `rcarriga/nvim-notify` | Notification backend |
 
 ## Eye Candy
 
 | Plugin | Description |
 |--------|-------------|
-| `echasnovski/mini.animate` | Smooth animations |
-| `rasulomaroff/reactive.nvim` | Mode-based colors |
-| `mawkler/modicator.nvim` | Line number mode colors |
 | `shellRaining/hlchunk.nvim` | Scope highlighting |
-| `nvim-zh/colorful-winsep.nvim` | Colorful window separators |
 | `brenoprata10/nvim-highlight-colors` | Color preview |
 | `lukas-reineke/indent-blankline.nvim` | Indent guides |
 | `xiyaowong/transparent.nvim` | Transparent background |
@@ -138,12 +123,7 @@ Complete list of all plugins in this configuration.
 | Plugin | Description |
 |--------|-------------|
 | `folke/zen-mode.nvim` | Distraction-free mode |
-| `folke/twilight.nvim` | Dim inactive code |
-| `folke/persistence.nvim` | Session management |
-| `rmagatti/auto-session` | Auto session restore |
 | `m4xshen/hardtime.nvim` | Vim motion training |
-| `tris203/precognition.nvim` | Vim motion hints |
-| `NStefan002/screenkey.nvim` | Show keypresses |
 | `bennypowers/nvim-regexplainer` | Regex explanation |
 
 ## Language Specific
@@ -173,28 +153,33 @@ Complete list of all plugins in this configuration.
 | `nvim-neotest/neotest-jest` | Jest adapter |
 | `nvim-neotest/neotest-python` | Python test adapter |
 
-## AI & Copilot
+## AI
 
 | Plugin | Description |
 |--------|-------------|
-| `zbirenbaum/copilot.lua` | GitHub Copilot |
-| `zbirenbaum/copilot-cmp` | Copilot completion source |
+| `zbirenbaum/copilot.lua` | GitHub Copilot ghost text |
+| `zbirenbaum/copilot-cmp` | Copilot completion source in nvim-cmp |
+| `CarGDev/codetyper.nvim` | Custom multi-provider AI assistant (owned) |
+| `CarGDev/ideadrop.nvim` | Obsidian-style idea panel (owned) |
 
 ## Misc
 
 | Plugin | Description |
 |--------|-------------|
-| `wakatime/vim-wakatime` | Coding time tracking |
+| `wakatime/vim-wakatime` | Coding time tracking (under review — see audit) |
 | `kawre/leetcode.nvim` | LeetCode integration |
 | `christoomey/vim-tmux-navigator` | Tmux integration |
-| `szw/vim-maximizer` | Window maximizer |
 | `nvim-lua/plenary.nvim` | Lua utilities |
 | `MunifTanjim/nui.nvim` | UI components |
 | `kkharji/sqlite.lua` | SQLite for plugins |
 
 ---
 
-## Plugin Count: 80+
+## Recently Removed (2026-04-14)
+
+telescope.nvim · telescope-fzf-native · telescope-dap · neogit · diffview.nvim · CopilotChat.nvim · modicator.nvim · vim-maximizer · precognition.nvim · twilight.nvim · git-blame.nvim · navbuddy.nvim · nvim-navic · FixCursorHold.nvim
+
+See [CHANGELOG.md](../CHANGELOG.md) for rationale.
 
 ## Installation
 

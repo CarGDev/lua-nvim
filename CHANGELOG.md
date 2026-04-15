@@ -6,6 +6,60 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2026-04-14] - Pruning & Keymap Deconfliction
+
+### Removed - Plugins
+- **modicator.nvim** - mode-colored line numbers (already shown by lualine)
+- **vim-maximizer** - split maximizer (native `<C-w>_`/`<C-w>|` suffice)
+- **precognition.nvim** - vim motion hints (training wheels no longer needed)
+- **twilight.nvim** - dim-inactive focus mode (rarely used)
+- **git-blame.nvim** - inline blame (gitsigns already provides it)
+- **navbuddy.nvim** + **nvim-navic** - symbol popup (dropbar + outline.nvim cover it)
+- **FixCursorHold.nvim** - legacy CursorHold perf fix, unneeded on modern Neovim
+- **telescope.nvim** + **telescope-fzf-native** + **telescope-dap** - replaced fully by fzf-lua
+- **neogit** - duplicate git UI (lazygit handles workflows including conflicts)
+- **diffview.nvim** - lazygit's built-in conflict resolver replaces it
+- **CopilotChat.nvim** - chat workflow moved to CLI + codetyper.nvim
+
+### Added
+- **noice.nvim** restored in cmdline-only mode: centered floating `:` / `/` popup, with messages/popupmenu/LSP features disabled so snacks.notifier and fidget keep owning notifications and LSP progress
+- `opt.colorcolumn = "80"` visual guide in `core/options.lua`
+
+### Changed - Keymap Deconfliction
+Reserved `<leader>c*` for codetyper. Moved conflicting bindings:
+
+| Old | New | Purpose |
+|-----|-----|---------|
+| `<leader>cs` | `<leader>so` | Outline toggle |
+| `<leader>ca` | `<leader>la` | LSP code action (lspsaga) |
+| `<leader>ci` / `<leader>co` | `<leader>li` / `<leader>lo` | LSP incoming/outgoing calls |
+| `<leader>cp` / `<leader>cs` / `<leader>cD` / `<leader>cE` | `<leader>ip` / `<leader>iS` / `<leader>iD` / `<leader>iE` | Copilot panel/status/disable/enable |
+| `<leader>cx` | `<leader>xc` | Close current tab |
+| `<leader>rn` (native) | _removed_ | inc-rename owns `<leader>rn` |
+| `<leader>sS` / `<leader>sR` (sessions) | `<leader>Ss` / `<leader>Sr` | SessionSave/Restore (freed `<leader>s*` for search) |
+| `<leader>sR` (SSR) | `<leader>sX` | Structural search/replace |
+| `<leader>sr` (surround) | _removed, use native `cs<from><to>`_ | nvim-surround replace |
+| `<leader>sl` (saga line diag) | _removed_ | redundant with native `<leader>dd` |
+| `<leader>or` / `<leader>oa` (octo) | `<leader>oL` / `<leader>oA` | Octo repo list / actions (`<leader>or` kept for Overseer run) |
+| `<leader>xt` (TodoTrouble dup) | _removed_ | trouble.lua already registered it |
+| `<leader>xq` / `<leader>xl` (quickfix) | `<leader>xQ` / `<leader>xL` | Quickfix close/last (freed for Trouble) |
+| `<leader>ts` / `<leader>tS` (showbreak) | `<leader>tB` / `<leader>tb` | Show/hide break indicator |
+| `<leader>lo` (lopen) | `<leader>lL` | Location-list open (freed `<leader>lo` for LSP outgoing) |
+| `<leader>so` (`:source %`) | `<leader>vr` | Reload current file (freed `<leader>so` for Outline) |
+| `<leader>nh` (package-info) | `<leader>nH` | Hide package info (`<leader>nh` kept for `:nohl`) |
+
+Removed all `<leader>z*` / `<leader>c*` CopilotChat bindings.
+
+### Added
+- Dashboard actions switched from `:Telescope` to `:FzfLua`.
+- `TodoTelescope` → `TodoFzfLua`.
+- Octo and Neogit (before its removal) and yaml.nvim: migrated telescope dep to fzf-lua.
+
+### Note
+- WakaTime is still configured (`plugins/wakatime.lua`). Dropping it remains on the todo; see the audit at `~/Nextcloud/ObsidianVault/nvim-plugin-audit-2026-04-14.md`.
+
+---
+
 ## [2026-02-10]
 
 ### Added

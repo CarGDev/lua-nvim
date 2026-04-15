@@ -95,8 +95,8 @@ opt.showbreak = "↪ "             -- Break indicator
 opt.breakindentopt = "shift:2"    -- Indent wrapped lines
 
 -- Text width
-opt.textwidth = 80                -- Default text width
-opt.colorcolumn = "80"            -- Visual column guide
+opt.textwidth = 120                -- Default text width
+opt.colorcolumn = "120"            -- Visual column guide
 ```
 
 ### **Format Options**

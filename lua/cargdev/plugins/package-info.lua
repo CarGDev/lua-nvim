@@ -31,7 +31,7 @@ return {
   },
   keys = {
     { "<leader>ns", "<cmd>lua require('package-info').show()<cr>", desc = "Show package info" },
-    { "<leader>nh", "<cmd>lua require('package-info').hide()<cr>", desc = "Hide package info" },
+    { "<leader>nH", "<cmd>lua require('package-info').hide()<cr>", desc = "Hide package info" },
     { "<leader>nu", "<cmd>lua require('package-info').update()<cr>", desc = "Update package" },
     { "<leader>nd", "<cmd>lua require('package-info').delete()<cr>", desc = "Delete package" },
     { "<leader>ni", "<cmd>lua require('package-info').install()<cr>", desc = "Install package" },

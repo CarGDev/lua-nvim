@@ -24,7 +24,7 @@ return {
   "pwntester/octo.nvim",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "nvim-telescope/telescope.nvim",
+    "ibhagwan/fzf-lua",
     "nvim-tree/nvim-web-devicons",
   },
   cmd = "Octo",
@@ -33,16 +33,16 @@ return {
     { "<leader>oI", "<cmd>Octo issue create<cr>", desc = "Create issue" },
     { "<leader>op", "<cmd>Octo pr list<cr>", desc = "List PRs" },
     { "<leader>oP", "<cmd>Octo pr create<cr>", desc = "Create PR" },
-    { "<leader>or", "<cmd>Octo repo list<cr>", desc = "List repos" },
+    { "<leader>oL", "<cmd>Octo repo list<cr>", desc = "List repos" },
     { "<leader>os", "<cmd>Octo search<cr>", desc = "Search issues/PRs" },
-    { "<leader>oa", "<cmd>Octo actions<cr>", desc = "Octo actions" },
+    { "<leader>oA", "<cmd>Octo actions<cr>", desc = "Octo actions" },
   },
   opts = {
     use_local_fs = false,
     enable_builtin = true,
     default_remote = { "upstream", "origin" },
     ssh_aliases = {},
-    picker = "telescope",
+    picker = "fzf-lua",
     picker_config = {
       use_emojis = true,
       mappings = {

@@ -10,7 +10,7 @@ return {
   "hedyhli/outline.nvim",
   cmd = { "Outline", "OutlineOpen" },
   keys = {
-    { "<leader>cs", "<cmd>Outline<cr>", desc = "Toggle symbol Outline" },
+    { "<leader>so", "<cmd>Outline<cr>", desc = "Toggle symbol Outline" },
   },
   opts = {
     outline_window = {

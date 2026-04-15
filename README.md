@@ -1,6 +1,6 @@
 # CargDev Neovim Configuration
 
-A modern, feature-rich Neovim configuration with 80+ plugins, optimized for full-stack development.
+A modern, pruned Neovim configuration (~70 plugins) optimized for full-stack development.
 
 ```
   ██████╗ █████╗ ██████╗  ██████╗ ██████╗ ███████╗██╗   ██╗
@@ -21,16 +21,16 @@ A modern, feature-rich Neovim configuration with 80+ plugins, optimized for full
 ## Features
 
 - **VS Code-like UI** with file explorer, breadcrumbs, symbol outline
-- **80+ plugins** carefully configured and optimized
 - **Full LSP support** for TypeScript, Python, Java, Go, Lua, and more
 - **Debugging** with DAP for Node.js/NestJS, Python, Java, Bun
-- **Git integration** with LazyGit, Neogit, Diffview, Octo (GitHub PRs)
-- **AI assistance** with GitHub Copilot + CopilotChat
+- **Git integration** with LazyGit (merge conflicts included) + Octo (GitHub PRs) + gitsigns
+- **AI assistance** with GitHub Copilot ghost text + `codetyper.nvim` (custom multi-provider assistant)
 - **HTTP client** for API testing
 - **Task runner** for build/run tasks
 - **Multi-cursor** editing like VS Code
-- **Snacks.nvim** for modern file navigation and pickers
-- **fzf-lua** for LSP navigation
+- **Snacks.nvim** for dashboard + terminal
+- **fzf-lua** for all fuzzy-finding and LSP navigation
+- **Noice** (cmdline-only) — centered floating `:` / `/` prompt
 
 ## Requirements
 
@@ -76,25 +76,26 @@ nvim
 
 | Key | Action |
 |-----|--------|
-| `<leader>ff` | Find files (Snacks picker) |
-| `<leader>fs` | Search text in project |
+| `<leader>ff` | Find files (fzf-lua) |
+| `<leader>fs` | Live grep (fzf-lua) |
 | `<leader>e` | Toggle file explorer |
 | `<leader>gg` | Open LazyGit |
-| `K` | Peek fold or hover documentation |
+| `H` | Hover documentation |
 | `gd` | Go to definition (fzf-lua) |
-| `<leader>ca` | Code actions (fzf-lua) |
-| `<leader>rn` | Rename symbol |
+| `<leader>la` | Code actions (lspsaga) |
+| `<leader>rn` | Rename symbol (inc-rename) |
 | `<C-d>` | Multi-cursor (select word) |
 
 ### Navigation
 
 | Key | Action |
 |-----|--------|
-| `<leader>ff` | Find files (Snacks) |
-| `<leader>fs` | Live grep (Snacks) |
-| `<leader>fr` | Recent files (Snacks) |
-| `<leader>fb` | Find buffers (Snacks) |
-| `<leader>fk` | Find keymaps (Snacks) |
+| `<leader>ff` | Find files (fzf-lua) |
+| `<leader>fs` | Live grep (fzf-lua) |
+| `<leader>fr` | Recent files |
+| `<leader>fb` | Find buffers |
+| `<leader>fk` | Find keymaps |
+| `<leader>ft` | Find TODOs (TodoFzfLua) |
 
 ### Git
 
@@ -115,8 +116,9 @@ nvim
 | `gd` | Go to definition |
 | `gi` | Go to implementation |
 | `gr` | Show references |
-| `<leader>ca` | Code actions |
-| `<leader>rn` | Rename |
+| `<leader>la` | Code actions (lspsaga) |
+| `<leader>li` / `<leader>lo` | Incoming / outgoing calls |
+| `<leader>rn` | Rename (inc-rename) |
 | `<leader>dd` | Line diagnostics |
 | `[d` / `]d` | Prev/next diagnostic |
 
@@ -136,11 +138,13 @@ nvim
 
 | Key | Action |
 |-----|--------|
-| `<leader>cc` | Toggle CopilotChat |
-| `<leader>ce` | Explain code |
-| `<leader>cr` | Review code |
-| `<leader>cf` | Fix code |
-| `<leader>ct` | Generate tests |
+| `<C-l>` | Accept Copilot ghost-text suggestion |
+| `<M-]>` / `<M-[>` | Next / previous suggestion |
+| `<leader>ip` | Open Copilot panel |
+| `<leader>iS` | Copilot status |
+| `<leader>ct` | Toggle codetyper view |
+| `<leader>ca` | Open codetyper Ask panel |
+| `<leader>co` | Open codetyper view |
 
 ### Editing
 
@@ -157,6 +161,9 @@ nvim
 |-----|--------|
 | `<leader>or` | Run task (Overseer) |
 | `<leader>ot` | Toggle task list |
+| `<leader>oA` | Task action (Overseer) |
+| `<leader>oL` | List GitHub repos (Octo) |
+| `<leader>op` | List PRs (Octo) |
 | `<leader>kr` | Run HTTP request (in .http file) |
 | `<leader>ka` | Run all HTTP requests |
 
@@ -171,18 +178,13 @@ nvim
 ## Plugin Categories
 
 ### Navigation & Search
-- **snacks.nvim** - Modern file navigation, pickers, dashboard
-- **telescope** - Fuzzy finder (git features, TODOs)
-- **fzf-lua** - LSP navigation pickers
+- **fzf-lua** - Primary fuzzy finder (files, grep, LSP, todos, diagnostics)
+- **snacks.nvim** - Dashboard + terminal
 - **portal.nvim** - Jump through jumplist with preview
-- **nvim-navbuddy** - Code structure navigation
 
 ### Git
-- **lazygit** - Terminal UI for git
-- **neogit** - Magit-like git interface
-- **diffview** - Side-by-side diffs
-- **gitsigns** - Git decorations and hunk actions
-- **git-blame** - Inline blame
+- **lazygit.nvim** - Terminal UI (covers merge conflicts)
+- **gitsigns** - Gutter decorations, hunk staging, line blame
 - **octo.nvim** - GitHub issues/PRs
 
 ### LSP & Coding
@@ -203,11 +205,13 @@ nvim
 - **Comment.nvim** - Commenting
 
 ### UI
-- **snacks.nvim** - Dashboard, notifier, picker
-- **noice.nvim** - UI for messages, cmdline
+- **snacks.nvim** - Dashboard, notifier, terminal
+- **noice.nvim** - Centered cmdline popup (cmdline-only mode)
+- **fidget.nvim** - LSP progress in the corner
 - **lualine** - Statusline (with word count)
 - **bufferline** - Buffer tabs
 - **dropbar** - Breadcrumbs
+- **outline.nvim** - Symbol sidebar (`<leader>so`)
 - **satellite** - Scrollbar with markers
 - **which-key** - Keybinding hints
 - **trouble** - Diagnostics list
@@ -226,10 +230,14 @@ nvim
 - **ssr.nvim** - Structural search/replace
 
 ### Eye Candy
-- **cargdev-cyberpunk** - Custom theme
-- **reactive** - Mode-based colors
+- **cargdev-cyberpunk** - Custom theme (owned)
 - **hlchunk** - Scope highlighting
 - **nvim-highlight-colors** - Color preview
+
+### AI (owned / configured)
+- **copilot.lua** + **copilot-cmp** - GitHub Copilot ghost text and cmp source
+- **CarGDev/codetyper.nvim** - Custom multi-provider AI assistant
+- **CarGDev/ideadrop.nvim** - Obsidian-style note panel
 
 ## Commands
 
@@ -237,10 +245,8 @@ nvim
 |---------|-------------|
 | `:Lazy` | Plugin manager |
 | `:Mason` | LSP server manager |
-| `:Navbuddy` | Code navigation |
 | `:Outline` | Symbol outline |
-| `:Neogit` | Git interface |
-| `:DiffviewOpen` | Open diff view |
+| `:LazyGit` | Git TUI |
 | `:GrugFar` | Search & replace |
 | `:Octo` | GitHub integration |
 | `:OverseerRun` | Run tasks |
@@ -292,7 +298,7 @@ Use `<leader>kr` to run request under cursor.
 ## Tips & Tricks
 
 ### Learn Vim Motions
-Enable Hardtime (`<leader>ht`) and Precognition (`<leader>vp`) to improve your vim skills.
+Enable Hardtime (`<leader>ht`) to discourage repeated motions and improve your vim skills.
 
 ### Multi-Cursor Editing
 Like VS Code: `<C-d>` to select word, keep pressing for more occurrences.

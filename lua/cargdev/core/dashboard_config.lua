@@ -22,10 +22,10 @@ M.header = {
 
 -- Minimal VS Code-like menu items
 M.menu_items = {
-  { key = "f", icon = "", desc = "Go to File",         action = ":Telescope find_files" },
-  { key = "r", icon = "", desc = "Recent Files",       action = ":Telescope oldfiles" },
-  { key = "g", icon = "", desc = "Find in Files",      action = ":Telescope live_grep" },
-  { key = "s", icon = "", desc = "Recent Files",        action = ":Telescope oldfiles" },
+  { key = "f", icon = "", desc = "Go to File",         action = ":FzfLua files" },
+  { key = "r", icon = "", desc = "Recent Files",       action = ":FzfLua oldfiles" },
+  { key = "g", icon = "", desc = "Find in Files",      action = ":FzfLua live_grep" },
+  { key = "s", icon = "", desc = "Recent Files",        action = ":FzfLua oldfiles" },
   { key = "e", icon = "", desc = "Explorer",           action = ":NvimTreeToggle" },
   { key = "l", icon = "󰒲", desc = "Lazy",               action = ":Lazy" },
   { key = "m", icon = "", desc = "Mason",              action = ":Mason" },
