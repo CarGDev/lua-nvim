@@ -22,10 +22,6 @@ return {
     -- enable syntax highlighting
     highlight = {
       enable = true,
-      disable = function(lang, buf)
-        -- Prevent Treesitter from parsing Copilot files
-        return lang == "copilot" or vim.api.nvim_buf_get_name(buf):match("copilot.lua")
-      end,
       -- Performance optimizations
       use_languagetree = true,
       additional_vim_regex_highlighting = false,

@@ -2,7 +2,7 @@
 -- CODETYPER.NVIM: AI-powered coding assistant plugin
 -- ============================================================================
 -- A local development plugin that provides AI-assisted coding capabilities
--- using various LLM providers (Ollama, Claude, OpenAI, Gemini, Copilot).
+-- using various LLM providers (Ollama, Claude, OpenAI, Gemini).
 -- Features include: inline code transformation with /@ @/ tags, Ask panel
 -- for interactive queries, Agent panel for autonomous coding tasks,
 -- Tree-sitter integration for scope detection, and diff review.
@@ -88,20 +88,28 @@ return {
   config = function()
     require("codetyper").setup({
       llm = {
-        -- Available providers: "ollama", "claude", "openai", "gemini", "copilot"
-        provider = "copilot", -- Using GitHub Copilot
+        -- Available providers: "ollama", "copilot", "claude"
+        provider = "claude", -- Using Claude API
+        smart_selection = false, -- Disabled smart provider selection
 
         -- Ollama (local LLM)
         ollama = {
           host = "http://localhost:11434",
           model = "deepseek-coder:6.7b",
-          -- model = "codellama:7b",
-          -- model = "qwen2.5-coder:7b",
+          ask_model = nil,
         },
 
-        -- GitHub Copilot (uses OAuth from copilot.vim/copilot.lua)
+        -- GitHub Copilot
         copilot = {
-          model = "gpt-4o", -- or "gpt-4", "gpt-3.5-turbo"
+          model = "claude-sonnet-4", -- Uses GitHub Copilot authentication
+          ask_model = "gpt-5-mini", -- Cheaper model for question/explain calls
+        },
+
+        -- Claude API (Anthropic)
+        claude = {
+          api_key = nil, -- Uses ANTHROPIC_API_KEY environment variable
+          model = "claude-3-5-sonnet-20241022", -- Claude 3.5 Sonnet (best for coding)
+          ask_model = "claude-3-5-sonnet-20241022", -- Claude 3 Haiku (faster for questions)
         },
       },
       window = {
@@ -114,11 +122,10 @@ return {
         close_tag = "@/",
         file_pattern = "*.coder.*",
       },
-      auto_gitignore = true,
+      auto_gitignore = false, -- Disabled - no longer creating project folders
       auto_open_ask = false, -- Don't auto-open Ask panel on startup
       scheduler = {
         enabled = true,
-        ollama_scout = false, -- Disabled since using Copilot directly
         escalation_threshold = 0.7,
         max_concurrent = 2,
         completion_delay_ms = 100, -- Delay before checking completion visibility
