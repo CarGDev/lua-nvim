@@ -32,7 +32,9 @@ return {
         "html",
         "lua_ls",
         "php",
+        "prettierd",
         "prismals",
+        "rust_analyzer",
         "pyright",
         "svelte",
         "tailwindcss",
@@ -158,6 +160,22 @@ return {
         filetypes = { "prisma" },
       },
       php_ls = {},
+      prettierd = {
+        filetypes = {
+          "css", "scss", "less", "html", "javascript", "javascriptreact",
+          "typescript", "typescriptreact", "json", "jsonc", "yaml", "markdown",
+          "mdx", "graphql", "sql", "rust",
+        },
+        settings = {
+          prettier = {
+            singleQuote = true,
+            semi = false,
+            tabWidth = 2,
+            trailingComma = "all",
+            printWidth = 100,
+          },
+        },
+      },
       pyright = { 
         settings = { 
           python = { 
@@ -167,6 +185,30 @@ return {
             } 
           } 
         } 
+      },
+      rust_analyzer = {
+        settings = {
+          ["rust-analyzer"] = {
+            cargo = { allFeatures = true },
+            checkOnSave = {
+              command = "clippy",
+              extraArgs = { "--", "-W", "clippy::all" },
+            },
+            procMacro = { enable = true },
+            inlayHints = {
+              bindingModeHints = { enable = true },
+              closingBraceHints = { enable = true, minLines = 25 },
+              closureCaptureHints = { enable = true },
+              closureReturnTypeHints = { enable = "always" },
+              discriminantHints = { enable = "always" },
+              expressionAdjustmentHints = { enable = "always" },
+              implicitDrops = { enable = true },
+              lifetimeElisionHints = { enable = "always" },
+              reborrowHints = { enable = "always" },
+              typeHints = { enable = true },
+            },
+          },
+        },
       },
       svelte = {
         filetypes = { "svelte" },
