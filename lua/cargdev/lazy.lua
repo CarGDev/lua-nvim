@@ -1,5 +1,6 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+local fs_stat = (vim.uv or vim.loop).fs_stat
+if not fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -14,8 +15,8 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({ { import = "cargdev.plugins" }, { import = "cargdev.plugins.lsp" } }, {
   checker = {
     enabled = true,
-    notify = true, -- Enable plugin update notifications
-    frequency = 86400, -- Check once per day (in seconds)
+    notify = false,
+    frequency = 86400,
   },
   change_detection = {
     notify = false,

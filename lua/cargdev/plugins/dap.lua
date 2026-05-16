@@ -85,7 +85,6 @@ return {
 
     -- 🧠 Mason DAP
     require("mason-nvim-dap").setup({
-      ensure_installed = { "python", "js", "javadbg", "javatest" },
       automatic_installation = true,
       handlers = {
         firefox = function() end, -- Disable Firefox auto-config for TS/JS

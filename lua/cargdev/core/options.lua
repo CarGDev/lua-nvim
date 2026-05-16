@@ -136,7 +136,7 @@ g.loaded_ruby_provider = 0 -- Disable Ruby provider (optional)
 
 g.python3_host_prog = fn.expand("~/.local/pipx/venvs/pynvim/bin/python")
 
--- Clipboard provider optimization (macOS only)
+-- Clipboard provider configuration
 if vim.fn.has("mac") == 1 then
   g.clipboard = {
     name = "macOS-clipboard",
@@ -149,6 +149,44 @@ if vim.fn.has("mac") == 1 then
       ["*"] = "pbpaste",
     },
   }
+elseif vim.fn.has("unix") == 1 then
+  if vim.fn.executable("wl-copy") == 1 then
+    g.clipboard = {
+      name = "wl-clipboard",
+      copy = {
+        ["+"] = "wl-copy",
+        ["*"] = "wl-copy",
+      },
+      paste = {
+        ["+"] = "wl-paste",
+        ["*"] = "wl-paste",
+      },
+    }
+  elseif vim.fn.executable("xclip") == 1 then
+    g.clipboard = {
+      name = "xclip",
+      copy = {
+        ["+"] = "xclip -selection clipboard",
+        ["*"] = "xclip -selection primary",
+      },
+      paste = {
+        ["+"] = "xclip -selection clipboard -o",
+        ["*"] = "xclip -selection primary -o",
+      },
+    }
+  elseif vim.fn.executable("xsel") == 1 then
+    g.clipboard = {
+      name = "xsel",
+      copy = {
+        ["+"] = "xsel --clipboard --input",
+        ["*"] = "xsel --primary --input",
+      },
+      paste = {
+        ["+"] = "xsel --clipboard --output",
+        ["*"] = "xsel --primary --output",
+      },
+    }
+  end
 end
 
 -- Lua specific settings
