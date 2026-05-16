@@ -1,4 +1,3 @@
-
 -- =============================================================================
 -- cargdev/core/init.lua
 -- Main core initialization for cargdev Neovim config
@@ -126,3 +125,15 @@ vim.api.nvim_create_autocmd("VimEnter", {
 vim.api.nvim_create_user_command("CheckConfig", function()
   vim.cmd("checkhealth")
 end, { desc = "Run Neovim health check" })
+
+vim.g.clipboard = {
+  name = "OSC52",
+  copy = {
+    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+  },
+  paste = {
+    ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+  },
+}

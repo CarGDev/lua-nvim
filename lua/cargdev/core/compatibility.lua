@@ -141,8 +141,8 @@ function M.setup()
   -- Set up proper error handling for deprecated functions
   local original_error = error
   error = function(msg, level)
-    if msg and msg:match("deprecated") then
-      return -- Silently ignore deprecated warnings
+    if type(msg) == "string" and msg:match("deprecated") then
+      return
     end
     return original_error(msg, level)
   end
