@@ -30,6 +30,7 @@ return {
   -- Local development version
   repo,
   dir = localDir,
+
   name = "codetyper.nvim",
   lazy = false, -- Load on startup to create .coder folder
   priority = 100, -- Load early
