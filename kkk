@@ -8,14 +8,6 @@ return {
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
 
-    -- 🧼 Remove invalid autocommand (FileExplorer) if it exists
-    vim.api.nvim_create_autocmd("VimEnter", {
-      once = true,
-      callback = function()
-        pcall(vim.cmd, "autocmd! FileExplorer *")
-      end,
-    })
-
     nvimtree.setup({
       view = {
         width = 35,
@@ -64,42 +56,35 @@ return {
 
         -- Open file in the current window
         vim.keymap.set("n", "o", api.node.open.edit, opts)
-
-        -- Navigate Up (Back One Folder Level)
-        vim.keymap.set("n", "u", api.tree.change_root_to_parent, opts)
-
-        -- Navigate Forward (Enter a Folder)
-        vim.keymap.set("n", "<leader>f", api.tree.change_root_to_node, opts)
-
         -- File Management keybindings
         vim.keymap.set("n", "a", function() -- Add a new file
-          vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
+          vim.cmd("set modifiable") -- Ensure modifiable mode is on
           api.fs.create()
         end, opts)
 
         vim.keymap.set("n", "r", function() -- Rename file
-          vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
+          vim.cmd("set modifiable") -- Ensure modifiable mode is on
           api.fs.rename()
         end, opts)
 
         vim.keymap.set("n", "d", function() -- Delete file
-          vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
+          vim.cmd("set modifiable") -- Ensure modifiable mode is on
           api.fs.remove()
         end, opts)
 
         vim.keymap.set("n", "x", function() -- Cut (move) file
-          vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
+          vim.cmd("set modifiable") -- Ensure modifiable mode is on
           api.fs.cut()
         end, opts)
 
         vim.keymap.set("n", "p", function() -- Paste file
-          vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
+          vim.cmd("set modifiable") -- Ensure modifiable mode is on
           api.fs.paste()
         end, opts)
 
         vim.keymap.set("n", "y", function() -- Copy file
-          vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
-          api.fs.copy.node()
+          vim.cmd("set modifiable") -- Ensure modifiable mode is on
+          api.fs.copy()
         end, opts)
       end,
     })

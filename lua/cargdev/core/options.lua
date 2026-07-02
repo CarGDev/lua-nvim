@@ -1,7 +1,6 @@
 -- Core options and settings
 local opt = vim.opt
 local g = vim.g
-local fn = vim.fn
 
 -- Disable deprecated API warnings
 vim.deprecate = function() end
@@ -17,11 +16,6 @@ opt.swapfile = false -- Don't create swap files
 opt.completeopt = "menuone,noselect" -- Better completion
 opt.undofile = true -- Persistent undo
 opt.undodir = vim.fn.stdpath("data") .. "/undodir"
-opt.autoread = true -- Auto-reload files when changed externally
-
--- Suppress startup messages to avoid "Press ENTER" prompts
-opt.shortmess = "aoOtTIcFWS" -- Suppress various messages
-opt.cmdheight = 1 -- Set command height to avoid prompts
 
 -- Search settings
 opt.ignorecase = true -- Case insensitive search
@@ -38,10 +32,10 @@ opt.autoindent = true -- Auto indent
 opt.smartindent = true -- Smart indent
 
 -- Performance optimizations
--- opt.updatetime = 100 -- Faster completion (reduced from 250)
+opt.updatetime = 100 -- Faster completion (reduced from 250)
 opt.timeoutlen = 200 -- Faster key sequence completion (reduced from 300)
 opt.redrawtime = 1500 -- Allow more time for loading syntax
-opt.synmaxcol = 200 -- Only highlight the first 200 columns (conservative for performance)
+opt.synmaxcol = 240 -- Only highlight the first 240 columns
 opt.maxmempattern = 1000 -- Reduce memory for pattern matching
 opt.hidden = true -- Allow switching buffers without saving
 opt.scrolljump = 1 -- Minimal number of screen lines to scroll
@@ -50,7 +44,9 @@ opt.sidescrolloff = 3 -- Keep 3 columns left/right of cursor (reduced from 8)
 
 -- Syntax loading optimizations
 opt.syntax = "on" -- Enable syntax highlighting
+opt.synmaxcol = 200 -- Reduce syntax highlighting column limit
 opt.lazyredraw = false -- Don't use lazy redraw (can cause issues)
+opt.foldmethod = "syntax" -- Use syntax-based folding for better performance
 opt.foldlevel = 99 -- Don't fold by default
 
 -- Filetype plugin optimizations
@@ -75,20 +71,20 @@ opt.signcolumn = "yes" -- Always show sign column
 -- =============================================================================
 
 -- Text wrapping settings
-opt.wrap = true -- Enable visual line wrapping (wraps based on window width)
+opt.wrap = true -- Enable line wrapping
 opt.linebreak = true -- Break lines at word boundaries
 opt.breakindent = true -- Preserve indentation in wrapped lines
 opt.showbreak = "↪ " -- Show break indicator
 opt.breakindentopt = "shift:2" -- Indent wrapped lines by 2 spaces
 
 -- Text width and formatting
-opt.textwidth = 0 -- Disable hard wrapping (0 = no limit, wraps based on window width)
-opt.colorcolumn = "80" -- Visual guide at column 80
-opt.formatoptions = "jcroqln" -- Format options (removed 't' to disable auto-wrap based on textwidth)
+opt.textwidth = 80 -- Set text width for auto-wrapping
+opt.colorcolumn = "80" -- Show column at 80 characters
+opt.formatoptions = "jcroqlnt" -- Format options for auto-wrapping
 
--- Format options settings
--- Note: 't' option removed - we want visual wrapping only, not hard line breaks
-opt.formatoptions:append("c") -- Auto-wrap comments using textwidth (only applies if textwidth > 0)
+-- Auto-wrap specific settings
+opt.formatoptions:append("t") -- Auto-wrap text using textwidth
+opt.formatoptions:append("c") -- Auto-wrap comments using textwidth
 opt.formatoptions:append("r") -- Auto-wrap comments when pressing Enter
 opt.formatoptions:append("o") -- Auto-wrap comments when pressing 'o' or 'O'
 opt.formatoptions:append("q") -- Allow formatting of comments with 'gq'
@@ -100,8 +96,9 @@ opt.formatoptions:append("j") -- Remove comment leader when joining lines
 opt.showmatch = true -- Show matching brackets
 opt.matchtime = 2 -- How long to show matching brackets
 
--- Folding (indent-based is generally faster than syntax-based)
+-- Folding
 opt.foldmethod = "indent" -- Fold based on indentation
+opt.foldlevel = 99 -- Don't fold by default
 opt.foldnestmax = 10 -- Maximum nesting level
 
 -- Backup and swap
@@ -133,34 +130,23 @@ g.loaded_perl_provider = 0 -- Disable Perl provider
 g.loaded_ruby_provider = 0 -- Disable Ruby provider (optional)
 
 -- Python provider configuration
+g.python3_host_prog = "/opt/homebrew/bin/python3.12" -- Explicit Python path
 
-g.python3_host_prog = fn.expand("~/.local/pipx/venvs/pynvim/bin/python")
-
--- Clipboard provider optimization (macOS only)
-if vim.fn.has("mac") == 1 then
-  g.clipboard = {
-    name = "macOS-clipboard",
-    copy = {
-      ["+"] = "pbcopy",
-      ["*"] = "pbcopy",
-    },
-    paste = {
-      ["+"] = "pbpaste",
-      ["*"] = "pbpaste",
-    },
-  }
-end
+-- Clipboard provider optimization (macOS)
+g.clipboard = {
+  name = "xclip",
+  copy = {
+    ["+"] = "xclip -selection clipboard",
+    ["*"] = "xclip -selection primary",
+  },
+  paste = {
+    ["+"] = "xclip -selection clipboard -o",
+    ["*"] = "xclip -selection primary -o",
+  },
+}
 
 -- Lua specific settings
 opt.runtimepath:append(vim.fn.stdpath("config") .. "/lua")
-
--- Custom file type associations
-vim.filetype.add({
-  extension = {
-    strata = "html",
-    sts = "typescript",
-  },
-})
 
 -- Better diff
 opt.diffopt:append("algorithm:patience")
@@ -218,127 +204,40 @@ for _, plugin in pairs(disabled_built_ins) do
 end
 
 -- =============================================================================
--- AUTO-RELOAD FILES WHEN CHANGED EXTERNALLY
--- =============================================================================
-
--- Trigger checktime when switching buffers or focusing Neovim
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
-  pattern = "*",
-  callback = function()
-    if vim.fn.mode() ~= "c" then
-      vim.cmd("checktime")
-    end
-  end,
-})
-
--- Notify when file is reloaded
-vim.api.nvim_create_autocmd("FileChangedShellPost", {
-  pattern = "*",
-  callback = function()
-    vim.notify("File changed on disk. Buffer reloaded.", vim.log.levels.WARN)
-  end,
-})
-
--- =============================================================================
 -- OPTIMIZED AUTO WRAPPER AUTOCMDS
 -- =============================================================================
 
 -- Consolidated auto-wrapping configuration
--- Note: textwidth is set to 0 globally to allow visual wrapping based on window width
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
   callback = function()
-    -- Safely get the primary filetype (handle compound types like "yaml.ansible")
-    local filetype = (vim.bo.filetype or ""):match("^[^.]+") or ""
+    local filetype = vim.bo.filetype
     local opt = vim.opt_local
 
-    -- If no filetype is detected, apply a sensible default (visual wrapping)
-    if filetype == "" then
-      opt.textwidth = 0
-      opt.wrap = true
-      opt.linebreak = true
-      return
-    end
-
-    -- Text/documentation files - visual wrapping only (no hard breaks)
+    -- Text/documentation files
     if vim.tbl_contains({ "text", "markdown", "gitcommit", "mail", "help", "man" }, filetype) then
-      opt.textwidth = 0 -- Disable hard wrapping, use visual wrapping based on window width
+      opt.textwidth = filetype == "help" or filetype == "man" and 78 or 80
       opt.wrap = true
       opt.linebreak = true
-      -- Removed 't' option - we want visual wrapping only, not hard line breaks
+      opt.formatoptions:append("t") -- Auto-wrap text
     end
 
-    -- Code files - visual wrapping only (no hard breaks)
+    -- Code files
     if
       vim.tbl_contains({ "lua", "javascript", "typescript", "python", "java", "cpp", "c", "rust", "go" }, filetype)
     then
-      opt.textwidth = 0 -- Disable hard wrapping, use visual wrapping based on window width
-      opt.formatoptions:append("c") -- Auto-wrap comments (only if textwidth > 0, so this won't apply)
+      opt.textwidth = 100 -- Longer lines for code
+      opt.formatoptions:append("c") -- Auto-wrap comments
       opt.formatoptions:append("r") -- Auto-wrap comments with leader
       opt.formatoptions:append("o") -- Auto-wrap comments with 'o'
       opt.formatoptions:append("q") -- Allow formatting of comments with 'gq'
     end
 
-    -- Configuration files - visual wrapping only (no hard breaks)
+    -- Configuration files
     if vim.tbl_contains({ "conf", "config", "ini", "toml", "yaml", "json" }, filetype) then
-      opt.textwidth = 0 -- Disable hard wrapping, use visual wrapping based on window width
-      opt.formatoptions:append("c") -- Auto-wrap comments (only if textwidth > 0, so this won't apply)
+      opt.textwidth = 80
+      opt.formatoptions:append("c") -- Auto-wrap comments
     end
   end,
 })
 
--- =============================================================================
--- MODERN UI: GLOBAL ROUNDED BORDERS
--- =============================================================================
-
--- Rounded border style for all floating windows
-local border = "rounded"
-
--- Override default floating window border
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
-
--- Diagnostic floating window border
-vim.diagnostic.config({
-  float = {
-    border = border,
-    source = "always",
-    header = "",
-    prefix = "",
-  },
-})
-
--- Set global float border highlight
-vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#7aa2f7", bg = "NONE" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1a1b26" })
-
--- Modern cursor line (subtle highlight)
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#292e42" })
-vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#7aa2f7", bold = true })
-
--- =============================================================================
--- WORD COUNTER (EXCLUDING SYMBOLS)
--- =============================================================================
-
--- Function to count words excluding symbols
-local function count_words_no_symbols()
-  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-  local text = table.concat(lines, " ")
-  -- Remove all non-alphanumeric characters except spaces
-  local clean_text = text:gsub("[^%w%s]", "")
-  -- Count words (sequences of alphanumeric characters)
-  local count = 0
-  for _ in clean_text:gmatch("%w+") do
-    count = count + 1
-  end
-  return count
-end
-
--- Make it globally accessible for statusline
-_G.word_count_no_symbols = count_words_no_symbols
-
--- Create user command to display word count
-vim.api.nvim_create_user_command("WordCount", function()
-  local count = count_words_no_symbols()
-  vim.notify("Words (excluding symbols): " .. count, vim.log.levels.INFO)
-end, { desc = "Count words excluding symbols" })

@@ -8,56 +8,77 @@
 return {
   "folke/noice.nvim",
   event = "VeryLazy",
-  dependencies = { "MunifTanjim/nui.nvim" },
-  opts = {
-    cmdline = {
-      enabled = true,
-      view = "cmdline_popup",
-      format = {
-        cmdline = { pattern = "^:", icon = "", lang = "vim" },
-        search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
-        search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
-        filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
-        lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
-        help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
-        input = { view = "cmdline_input", icon = "󰥻 " },
-      },
-    },
-    views = {
-      cmdline_popup = {
-        position = { row = "50%", col = "50%" },
-        size = { width = 60, height = "auto" },
-        border = { style = "rounded" },
-      },
-      cmdline_popupmenu = {
-        relative = "editor",
-        position = { row = "50%", col = "50%" },
-        size = { width = 60, height = 10 },
-        border = { style = "rounded" },
-      },
-    },
-    messages = {
-      enabled = true, -- enables the Noice messages UI
-      view = "notify", -- default view for messages
-      view_error = "notify", -- view for errors
-      view_warn = "notify", -- view for warnings
-      view_history = "messages", -- view for :messages
-      view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
-    },
-    popupmenu = { enabled = false },
-    notify = { enabled = false },
-    lsp = {
-      progress = { enabled = false },
-      hover = { enabled = false },
-      signature = { enabled = false },
-      message = { enabled = false },
-    },
-    presets = {
-      bottom_search = false,
-      command_palette = true,
-      long_message_to_split = false,
-      inc_rename = false,
-      lsp_doc_border = false,
-    },
+  dependencies = {
+    "MunifTanjim/nui.nvim",
+    "rcarriga/nvim-notify",
   },
+  config = function()
+    require("noice").setup({
+      cmdline = {
+        enabled = true,
+        view = "cmdline_popup",
+        format = {
+          cmdline = { icon = ">" },
+          search_down = { icon = "🔍 " },
+          search_up = { icon = "🔍 " },
+          filter = { icon = "$" },
+          lua = { icon = "" },
+          help = { icon = "?" },
+        },
+      },
+      messages = {
+        enabled = true,
+        view = "mini", -- Mini popup for messages
+        view_error = "mini", -- Ensure errors also use mini
+        view_warn = "mini",
+        view_history = "messages",
+        view_search = "virtualtext",
+      },
+      popupmenu = {
+        enabled = true,
+        backend = "nui",
+      },
+      lsp = {
+        progress = {
+          enabled = false,
+        },
+        message = {
+          enabled = true,
+          view = "mini", -- Show LSP messages in mini popup
+        },
+      },
+      views = {
+        mini = {
+          position = {
+            row = "100%", -- Place it at the bottom of the screen
+            col = "50%", -- Center it horizontally
+          },
+          border = {
+            style = "rounded",
+          },
+          win_options = {
+            winblend = 10, -- Slight transparency
+          },
+          max_height = 2, -- Small window size
+          max_width = 60,
+        },
+        notify = {
+          position = {
+            row = "100%", -- Bottom of the screen
+            col = "50%",
+          },
+          win_options = {
+            winblend = 10,
+          },
+          max_height = 2,
+          max_width = 60,
+        },
+      },
+      presets = {
+        bottom_search = false,
+        command_palette = true,
+        long_message_to_split = false,
+      },
+    })
+  end,
 }

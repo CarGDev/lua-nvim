@@ -68,9 +68,9 @@ return {
       },
     })
 
-    -- vim.schedule(function()
-    --   vim.ui.input = require("snacks.input").input
-    --   vim.ui.select = require("snacks.picker").select
-    -- end)
+    vim.schedule(function()
+      vim.ui.input = require("snacks.input").input
+      vim.ui.select = require("snacks.picker").select
+    end)
   end,
 }

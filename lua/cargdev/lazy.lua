@@ -14,8 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({ { import = "cargdev.plugins" }, { import = "cargdev.plugins.lsp" } }, {
   checker = {
     enabled = true,
-    notify = true, -- Enable plugin update notifications
-    frequency = 86400, -- Check once per day (in seconds)
+    notify = false,
   },
   change_detection = {
     notify = false,
