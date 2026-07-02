@@ -132,19 +132,6 @@ g.loaded_ruby_provider = 0 -- Disable Ruby provider (optional)
 -- Python provider configuration
 g.python3_host_prog = "/opt/homebrew/bin/python3.12" -- Explicit Python path
 
--- Clipboard provider optimization (macOS)
-g.clipboard = {
-  name = "xclip",
-  copy = {
-    ["+"] = "xclip -selection clipboard",
-    ["*"] = "xclip -selection primary",
-  },
-  paste = {
-    ["+"] = "xclip -selection clipboard -o",
-    ["*"] = "xclip -selection primary -o",
-  },
-}
-
 -- Lua specific settings
 opt.runtimepath:append(vim.fn.stdpath("config") .. "/lua")
 

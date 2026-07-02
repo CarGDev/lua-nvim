@@ -38,6 +38,7 @@ return {
         enabled = true,
         backend = "nui",
       },
+      notify = { enabled = false },
       lsp = {
         progress = {
           enabled = false,
