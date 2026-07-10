@@ -5,17 +5,16 @@
 ## Table of Contents
 - [General](#general)
 - [Personal Workflow](#personal-workflow)
-- [Navigation (Snacks Picker)](#navigation-snacks-picker)
+- [Navigation (fzf-lua)](#navigation-fzf-lua)
 - [LSP & Code Intelligence](#lsp--code-intelligence)
 - [File Management](#file-management)
 - [Editing](#editing)
 - [Git](#git)
 - [Debugging (DAP)](#debugging-dap)
-- [Copilot & AI](#copilot--ai)
+- [Codetyper & AI](#codetyper--ai)
 - [Terminal](#terminal)
 - [Window Management](#window-management)
-- [Database](#database)
-- [LeetCode](#leetcode)
+- [HTTP Client (rest.nvim)](#http-client-restnvim)
 - [Text Wrapping](#text-wrapping)
 - [Folding (nvim-ufo)](#folding-nvim-ufo)
 - [Session Management](#session-management)
@@ -91,14 +90,13 @@
 
 ---
 
-## Navigation (Snacks Picker)
+## Navigation (fzf-lua)
 
 ### File Navigation
 | Key | Mode | Action |
 |-----|------|--------|
 | `<leader>ff` | n | Find files |
 | `<leader>fs` | n | Live grep |
-| `<leader>fc` | n | Grep string under cursor |
 | `<leader>fr` | n | Recent files |
 
 ### Buffer & Utility Search
@@ -108,9 +106,9 @@
 | `<leader>fh` | n | Help tags |
 | `<leader>fm` | n | Find marks |
 | `<leader>fk` | n | Find keymaps |
-| `<leader>fC` | n | Find commands |
+| `<leader>fc` | n | Find commands |
 
-### Git (Telescope Fallback)
+### Git
 | Key | Mode | Action |
 |-----|------|--------|
 | `<leader>fG` | n | Git commits |
@@ -121,12 +119,7 @@
 ### TODO Search
 | Key | Mode | Action |
 |-----|------|--------|
-| `<leader>ft` | n | Find TODOs (Telescope) |
-
-### Telescope (Unfiltered)
-| Key | Mode | Action |
-|-----|------|--------|
-| `<leader>fF` | n | Find files (all, unfiltered) |
+| `<leader>ft` | n | Find TODOs (TodoFzfLua) |
 
 ---
 
@@ -318,33 +311,9 @@ Inside nvim-tree:
 
 ---
 
-## Copilot & AI
+## Codetyper & AI
 
-### Copilot Commands
-| Key | Mode | Action |
-|-----|------|--------|
-| `<leader>ip` | n | Open Copilot panel |
-| `<leader>iD` | n | Disable Copilot |
-| `<leader>iE` | n | Enable Copilot |
-| `<leader>iS` | n | Copilot status |
-
-### Copilot Panel Navigation
-| Key | Mode | Action |
-|-----|------|--------|
-| `[[` | n | Previous suggestion (in panel) |
-| `]]` | n | Next suggestion (in panel) |
-| `<CR>` | n | Accept suggestion (in panel) |
-| `rp` | n | Refresh panel |
-| `<M-CR>` | n | Open panel |
-
-### Inline Suggestions
-| Key | Mode | Action |
-|-----|------|--------|
-| `<leader>]` | i | Next suggestion |
-| `<leader>[` | i | Previous suggestion |
-| `<C-]>` | i | Dismiss suggestion |
-
-### Codetyper (custom AI assistant)
+### Codetyper (custom multi-provider AI assistant)
 | Key | Mode | Action |
 |-----|------|--------|
 | `<leader>co` | n | Open Coder view |
@@ -359,7 +328,7 @@ Inside nvim-tree:
 | `<leader>cd` | n | Open Diff Review |
 | `<leader>ctt` | n, v | Transform tag(s) at cursor/selection |
 
-CopilotChat was removed on 2026-04-14 — use the CLI or codetyper for chat workflows.
+Copilot and CopilotChat were removed — use the CLI or codetyper for AI workflows.
 
 ---
 
@@ -410,51 +379,12 @@ CopilotChat was removed on 2026-04-14 — use the CLI or codetyper for chat work
 
 ---
 
-## Database
-
-### vim-dadbod UI
-| Key | Mode | Action |
-|-----|------|--------|
-| `<leader>Du` | n | Toggle Database UI |
-| `<leader>Da` | n | Add DB connection |
-| `<leader>Df` | n | Find DB buffer |
-| `<leader>De` | n, v | Execute query |
-| `<leader>Dw` | n | Save query |
-| `<leader>Dr` | n | Rename DB buffer |
-
-### Quick Connections
-| Key | Mode | Action |
-|-----|------|--------|
-| `<leader>Dp` | n | PostgreSQL Docker |
-| `<leader>Dm` | n | MongoDB local |
-| `<leader>DM` | n | MongoDB Docker |
-| `<leader>Di` | n | Redis local |
-| `<leader>DI` | n | Redis Docker |
-
-### Redis & MongoDB (plugins.lua)
-| Key | Mode | Action |
-|-----|------|--------|
-| `<leader>rds` | n | Open Redis |
-| `<leader>rdk` | n | Show Redis keys |
-| `<leader>rdi` | n | Redis info |
-| `<leader>mdb` | n | Open MongoDB |
-| `<leader>mdc` | n | Connect MongoDB |
-| `<leader>mdd` | n | Disconnect MongoDB |
-
----
-
-## LeetCode
+## HTTP Client (rest.nvim)
 
 | Key | Mode | Action |
 |-----|------|--------|
-| `<leader>lr` | n | Run code |
-| `<leader>ls` | n | Submit code |
-| `<leader>ld` | n | Daily challenge |
-| `<leader>ll` | n | List problems |
-| `<leader>lc` | n | Open console |
-| `<leader>lu` | n | Update cookie |
-| `<leader>lh` | n | Show hints |
-| `<leader>lls` | n | Get latest submission |
+| `<leader>kr` | n | Run HTTP request (in .http file) |
+| `<leader>ka` | n | Run all HTTP requests |
 
 ---
 
@@ -537,4 +467,4 @@ CopilotChat was removed on 2026-04-14 — use the CLI or codetyper for chat work
 
 ---
 
-*Last Updated: April 14, 2026*
+*Last Updated: July 10, 2026*

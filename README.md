@@ -1,6 +1,6 @@
 # CargDev Neovim Configuration
 
-A modern, pruned Neovim configuration (~70 plugins) optimized for full-stack development.
+A modern, pruned Neovim configuration (~45 plugins) optimized for full-stack development.
 
 ```
   ██████╗ █████╗ ██████╗  ██████╗ ██████╗ ███████╗██╗   ██╗
@@ -24,10 +24,9 @@ A modern, pruned Neovim configuration (~70 plugins) optimized for full-stack dev
 - **Full LSP support** for TypeScript, Python, Java, Go, Lua, and more
 - **Debugging** with DAP for Node.js/NestJS, Python, Java, Bun
 - **Git integration** with LazyGit (merge conflicts included) + Octo (GitHub PRs) + gitsigns
-- **AI assistance** with GitHub Copilot ghost text + `codetyper.nvim` (custom multi-provider assistant)
-- **HTTP client** for API testing
+- **AI assistance** with `codetyper.nvim` (custom multi-provider assistant)
+- **HTTP client** (rest.nvim) for API testing with `.http` files
 - **Task runner** for build/run tasks
-- **Multi-cursor** editing like VS Code
 - **Snacks.nvim** for dashboard + terminal
 - **fzf-lua** for all fuzzy-finding and LSP navigation
 - **Noice** (cmdline-only) — centered floating `:` / `/` prompt
@@ -84,7 +83,6 @@ nvim
 | `gd` | Go to definition (fzf-lua) |
 | `<leader>la` | Code actions (lspsaga) |
 | `<leader>rn` | Rename symbol (inc-rename) |
-| `<C-d>` | Multi-cursor (select word) |
 
 ### Navigation
 
@@ -134,23 +132,19 @@ nvim
 | `<leader>du` | Toggle DAP UI |
 | `<leader>jd` | Dynamic debug attach |
 
-### Copilot & AI
+### Codetyper & AI
 
 | Key | Action |
 |-----|--------|
-| `<C-l>` | Accept Copilot ghost-text suggestion |
-| `<M-]>` / `<M-[>` | Next / previous suggestion |
-| `<leader>ip` | Open Copilot panel |
-| `<leader>iS` | Copilot status |
 | `<leader>ct` | Toggle codetyper view |
 | `<leader>ca` | Open codetyper Ask panel |
 | `<leader>co` | Open codetyper view |
+| `<leader>cd` | Open codetyper Diff Review |
 
 ### Editing
 
 | Key | Action |
 |-----|--------|
-| `<C-d>` | Add cursor on word (VS Code style) |
 | `<leader>/` | Toggle comment |
 | `<leader>sub` | Substitute with motion |
 | `<leader>mm` | Format with conform |
@@ -161,7 +155,6 @@ nvim
 |-----|--------|
 | `<leader>or` | Run task (Overseer) |
 | `<leader>ot` | Toggle task list |
-| `<leader>oA` | Task action (Overseer) |
 | `<leader>oL` | List GitHub repos (Octo) |
 | `<leader>op` | List PRs (Octo) |
 | `<leader>kr` | Run HTTP request (in .http file) |
@@ -171,34 +164,31 @@ nvim
 
 | Key | Action |
 |-----|--------|
-| `<leader>vs` | Select Python venv |
 | `<leader>ns` | Show package versions (package.json) |
 | `<leader>cv` | Show crate versions (Cargo.toml) |
 
 ## Plugin Categories
 
 ### Navigation & Search
-- **fzf-lua** - Primary fuzzy finder (files, grep, LSP, todos, diagnostics)
+- **fzf-lua** - Primary fuzzy finder (files, grep, LSP, todos, diagnostics, git)
 - **snacks.nvim** - Dashboard + terminal
 - **portal.nvim** - Jump through jumplist with preview
 
 ### Git
 - **lazygit.nvim** - Terminal UI (covers merge conflicts)
 - **gitsigns** - Gutter decorations, hunk staging, line blame
-- **octo.nvim** - GitHub issues/PRs
+- **octo.nvim** - GitHub issues/PRs (fzf-lua picker)
 
 ### LSP & Coding
 - **nvim-lspconfig** + **mason** - LSP setup
 - **lspsaga** - Pretty LSP UI
-- **nvim-cmp** - Completion (with Copilot source)
+- **nvim-cmp** - Completion engine
 - **treesitter** - Syntax highlighting
 - **outline.nvim** - Symbol sidebar
 - **inc-rename** - Live rename preview
 - **lightbulb** - Code action indicator
 
 ### Editing
-- **vim-visual-multi** - Multi-cursor
-- **yanky.nvim** - Yank ring
 - **treesj** - Split/join blocks
 - **nvim-surround** - Surround text
 - **nvim-autopairs** - Auto brackets
@@ -224,8 +214,7 @@ nvim
 
 ### Productivity
 - **overseer** - Task runner
-- **kulala** - HTTP client
-- **zen-mode** - Distraction-free
+- **rest.nvim** - HTTP client (`.http` files)
 - **grug-far** - Search & replace
 - **ssr.nvim** - Structural search/replace
 
@@ -234,8 +223,7 @@ nvim
 - **hlchunk** - Scope highlighting
 - **nvim-highlight-colors** - Color preview
 
-### AI (owned / configured)
-- **copilot.lua** + **copilot-cmp** - GitHub Copilot ghost text and cmp source
+### AI (owned)
 - **CarGDev/codetyper.nvim** - Custom multi-provider AI assistant
 - **CarGDev/ideadrop.nvim** - Obsidian-style note panel
 
@@ -275,7 +263,7 @@ Configs: Launch NestJS, Launch File, ts-node, Bun Launch, Dynamic Attach
 ```
 Auto-configured via nvim-jdtls (JDK 25, mac_arm)
 
-## HTTP Client (Kulala)
+## HTTP Client (rest.nvim)
 
 Create a `.http` file:
 
@@ -293,7 +281,7 @@ Content-Type: application/json
 }
 ```
 
-Use `<leader>kr` to run request under cursor.
+Use `<leader>kr` to run the request under cursor, or `<leader>ka` to run all requests.
 
 ## Tips & Tricks
 

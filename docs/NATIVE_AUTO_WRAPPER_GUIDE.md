@@ -25,8 +25,8 @@ Your Neovim is now configured with native auto wrapper functionality using built
 |--------|-------------|
 | `<leader>tw` | Toggle line wrapping |
 | `<leader>tl` | Toggle line break |
-| `<leader>tc` | Show 80 character column guide |
-| `<leader>tC` | Hide column guide |
+| `<leader>tx` | Show 80 char column guide |
+| `<leader>tH` | Hide column guide |
 
 ### **Text Formatting**
 | Keymap | Description |
@@ -55,8 +55,8 @@ Your Neovim is now configured with native auto wrapper functionality using built
 | Keymap | Description |
 |--------|-------------|
 | `<leader>ti` | Toggle break indent |
-| `<leader>ts` | Show break indicator (↪) |
-| `<leader>tS` | Hide break indicator |
+| `<leader>tB` | Show break indicator (↪) |
+| `<leader>tb` | Hide break indicator |
 
 ## 📁 **File Type Specific Settings**
 
@@ -140,11 +140,11 @@ git commit -m "This is a very long commit message that describes the changes mad
 
 ### **Break Indicators**
 - **Symbol**: `↪` shows where lines are wrapped
-- **Toggle**: Use `<leader>ts` to show/hide
+- **Toggle**: Use `<leader>tB` to show, `<leader>tb` to hide
 
 ### **Color Column**
 - **Guide**: Visual line at text width
-- **Toggle**: Use `<leader>tc` to show/hide
+- **Toggle**: Use `<leader>tx` to show, `<leader>tH` to hide
 
 ### **Indentation**
 - **Preserved**: Wrapped lines maintain indentation
