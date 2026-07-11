@@ -50,7 +50,6 @@ opt.foldmethod = "syntax" -- Use syntax-based folding for better performance
 opt.foldlevel = 99 -- Don't fold by default
 
 -- Filetype plugin optimizations
-opt.filetype = "on" -- Enable filetype detection
 opt.modeline = false -- Disable modeline for security and performance
 opt.modelines = 0 -- Disable modelines
 

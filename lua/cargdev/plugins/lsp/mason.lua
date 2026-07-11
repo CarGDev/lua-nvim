@@ -45,16 +45,16 @@ return {
         "html",
         "jdtls",
         "lua_ls",
-        "php",
+        "phpactor",
         "prismals",
         "pyright",
         "svelte",
         "tailwindcss",
         "vtsls", -- VSCode TypeScript Language Server
       },
-      -- Prevent ts_ls from auto-starting (we use vtsls instead)
-      handlers = {
-        ["ts_ls"] = function() end, -- noop handler to skip ts_ls
+      -- mason-lspconfig v2: exclude servers from vim.lsp.enable()
+      automatic_enable = {
+        exclude = { "jdtls", "ts_ls" } -- jdtls: ftplugin/java.lua; ts_ls: we use vtsls
       },
     })
 

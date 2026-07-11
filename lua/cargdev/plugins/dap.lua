@@ -1,7 +1,6 @@
 return {
   "mfussenegger/nvim-dap",
-  event = "VeryLazy", -- Changed from immediate loading to lazy loading
-  cmd = { "Dap", "DapUI", "DapContinue", "DapToggleBreakpoint" }, -- Load on command
+  optional = true,
   dependencies = {
     { "nvim-neotest/nvim-nio", lazy = false },
     "rcarriga/nvim-dap-ui",
@@ -35,7 +34,6 @@ return {
     local api, fn = vim.api, vim.fn
     local keymap = vim.keymap.set
 
-    -- 🎯 Fixed Layout UI (no floating)
     dapui.setup({
       layouts = {
         {
@@ -45,7 +43,7 @@ return {
             { id = "stacks", size = 0.25 },
             { id = "watches", size = 0.25 },
           },
-          size = 40, -- width (left)
+          size = 40,
           position = "left",
         },
         {
@@ -53,7 +51,7 @@ return {
             { id = "repl", size = 0.5 },
             { id = "console", size = 0.5 },
           },
-          size = 10, -- height (bottom)
+          size = 10,
           position = "bottom",
         },
       },
@@ -75,13 +73,11 @@ return {
       windows = { indent = 1 },
     })
 
-    -- 🧠 Mason DAP
     require("mason-nvim-dap").setup({
       ensure_installed = { "js-debug-adapter", "firefox" },
       automatic_setup = true,
     })
 
-    -- 🔍 Virtual Text
     require("nvim-dap-virtual-text").setup({
       commented = true,
       highlight_changed_variables = true,
@@ -90,7 +86,6 @@ return {
       all_frames = true,
     })
 
-    -- 💾 Persistent Breakpoints
     require("persistent-breakpoints").setup({
       load_breakpoints_event = { "BufReadPost" },
     })
@@ -104,7 +99,6 @@ return {
       end,
     })
 
-    -- 🔁 Auto-open/close UI on debug events
     dap.listeners.after.event_initialized["dapui_config"] = function()
       dapui.open()
     end
@@ -114,6 +108,24 @@ return {
     dap.listeners.before.event_exited["dapui_config"] = function()
       dapui.close()
     end
+
+    local map = function(lhs, rhs, desc)
+      keymap("n", lhs, rhs, { desc = "Debug: " .. desc })
+    end
+
+    map("<leader>dc", dap.continue, "Continue")
+    map("<leader>db", dap.toggle_breakpoint, "Toggle Breakpoint")
+    map("<leader>dB", function()
+      dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+    end, "Conditional Breakpoint")
+    map("<leader>do", dap.step_over, "Step Over")
+    map("<leader>di", dap.step_into, "Step Into")
+    map("<leader>dO", dap.step_out, "Step Out")
+    map("<leader>dt", dap.terminate, "Terminate")
+    map("<leader>dr", dap.repl.toggle, "Toggle REPL")
+    map("<leader>dl", dap.run_last, "Run Last")
+    map("<leader>dw", widgets.hover, "Hover Variables")
+    map("<leader>dp", widgets.preview, "Preview")
 
     -- 🧿 Sign Icons
     for name, icon in pairs({
@@ -126,72 +138,16 @@ return {
       fn.sign_define(name, { text = icon, texthl = "DiagnosticSignInfo", linehl = "", numhl = "" })
     end
 
-    -- 🔁 NestJS Smart Watcher (optional)
     api.nvim_create_autocmd("BufWritePost", {
       pattern = "*.ts",
       callback = function()
         if fn.filereadable(".nvim/project.lua") == 1 then
           local config = loadfile(".nvim/project.lua")()
           if config and config.run and config.run:match("nest") then
-            -- Your custom logic here
+            -- custom logic here
           end
         end
       end,
     })
-
-    -- ☕ Java Debug Adapter
-    dap.adapters.java = function(callback)
-      callback({ type = "server", host = "127.0.0.1", port = { port } })
-    end
-    dap.configurations.java = {
-      {
-        name = "Attach to running Java process",
-        type = "java",
-        request = "attach",
-        hostName = "127.0.0.1",
-        port = { port },
-      },
-    }
-
-    -- 🧠 Node.js (NestJS / TypeScript) - Using js-debug-adapter
-    dap.adapters.node = {
-      type = "executable",
-      command = "node",
-      args = {
-        os.getenv("HOME") .. "/.local/share/nvim/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
-        "${port}",
-      },
-    }
-
-    dap.configurations.typescript = {
-      {
-        name = "Launch NestJS",
-        type = "node",
-        request = "launch",
-        program = "${workspaceFolder}/dist/main.js",
-        args = {},
-        console = "integratedTerminal",
-        outFiles = { "${workspaceFolder}/dist/**/*.js" },
-        sourceMaps = true,
-        protocol = "inspector",
-        cwd = fn.getcwd(),
-        runtimeArgs = { "--inspect-brk" },
-        restart = true,
-      },
-      {
-        name = "Attach to NestJS (start:debug)",
-        type = "node",
-        request = "attach",
-        port = 9229,
-        protocol = "inspector",
-        cwd = fn.getcwd(),
-        sourceMaps = true,
-        outFiles = { "${workspaceFolder}/dist/**/*.js" },
-        skipFiles = { "<node_internals>/**" },
-      },
-    }
-
-    -- Also add JavaScript configurations
-    dap.configurations.javascript = dap.configurations.typescript
   end,
 }

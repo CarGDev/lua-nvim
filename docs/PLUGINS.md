@@ -1,12 +1,12 @@
 # Plugins Reference
 
-Complete list of plugins in this configuration.
+Complete list of plugins in this configuration (~45 plugins).
 
 ## Navigation & Search
 
 | Plugin | Description |
 |--------|-------------|
-| `ibhagwan/fzf-lua` | Primary fuzzy finder (files, grep, LSP, diagnostics, todos) |
+| `ibhagwan/fzf-lua` | Primary fuzzy finder (files, grep, LSP, diagnostics, todos, git) |
 | `cbochs/portal.nvim` | Navigate jumplist/changelist with preview |
 
 ## File Management
@@ -56,15 +56,11 @@ Complete list of plugins in this configuration.
 
 | Plugin | Description |
 |--------|-------------|
-| `mg979/vim-visual-multi` | Multi-cursor editing |
-| `gbprod/yanky.nvim` | Yank ring with history |
 | `Wansmer/treesj` | Split/join code blocks |
 | `kylechui/nvim-surround` | Surround text objects (native `cs<from><to>`) |
 | `windwp/nvim-autopairs` | Auto close brackets |
-| `numToStr/Comment.nvim` | Commenting |
 | `folke/todo-comments.nvim` | Highlight TODOs (`:TodoFzfLua`) |
 | `gbprod/substitute.nvim` | Substitute operator |
-| `mbbill/undotree` | Visual undo history |
 | `chentoast/marks.nvim` | Better marks |
 | `kevinhwang91/nvim-ufo` | Better folding |
 
@@ -92,7 +88,7 @@ Complete list of plugins in this configuration.
 | Plugin | Description |
 |--------|-------------|
 | `stevearc/overseer.nvim` | Task runner |
-| `mistweaverco/kulala.nvim` | HTTP client |
+| `rest-nvim/rest.nvim` | HTTP client (`.http` files, treesitter `http` parser) |
 
 ## UI & Theme
 
@@ -122,28 +118,16 @@ Complete list of plugins in this configuration.
 
 | Plugin | Description |
 |--------|-------------|
-| `folke/zen-mode.nvim` | Distraction-free mode |
-| `m4xshen/hardtime.nvim` | Vim motion training |
 | `bennypowers/nvim-regexplainer` | Regex explanation |
 
 ## Language Specific
 
 | Plugin | Description |
 |--------|-------------|
-| `linux-cultist/venv-selector.nvim` | Python venv selector |
 | `vuki656/package-info.nvim` | NPM package versions |
 | `saecki/crates.nvim` | Rust crate versions |
 | `mfussenegger/nvim-jdtls` | Java LSP + debugging |
-| `akinsho/flutter-tools.nvim` | Flutter development |
-| `lervag/vimtex` | LaTeX support |
-
-## Database
-
-| Plugin | Description |
-|--------|-------------|
-| `kristijanhusak/vim-dadbod-ui` | Database UI |
-| `tpope/vim-dadbod` | Database interaction |
-| `kristijanhusak/vim-dadbod-completion` | DB completion |
+| `lervag/vimtex` | LaTeX support (Skim on macOS, zathura elsewhere) |
 
 ## Testing
 
@@ -157,8 +141,6 @@ Complete list of plugins in this configuration.
 
 | Plugin | Description |
 |--------|-------------|
-| `zbirenbaum/copilot.lua` | GitHub Copilot ghost text |
-| `zbirenbaum/copilot-cmp` | Copilot completion source in nvim-cmp |
 | `CarGDev/codetyper.nvim` | Custom multi-provider AI assistant (owned) |
 | `CarGDev/ideadrop.nvim` | Obsidian-style idea panel (owned) |
 
@@ -166,8 +148,6 @@ Complete list of plugins in this configuration.
 
 | Plugin | Description |
 |--------|-------------|
-| `wakatime/vim-wakatime` | Coding time tracking (under review — see audit) |
-| `kawre/leetcode.nvim` | LeetCode integration |
 | `christoomey/vim-tmux-navigator` | Tmux integration |
 | `nvim-lua/plenary.nvim` | Lua utilities |
 | `MunifTanjim/nui.nvim` | UI components |
@@ -175,9 +155,13 @@ Complete list of plugins in this configuration.
 
 ---
 
-## Recently Removed (2026-04-14)
+## Recently Removed (2026-07-10)
 
-telescope.nvim · telescope-fzf-native · telescope-dap · neogit · diffview.nvim · CopilotChat.nvim · modicator.nvim · vim-maximizer · precognition.nvim · twilight.nvim · git-blame.nvim · navbuddy.nvim · nvim-navic · FixCursorHold.nvim
+copilot.lua · copilot-cmp · Comment.nvim · diffview.nvim · flutter-tools · git-blame · hardtime · kulala · leetcode · mcphub · navbuddy · nvim-navic · neogit · obsidian · precognition · telescope.nvim · telescope-fzf-native · telescope-dap · twilight · undotree · venv-selector · vim-maximizer · vim-visual-multi · wakatime · yanky · zen-mode
+
+## Older Removals (2026-04-14)
+
+modicator · vim-maximizer · precognition · twilight · git-blame · navbuddy · nvim-navic · FixCursorHold · telescope (all) · neogit · diffview · CopilotChat
 
 See [CHANGELOG.md](../CHANGELOG.md) for rationale.
 

@@ -6,6 +6,77 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2026-07-11] - Java Debugging Documentation & Verification
+
+### Added
+- **README.md**: Expanded Java debugging section with:
+  - Java 21+ requirement note for macOS (JDK 21+ for JDTLS runtime)
+  - Explicit `:MasonInstall` commands for `java-debug-adapter`, `java-test`, and `jdtls`
+  - Maven Spring Boot debug run command with JVM debug args
+  - Debugger verification commands (`nc -zv`, `lsof -i :5005`) with expected output
+  - Verified working badge confirming end-to-end setup
+
+---
+
+## [2026-07-10] - Major Cleanup & Platform Guard
+
+### Removed - Plugins
+- **copilot.lua** + **copilot-cmp** — GitHub Copilot ghost text and cmp source (codetyper.nvim remains as sole AI assistant)
+- **Comment.nvim** — commenting (keymaps retained via native `gc`/`gcc` motions)
+- **diffview.nvim** — side-by-side diffs (lazygit conflict resolver covers this)
+- **flutter-tools.nvim** — Flutter development (not actively used)
+- **git-blame.nvim** — inline blame (gitsigns already provides it)
+- **hardtime.nvim** — vim motion training
+- **kulala.nvim** — HTTP client (replaced by rest.nvim)
+- **leetcode.nvim** — LeetCode integration
+- **mcphub.nvim** — MCP server hub
+- **navbuddy.nvim** + **nvim-navic** — symbol popup (dropbar + outline.nvim cover it)
+- **neogit** — Magit-style git UI (lazygit handles workflows)
+- **obsidian.nvim** — Obsidian vault integration
+- **precognition.nvim** — vim motion hints
+- **telescope.nvim** + telescope-fzf-native + telescope-dap — fully replaced by fzf-lua
+- **twilight.nvim** — dim-inactive focus mode
+- **undotree.nvim** — visual undo history
+- **venv-selector.nvim** — Python venv picker
+- **vim-maximizer.nvim** — split maximizer (native `<C-w>_`/`<C-w>|` suffice)
+- **vim-visual-multi** — multi-cursor (native `<C-d>` + visual multi retained)
+- **wakatime.nvim** — coding time tracking
+- **yanky.nvim** — yank ring (native registers suffice)
+- **zen-mode.nvim** — distraction-free mode
+
+### Added
+- **rest.nvim** — HTTP client replacing kulala (uses `.http` files, treesitter `http` parser)
+
+### Changed - Plugins
+- **noice.nvim**: Simplified to cmdline-only mode. Messages use `mini` view, `notify` disabled, LSP progress left to fidget. Removed nvim-notify config block.
+- **nvim-tree**: Simplified config — removed custom `FileRemoved` handler, uses `nvim-web-devicons` instead of `vim-devicons`, adds `VimEnter` autocmd to clean up stale `FileExplorer` augroup.
+- **nvim-cmp**: Removed copilot source. Added `enabled` function to disable completion in prompt/nofile buffers (pickers, floating inputs).
+- **octo.nvim**: Switched picker from `telescope` to `fzf-lua`. Keymaps `<leader>or`/`<leader>oa` → `<leader>oL`/`<leader>oA`.
+- **treesitter**: Removed Copilot file disabling guard.
+
+### Changed - Keymaps
+| Old | New | Purpose |
+|-----|-----|---------|
+| `<leader>cs` | `<leader>so` | Symbol outline toggle |
+| `<leader>nh` (package-info) | `<leader>nH` | Hide package info (`<leader>nh` kept for `:nohl`) |
+| `<leader>sR` (SSR) | `<leader>sX` | Structural search/replace |
+| `<leader>or` / `<leader>oa` (octo) | `<leader>oL` / `<leader>oA` | Octo repo list / actions |
+
+### Changed - Platform
+- **vimtex**: Added macOS guard (`has('mac')`) — uses Skim on macOS, zathura elsewhere.
+
+### Fixed
+- **dropbar**: Rendering fixes.
+- **nvim-tree**: Fixed paste-related issues.
+- **noice**: Fixed configuration issues.
+
+### Removed - Misc
+- `scripts/detect_keymap_conflicts.lua` — keymap conflict detection script.
+- `docs/CHANGELOG_OLD.md` — old changelog archive.
+- `kkk` — temporary file.
+
+---
+
 ## [2026-04-14] - Pruning & Keymap Deconfliction
 
 ### Removed - Plugins
@@ -212,4 +283,4 @@ Added minimal plugin configuration stubs for better organization (each plugin in
 
 ---
 
-*Last Updated: February 10, 2026*
+*Last Updated: July 10, 2026*
