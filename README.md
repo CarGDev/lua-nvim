@@ -259,9 +259,39 @@ Configs: Launch NestJS, Launch File, ts-node, Bun Launch, Dynamic Attach
 
 ### Java
 ```bash
-:Mason  # Install java-debug-adapter, java-test
+:MasonInstall java-debug-adapter  # Install Java debugger
+:MasonInstall java-test            # Install Java test runner
+:MasonInstall jdtls                # Install Java LSP server
 ```
-Auto-configured via nvim-jdtls (JDK 25, mac_arm)
+Auto-configured via nvim-jdtls.
+
+**Requirements:**
+- macOS must have **Java 21+** installed (`brew install openjdk@21`), regardless of the project's Java version. JDTLS itself requires JDK 21+ to run.
+- The project can target any Java version (8, 11, 17, etc.) — only the JDTLS runtime needs JDK 21+.
+
+**Run a Spring Boot project with debugger:**
+```bash
+mvn spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Dspring.devtools.restart.enabled=false"
+```
+
+**Verify the debugger is listening:**
+```bash
+nc -zv 127.0.0.1 5005
+nc -zv6 ::1 5005
+lsof -i :5005
+```
+
+Expected output:
+```
+Connection to 127.0.0.1 port 5005 [tcp/avt-profile-2] succeeded!
+Connection to ::1 port 5005 [tcp/avt-profile-2] succeeded!
+COMMAND  PID   USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+java    9055 carlos    5u  IPv4 0x1b613912c0ed600f      0t0  TCP localhost:avt-profile-2 (LISTEN)
+```
+
+Once verified, attach with `<leader>dcr` using the "Debug (Attach) - Remote" configuration.
+
+> **Verified Working** — Configuration tested with JDK 21+ on macOS (arm64) attaching to remote JVM on port 5005.
 
 ## HTTP Client (rest.nvim)
 

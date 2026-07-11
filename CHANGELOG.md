@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2026-07-11] - Java Debugging Documentation & Verification
+
+### Added
+- **README.md**: Expanded Java debugging section with:
+  - Java 21+ requirement note for macOS (JDK 21+ for JDTLS runtime)
+  - Explicit `:MasonInstall` commands for `java-debug-adapter`, `java-test`, and `jdtls`
+  - Maven Spring Boot debug run command with JVM debug args
+  - Debugger verification commands (`nc -zv`, `lsof -i :5005`) with expected output
+  - Verified working badge confirming end-to-end setup
+
+---
+
 ## [2026-07-10] - Major Cleanup & Platform Guard
 
 ### Removed - Plugins
