@@ -19,30 +19,7 @@ return {
   },
   config = function()
     local lspconfig = require("lspconfig")
-    local mason_lspconfig = require("mason-lspconfig")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-    mason_lspconfig.setup({
-      ensure_installed = {
-        "cssls",
-        "emmet_ls",
-        "eslint",
-        "gopls",
-        "graphql",
-        "html",
-        "lua_ls",
-        "php",
-        "prismals",
-        "pyright",
-        "svelte",
-        "tailwindcss",
-        "vtsls", -- VSCode TypeScript Language Server - better moduleResolution support
-      },
-      -- Prevent ts_ls from auto-starting (we use vtsls instead)
-      handlers = {
-        ["ts_ls"] = function() end, -- noop handler to skip ts_ls
-      },
-    })
 
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
@@ -157,7 +134,7 @@ return {
       prismals = {
         filetypes = { "prisma" },
       },
-      php_ls = {},
+      phpactor = {},
       pyright = { 
         settings = { 
           python = { 

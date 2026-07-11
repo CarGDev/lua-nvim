@@ -328,6 +328,14 @@ Inside nvim-tree:
 | `<leader>cd` | n | Open Diff Review |
 | `<leader>ctt` | n, v | Transform tag(s) at cursor/selection |
 
+### Java (nvim-jdtls — buffer-local, Java files only)
+| Key | Mode | Action |
+|-----|------|--------|
+| `<leader>jco` | n | Organize imports |
+| `<leader>jrv` | n, v | Extract variable |
+| `<leader>jrc` | n, v | Extract constant |
+| `<leader>jrm` | v | Extract method |
+
 Copilot and CopilotChat were removed — use the CLI or codetyper for AI workflows.
 
 ---
