@@ -1,137 +1,125 @@
--- -- ============================================================================
--- -- CODETYPER.NVIM: AI-powered coding assistant plugin
--- -- ============================================================================
--- -- A local development plugin that provides AI-assisted coding capabilities
--- -- using various LLM providers (Ollama, Claude, OpenAI, Gemini).
--- -- Features include: inline code transformation with /@ @/ tags, Ask panel
--- -- for interactive queries, Agent panel for autonomous coding tasks,
--- -- Tree-sitter integration for scope detection, and diff review.
--- --
--- -- Key keymaps:
--- --   <leader>co - Open Coder view        <leader>ca - Open Ask panel
--- --   <leader>ct - Toggle Coder view      <leader>cg - Open Agent panel
--- --   <leader>cp - Process prompt         <leader>cd - Open Diff Review
--- --   <leader>ctt - Transform tag at cursor (also works in visual mode)
--- -- ============================================================================
+-- ============================================================================
+-- CODETYPER.NVIM: AI-powered coding assistant plugin
+-- ============================================================================
+-- A local development plugin that provides AI-assisted coding capabilities
+-- using GitHub Copilot (auth-gated, tried first) or Ollama (local fallback
+-- when Copilot isn't authenticated). Features include inline /@ ... @/ prompt
+-- tags, visual-selection transforms, a project indexer, cost/usage tracking,
+-- and an event-driven scheduler with confidence scoring and completion-aware
+-- code injection.
 --
--- -- Get local config (loaded in core/init.lua)
--- local local_cfg = vim.g.cargdev_local or {}
---
--- local repo = "CarGDev/codetyper.nvim"
--- local localDir = nil
---
--- -- If requested to run codetyper locally and a path is provided, use it.
--- if local_cfg.RUN_CODETYPER_LOCAL and local_cfg.CODE_TYPER_DIR and #local_cfg.CODE_TYPER_DIR > 0 then
---   localDir = local_cfg.CODE_TYPER_DIR
--- end
---
--- return {
---   -- Codetyper.nvim - AI-powered coding partner
---   -- Local development version
---   repo,
---   dir = localDir,
---   name = "codetyper.nvim",
---   lazy = false, -- Load on startup to create .coder folder
---   priority = 100, -- Load early
---   dependencies = {
---     "nvim-lua/plenary.nvim", -- Required: async utilities
---     -- "nvim-treesitter/nvim-treesitter", -- Required: scope detection via Tree-sitter
---     -- "nvim-treesitter/nvim-treesitter-textobjects", -- Optional: better text object support
---     "MunifTanjim/nui.nvim", -- Optional: UI components
---   },
---   event = {
---     "BufReadPre *.coder.*",
---     "BufNewFile *.coder.*",
---   },
---   cmd = {
---     "Coder",
---     "CoderOpen",
---     "CoderClose",
---     "CoderToggle",
---     "CoderProcess",
---     "CoderTree",
---     "CoderTreeView",
---     -- Ask commands
---     "CoderAsk",
---     "CoderAskToggle",
---     "CoderAskClear",
---     -- Agent commands
---     "CoderAgent",
---     "CoderAgentToggle",
---     "CoderAgentStop",
---     "CoderMode",
---   },
---   keys = {
---     -- Coder view commands
---     { "<leader>co", "<cmd>Coder open<cr>", desc = "Coder: Open view" },
---     { "<leader>cC", "<cmd>Coder close<cr>", desc = "Coder: Close view" },
---     { "<leader>ct", "<cmd>Coder toggle<cr>", desc = "Coder: Toggle view" },
---     { "<leader>cp", "<cmd>Coder process<cr>", desc = "Coder: Process prompt" },
---     { "<leader>cs", "<cmd>Coder status<cr>", desc = "Coder: Show status" },
---     { "<leader>cf", "<cmd>Coder focus<cr>", desc = "Coder: Switch focus" },
---     { "<leader>cv", "<cmd>Coder tree-view<cr>", desc = "Coder: View tree" },
---     { "<leader>cr", "<cmd>Coder tree<cr>", desc = "Coder: Refresh tree" },
---     -- Ask panel commands
---     { "<leader>ca", "<cmd>Coder ask<cr>", desc = "Coder: Open Ask panel" },
---     { "<leader>cA", "<cmd>Coder ask-toggle<cr>", desc = "Coder: Toggle Ask panel" },
---     { "<leader>cx", "<cmd>Coder ask-clear<cr>", desc = "Coder: Clear Ask history" },
---     -- Agent panel commands
---     { "<leader>cg", "<cmd>Coder agent<cr>", desc = "Coder: Open Agent panel" },
---     { "<leader>cG", "<cmd>Coder agent-toggle<cr>", desc = "Coder: Toggle Agent panel" },
---     { "<leader>cS", "<cmd>Coder agent-stop<cr>", desc = "Coder: Stop Agent" },
---     { "<leader>cd", "<cmd>CoderDiffReview<cr>", desc = "Coder: Open Diff Review" },
---     -- Transform commands (inline /@ @/ replacement)
---     { "<leader>ctt", mode = "n", desc = "Coder: Transform tag at cursor" },
---     { "<leader>ctt", mode = "v", desc = "Coder: Transform selected tags" },
---     { "<leader>ctT", "<cmd>Coder transform<cr>", desc = "Coder: Transform all tags" },
---   },
---   config = function()
---     require("codetyper").setup({
---       llm = {
---         -- Available providers: "ollama", "copilot", "claude"
---         provider = "claude", -- Using Claude API
---         smart_selection = false, -- Disabled smart provider selection
---
---         -- Ollama (local LLM)
---         ollama = {
---           host = "http://localhost:11434",
---           model = "deepseek-coder:6.7b",
---           ask_model = nil,
---         },
---
---         -- GitHub Copilot
---         copilot = {
---           model = "claude-sonnet-4", -- Uses GitHub Copilot authentication
---           ask_model = "gpt-5-mini", -- Cheaper model for question/explain calls
---         },
---
---         -- Claude API (Anthropic)
---         claude = {
---           api_key = nil, -- Uses ANTHROPIC_API_KEY environment variable
---           model = "claude-3-5-sonnet-20241022", -- Claude 3.5 Sonnet (best for coding)
---           ask_model = "claude-3-5-sonnet-20241022", -- Claude 3 Haiku (faster for questions)
---         },
---       },
---       window = {
---         width = 0.25, -- 1/4 of window
---         position = "left",
---         border = "rounded",
---       },
---       patterns = {
---         open_tag = "/@",
---         close_tag = "@/",
---         file_pattern = "*.coder.*",
---       },
---       auto_gitignore = false, -- Disabled - no longer creating project folders
---       auto_open_ask = false, -- Don't auto-open Ask panel on startup
---       scheduler = {
---         enabled = true,
---         escalation_threshold = 0.7,
---         max_concurrent = 2,
---         completion_delay_ms = 100, -- Delay before checking completion visibility
---         apply_delay_ms = 2000, -- Wait 2 seconds before applying code
---       },
---     })
---   end,
--- }
-return {}
+-- Key keymaps:
+--   <leader>ctt - Transform tag/selection at cursor (normal + visual mode)
+--   <leader>ctp - Manually process /@ @/ tags in current buffer
+--   <leader>cta - Toggle auto-trigger for /@ @/ tags (auto/manual)
+--   <leader>cc  - Toggle Cost estimation window
+--   <leader>cq  - Toggle prompt Queue window
+--   <leader>ck  - Toggle Terminal window
+--   <leader>cm  - Quick switch Copilot model
+--   <leader>cu  - Connect to GitHub Copilot (only runs if not already connected)
+--   <leader>ci  - Index the entire project
+--   <leader>cI  - Show project index status
+-- ============================================================================
+
+-- Get local config (loaded in core/init.lua)
+local local_cfg = vim.g.cargdev_local or {}
+
+local repo = "CarGDev/codetyper.nvim"
+local localDir = nil
+
+-- If requested to run codetyper locally and a path is provided, use it.
+if local_cfg.RUN_CODETYPER_LOCAL and local_cfg.CODE_TYPER_DIR and #local_cfg.CODE_TYPER_DIR > 0 then
+  localDir = local_cfg.CODE_TYPER_DIR
+end
+
+return {
+  -- Codetyper.nvim - AI-powered coding partner
+  -- Local development version
+  repo,
+  dir = localDir,
+  name = "codetyper.nvim",
+  lazy = false, -- Load on startup (registers /@ @/ tag autocmds immediately)
+  priority = 100, -- Load early
+  dependencies = {
+    "nvim-lua/plenary.nvim", -- Required: async utilities
+    "MunifTanjim/nui.nvim", -- Optional: UI components
+  },
+  event = {
+    "BufReadPre *.coder.*",
+    "BufNewFile *.coder.*",
+  },
+  cmd = {
+    "Coder",
+    "CoderTransformSelection",
+    "CoderIndexProject",
+    "CoderIndexStatus",
+    "CoderCost",
+    "CoderAutotrigger",
+    "CoderProcess",
+    "CoderCredentials",
+    "CoderSwitchProvider",
+    "CoderModel",
+    "CoderAuth",
+  },
+  keys = {
+    -- Prompt tag processing (/@ ... @/)
+    {
+      "<leader>ctt",
+      "<cmd>CoderTransformSelection<cr>",
+      mode = { "n", "v" },
+      desc = "Coder: Transform selection with custom prompt",
+    },
+    { "<leader>ctp", "<cmd>CoderProcess<cr>", desc = "Coder: Process /@ @/ tags in buffer" },
+    { "<leader>cta", "<cmd>CoderAutotrigger<cr>", desc = "Coder: Toggle /@ @/ auto-trigger" },
+    -- Windows
+    { "<leader>cc", "<cmd>CoderCost<cr>", desc = "Coder: Toggle cost estimation window" },
+    { "<leader>cq", "<cmd>Coder queue<cr>", desc = "Coder: Toggle prompt queue window" },
+    { "<leader>ck", "<cmd>Coder terminal<cr>", desc = "Coder: Toggle terminal window" },
+    -- Provider / auth / model
+    { "<leader>cu", "<cmd>CoderAuth<cr>", desc = "Coder: Connect to GitHub Copilot" },
+    { "<leader>cP", "<cmd>CoderSwitchProvider<cr>", desc = "Coder: Switch active LLM provider" },
+    { "<leader>cm", "<cmd>CoderModel<cr>", desc = "Coder: Switch Copilot model" },
+    { "<leader>cC", "<cmd>CoderCredentials<cr>", desc = "Coder: Show credentials status" },
+    -- Project indexer
+    { "<leader>ci", "<cmd>CoderIndexProject<cr>", desc = "Coder: Index project" },
+    { "<leader>cI", "<cmd>CoderIndexStatus<cr>", desc = "Coder: Show index status" },
+  },
+  config = function()
+    require("codetyper").setup({
+      llm = {
+        -- Copilot is always tried first (auth-gated via a real token check).
+        -- Ollama is only used automatically when Copilot auth is unavailable.
+        provider = "copilot",
+        smart_selection = false,
+
+        -- Ollama (local LLM) — used as fallback when Copilot isn't authenticated
+        ollama = {
+          host = "http://localhost:11434",
+          model = "gemma4:26b",
+          ask_model = nil,
+        },
+
+        -- GitHub Copilot — connect via <leader>cu / :CoderAuth if not already
+        -- authenticated (uses OAuth from copilot.vim/copilot.lua if present,
+        -- otherwise runs its own device-flow login)
+        copilot = {
+          model = "claude-sonnet-5",
+          ask_model = "gpt-5-mini", -- Cheaper model for question/explain calls
+        },
+      },
+      patterns = {
+        open_tag = "/@",
+        close_tag = "@/",
+        file_pattern = "*.coder.*",
+      },
+      auto_gitignore = false,
+      scheduler = {
+        enabled = true,
+        escalation_threshold = 0.7,
+        max_concurrent = 2,
+        completion_delay_ms = 100, -- Delay before checking completion visibility
+        apply_delay_ms = 2000, -- Wait 2 seconds before applying code
+      },
+    })
+  end,
+}

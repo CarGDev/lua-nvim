@@ -67,10 +67,16 @@ vim.api.nvim_create_autocmd("VimEnter", {
   once = true,
 })
 
---[[ vim.api.nvim_create_autocmd("BufReadPost", {
-  once = true,
+-- lua/core/autocmds.lua
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "/Users/carlos/Documents/projects/nvim.plugins/cargdevschemecolor.nvim/**/*.lua",
   callback = function()
-    require("cargdev.core.project_config").bootstrap_config()
-  end
+    for name, _ in pairs(package.loaded) do
+      if name:match("^cargdev%-cyberpunk") then
+        package.loaded[name] = nil
+      end
+    end
+    vim.cmd("colorscheme cargdev-cyberpunk")
+    vim.notify("cargdev-cyberpunk reloaded", vim.log.levels.INFO)
+  end,
 })
- ]]

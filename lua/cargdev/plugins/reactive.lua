@@ -15,7 +15,6 @@ return {
       cursor = true,
       modemsg = true,
     },
-    load = { "catppuccin-mocha-cursor", "catppuccin-mocha-cursorline" },
   },
   config = function(_, opts)
     require("reactive").setup(opts)

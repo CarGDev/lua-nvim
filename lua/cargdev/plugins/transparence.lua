@@ -69,9 +69,13 @@ return {
         "lualine_y_normal",
         "lualine_z_normal",
       },
-      exclude_groups = {}, -- Groups you don't want to clear
+      exclude_groups = {
+        "Visual",
+        "CursorLine",
+        "VisualNOS",
+      }, -- Groups you don't want to clear
       on_clear = function()
---[[         print("💡 Transparent Mode Enabled") ]]
+        --[[         print("💡 Transparent Mode Enabled") ]]
       end,
     })
 

@@ -44,6 +44,7 @@ return {
         tex = { "latexindent" },
         lua = { "stylua" },
         python = { "isort", "black" },
+        rust = { "rustfmt" },
         sql = { "sqlfluff" }, -- SQL formatting
         -- java: no conform formatter (google-java-format needs JDK 21+)
         -- falls through to JDTLS LSP via lsp_fallback = true

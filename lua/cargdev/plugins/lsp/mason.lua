@@ -54,7 +54,7 @@ return {
       },
       -- mason-lspconfig v2: exclude servers from vim.lsp.enable()
       automatic_enable = {
-        exclude = { "jdtls", "ts_ls" } -- jdtls: ftplugin/java.lua; ts_ls: we use vtsls
+        exclude = { "jdtls", "ts_ls", "lua_ls" }, -- jdtls: ftplugin/java.lua; ts_ls: we use vtsls
       },
     })
 
