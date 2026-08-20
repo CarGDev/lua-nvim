@@ -37,6 +37,7 @@ return {
     mason_lspconfig.setup({
       -- list of servers for mason to install
       ensure_installed = {
+        "clangd",
         "cssls",
         "emmet_ls",
         "eslint",
@@ -66,6 +67,7 @@ return {
         "black", -- python formatter
         "pylint",
         "eslint_d",
+        "clang-format", -- C/C++ formatter
         "tree-sitter-cli", -- required for nvim-treesitter parser compilation
         "java-debug-adapter", -- Java debugger
         "java-test", -- Java test runner

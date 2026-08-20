@@ -89,6 +89,7 @@ return {
     end
 
     local servers = {
+      clangd = {},
       cssls = { 
         settings = { 
           css = { 

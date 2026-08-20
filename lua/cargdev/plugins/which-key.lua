@@ -30,12 +30,10 @@ return {
     -- Register group names for better organization
     wk.add({
       { "<leader>b", group = "Buffer" },
-      { "<leader>c", group = "Code/Copilot" },
       { "<leader>d", group = "Debug/DAP" },
       { "<leader>e", group = "Explorer" },
       { "<leader>f", group = "Find/Files" },
       { "<leader>g", group = "Git" },
-      { "<leader>l", group = "LSP/LeetCode" },
       { "<leader>m", group = "Format" },
       { "<leader>n", group = "Notifications" },
       { "<leader>p", group = "Project" },
@@ -44,7 +42,6 @@ return {
       { "<leader>t", group = "Tab/Terminal/Text" },
       { "<leader>w", group = "Save" },
       { "<leader>x", group = "Trouble/Quickfix" },
-      { "<leader>z", group = "Copilot Chat" },
     })
   end,
 }
