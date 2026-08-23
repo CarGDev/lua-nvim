@@ -5,7 +5,7 @@
 -- systems, shell commands, and custom task templates. Features include:
 -- - Terminal-based task execution with DAP integration
 -- - Task list panel with preview and quick actions
--- - Custom templates for npm, Python, Flutter, Go, and Arduino projects
+-- - Custom templates for npm, Python, Flutter, Go, Arduino, and C projects
 -- Keymaps: <leader>or (run), <leader>ot (toggle), <leader>oa (action),
 --          <leader>oq (quick action), <leader>ob (build), <leader>oc (cmd)
 -- ============================================================================
@@ -116,11 +116,18 @@ return {
     },
     component_aliases = {
       default = {
-        { "display_duration", detail_level = 2 },
-        "on_output_summarize",
+        -- Auto-open the output dock (focused) whenever a task starts, so
+        -- you don't have to manually <leader>ot to see it running.
+        { "open_output", direction = "dock", on_start = "always", focus = true },
+        -- vim.notify the last output lines if a task fails (belt-and-
+        -- suspenders in case you've navigated away from the output dock).
+        "on_fail_notify_output",
         "on_exit_set_status",
         "on_complete_notify",
-        "on_complete_dispose",
+        -- NOTE: "display_duration" and "on_output_summarize" were removed:
+        -- both are deprecated no-ops in this overseer.nvim version
+        -- ("Components are no longer used to customize task rendering").
+        { "on_complete_dispose", require_view = { "SUCCESS", "FAILURE" } },
       },
       default_neotest = {
         "unique",
@@ -292,6 +299,79 @@ return {
       end,
       condition = {
         filetype = { "arduino" },
+      },
+    })
+
+    -- C: auto-detects a Makefile (walking up from the current file); uses it
+    -- when present, otherwise falls back to compiling the current file
+    -- directly with clang. Matches both Makefile-based projects (e.g.
+    -- ~/Documents/projects/cpractices/catProject) and standalone practice
+    -- files with no build system.
+    local function find_makefile_root(start_dir)
+      local found = vim.fs.find("Makefile", { path = start_dir, upward = true })[1]
+      if found then
+        return vim.fn.fnamemodify(found, ":h")
+      end
+      return nil
+    end
+
+    overseer.register_template({
+      name = "C: Build",
+      builder = function()
+        local file = vim.fn.expand("%:p")
+        local dir = vim.fn.expand("%:p:h")
+        local root = find_makefile_root(dir)
+        if root then
+          return {
+            cmd = { "make" },
+            cwd = root,
+            name = "make (C build)",
+          }
+        end
+        local out = vim.fn.expand("%:p:r")
+        return {
+          cmd = { "clang" },
+          args = { "-Wall", "-Wextra", "-g", file, "-o", out },
+          cwd = dir,
+          name = "clang compile " .. vim.fn.expand("%:t"),
+        }
+      end,
+      condition = {
+        filetype = { "c" },
+      },
+    })
+
+    overseer.register_template({
+      name = "C: Compile & Run",
+      builder = function()
+        local file = vim.fn.expand("%:p")
+        local dir = vim.fn.expand("%:p:h")
+        local root = find_makefile_root(dir)
+        if root then
+          -- After `make`, find the most recently built executable in the
+          -- project root or build/ dir (binary name may not match the
+          -- project folder name, e.g. catProject builds "mycat").
+          local run_script = "make && "
+            .. 'bin=$(find . build -maxdepth 1 -type f -perm +111 2>/dev/null | xargs -I{} ls -t {} 2>/dev/null | head -1); '
+            .. 'if [ -n "$bin" ]; then echo "-- running: $bin"; "$bin"; '
+            .. 'else echo "No executable found after build"; fi'
+          return {
+            cmd = { "sh" },
+            args = { "-c", run_script },
+            cwd = root,
+            name = "make && run",
+          }
+        end
+        local out = vim.fn.expand("%:p:r")
+        return {
+          cmd = { "sh" },
+          args = { "-c", string.format("clang -Wall -Wextra -g %q -o %q && %q", file, out, out) },
+          cwd = dir,
+          name = "clang run " .. vim.fn.expand("%:t"),
+        }
+      end,
+      condition = {
+        filetype = { "c" },
       },
     })
   end,

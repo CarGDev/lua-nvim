@@ -74,8 +74,12 @@ return {
     })
 
     require("mason-nvim-dap").setup({
-      ensure_installed = { "js-debug-adapter", "firefox" },
-      automatic_setup = true,
+      ensure_installed = { "js-debug-adapter", "firefox", "codelldb" },
+      -- NOTE: `automatic_setup = true` is a stale option that no longer
+      -- exists in the installed mason-nvim-dap version (it silently did
+      -- nothing). `handlers = {}` is the correct option to auto-configure
+      -- adapters + default launch configs (codelldb -> c/cpp/rust/etc.).
+      handlers = {},
     })
 
     require("nvim-dap-virtual-text").setup({

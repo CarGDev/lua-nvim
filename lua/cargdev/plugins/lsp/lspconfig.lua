@@ -102,7 +102,20 @@ return {
           (os.getenv("HOME") or "") .. "/Library/Arduino15/arduino-cli.yaml",
         },
       },
-      clangd = {},
+      -- --header-insertion=iwyu + --all-scopes-completion: accepting a
+      -- completion for a not-yet-included symbol (e.g. printf) auto-inserts
+      -- the matching #include line ("auto library import").
+      clangd = {
+        cmd = {
+          "clangd",
+          "--background-index",
+          "--clang-tidy",
+          "--header-insertion=iwyu",
+          "--all-scopes-completion",
+          "--completion-style=detailed",
+          "--cross-file-rename",
+        },
+      },
       cssls = { 
         settings = { 
           css = { 
