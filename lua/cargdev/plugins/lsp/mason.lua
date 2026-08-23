@@ -4,8 +4,8 @@
 -- Manages installation of LSP servers, debuggers, linters, and formatters.
 -- Uses mason-lspconfig for LSP server management and mason-tool-installer
 -- for additional tools. Ensures commonly used language servers are installed:
--- CSS, Emmet, ESLint, Go, GraphQL, HTML, Java, Lua, Prisma, Python, Svelte,
--- Tailwind, and TypeScript (vtsls). Also installs formatters (prettier, stylua,
+-- Arduino, CSS, Emmet, ESLint, Go, GraphQL, HTML, Java, Lua, Prisma, Python,
+-- Svelte, Tailwind, and TypeScript (vtsls). Also installs formatters (prettier, stylua,
 -- black, isort) and debuggers (debugpy, java-debug-adapter, js-debug-adapter).
 -- ============================================================================
 return {
@@ -37,6 +37,7 @@ return {
     mason_lspconfig.setup({
       -- list of servers for mason to install
       ensure_installed = {
+        "arduino_language_server",
         "clangd",
         "cssls",
         "emmet_ls",

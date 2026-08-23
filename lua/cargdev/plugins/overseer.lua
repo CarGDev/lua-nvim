@@ -5,7 +5,7 @@
 -- systems, shell commands, and custom task templates. Features include:
 -- - Terminal-based task execution with DAP integration
 -- - Task list panel with preview and quick actions
--- - Custom templates for npm, Python, Flutter, and Go projects
+-- - Custom templates for npm, Python, Flutter, Go, and Arduino projects
 -- Keymaps: <leader>or (run), <leader>ot (toggle), <leader>oa (action),
 --          <leader>oq (quick action), <leader>ob (build), <leader>oc (cmd)
 -- ============================================================================
@@ -233,6 +233,65 @@ return {
       end,
       condition = {
         filetype = { "go" },
+      },
+    })
+
+    -- Arduino: compile/upload/monitor via arduino-cli.
+    -- Params have defaults so keymaps run instantly; edit them via <leader>or
+    -- (OverseerRun picker) when your board's FQBN or port changes.
+    overseer.register_template({
+      name = "Arduino: Compile",
+      params = {
+        fqbn = { type = "string", default = "arduino:avr:uno", desc = "Fully Qualified Board Name" },
+      },
+      builder = function(params)
+        return {
+          cmd = { "arduino-cli" },
+          args = { "compile", "--fqbn", params.fqbn, "." },
+          cwd = vim.fn.expand("%:p:h"),
+          name = "arduino compile",
+        }
+      end,
+      condition = {
+        filetype = { "arduino" },
+      },
+    })
+
+    overseer.register_template({
+      name = "Arduino: Compile & Upload",
+      params = {
+        fqbn = { type = "string", default = "arduino:avr:uno", desc = "Fully Qualified Board Name" },
+        port = { type = "string", default = "/dev/cu.usbmodem3112401", desc = "Upload port" },
+      },
+      builder = function(params)
+        return {
+          cmd = { "arduino-cli" },
+          args = { "compile", "--upload", "-p", params.port, "--fqbn", params.fqbn, "." },
+          cwd = vim.fn.expand("%:p:h"),
+          name = "arduino compile & upload",
+        }
+      end,
+      condition = {
+        filetype = { "arduino" },
+      },
+    })
+
+    overseer.register_template({
+      name = "Arduino: Serial Monitor",
+      params = {
+        port = { type = "string", default = "/dev/cu.usbmodem3112401", desc = "Serial port" },
+        baud = { type = "string", default = "9600", desc = "Baud rate" },
+      },
+      builder = function(params)
+        return {
+          cmd = { "arduino-cli" },
+          args = { "monitor", "-p", params.port, "-c", "baudrate=" .. params.baud },
+          cwd = vim.fn.expand("%:p:h"),
+          name = "arduino monitor",
+        }
+      end,
+      condition = {
+        filetype = { "arduino" },
       },
     })
   end,

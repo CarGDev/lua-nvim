@@ -2,8 +2,9 @@
 -- LSPCONFIG: Language Server Protocol configuration
 -- ============================================================================
 -- Configures LSP servers for code intelligence (completions, diagnostics,
--- go-to-definition, etc.). Sets up servers for CSS, Emmet, ESLint, Go, GraphQL,
--- HTML, Lua, Prisma, Python, Svelte, Tailwind, and TypeScript (using vtsls).
+-- go-to-definition, etc.). Sets up servers for Arduino, C/C++ (clangd), CSS,
+-- Emmet, ESLint, Go, GraphQL, HTML, Lua, Prisma, Python, Svelte, Tailwind,
+-- and TypeScript (using vtsls).
 -- Includes smart buffer attachment logic to skip binary files and large files.
 -- Integrates with cmp-nvim-lsp for completion capabilities. Disables virtual
 -- text diagnostics in favor of tiny-inline-diagnostic plugin. Has LspAttach
@@ -89,6 +90,18 @@ return {
     end
 
     local servers = {
+      -- Requires `-cli-config` explicitly: arduino-language-server exits
+      -- immediately with "Path to ArduinoCLI config file must be set" if
+      -- it's not passed. Per-project board selection (FQBN) is read from a
+      -- `sketch.yaml` file in the sketch folder, not passed here — generate
+      -- one with: arduino-cli board attach -p <port> -b <fqbn> <sketch>.ino
+      arduino_language_server = {
+        cmd = {
+          "arduino-language-server",
+          "-cli-config",
+          (os.getenv("HOME") or "") .. "/Library/Arduino15/arduino-cli.yaml",
+        },
+      },
       clangd = {},
       cssls = { 
         settings = { 
@@ -237,6 +250,11 @@ return {
       -- Add init_options if present
       if cfg.init_options then
         server_config.init_options = cfg.init_options
+      end
+
+      -- Add cmd if present (override the server's default launch command)
+      if cfg.cmd then
+        server_config.cmd = cfg.cmd
       end
       
       lspconfig[name].setup(server_config)
