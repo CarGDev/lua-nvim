@@ -45,8 +45,8 @@
 --     "MunifTanjim/nui.nvim", -- Optional: UI components
 --   },
 --   event = {
---     "BufReadPre *.coder.*",
---     "BufNewFile *.coder.*",
+--     "BufReadPre *.codetyper.*",
+--     "BufNewFile *.codetyper.*",
 --   },
 --   cmd = {
 --     "Coder",
@@ -110,7 +110,7 @@
 --       patterns = {
 --         open_tag = "/@",
 --         close_tag = "@/",
---         file_pattern = "*.coder.*",
+--         file_pattern = "*.codetyper.*",
 --       },
 --       auto_gitignore = false,
 --       scheduler = {

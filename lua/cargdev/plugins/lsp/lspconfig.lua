@@ -20,9 +20,15 @@ return {
   },
   config = function()
     local lspconfig = require("lspconfig")
+    local util = require("lspconfig.util")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
     local capabilities = cmp_nvim_lsp.default_capabilities()
+
+    local function mason_bin(name)
+      local path = vim.fn.stdpath("data") .. "/mason/bin/" .. name
+      return vim.fn.executable(path) == 1 and path or name
+    end
 
     -- Enhanced error handling for LSP diagnostics
     -- NOTE: tiny-inline-diagnostic handles the display, so we disable virtual_text and float here
@@ -131,6 +137,10 @@ return {
         settings = { workingDirectory = { mode = "auto" } } 
       },
       gopls = { 
+        cmd = { mason_bin("gopls") },
+        filetypes = { "go", "gomod", "gowork", "gotmpl" },
+        root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+        single_file_support = true,
         settings = { 
           gopls = { 
             analyses = { unusedparams = true }, 
@@ -269,7 +279,16 @@ return {
       if cfg.cmd then
         server_config.cmd = cfg.cmd
       end
-      
+
+      -- Add root/single-file behavior if present
+      if cfg.root_dir then
+        server_config.root_dir = cfg.root_dir
+      end
+
+      if cfg.single_file_support ~= nil then
+        server_config.single_file_support = cfg.single_file_support
+      end
+       
       lspconfig[name].setup(server_config)
     end
 
