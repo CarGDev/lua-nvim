@@ -1,12 +1,32 @@
 return {
   "nvim-tree/nvim-tree.lua",
   dependencies = "nvim-tree/nvim-web-devicons",
-  config = function()
-    local nvimtree = require("nvim-tree")
-
-    -- recommended settings from nvim-tree documentation
+  cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile", "NvimTreeFindFileToggle", "NvimTreeCollapse", "NvimTreeRefresh" },
+  keys = {
+    { "<leader>ee", "<cmd>NvimTreeToggle<CR>", desc = "Toggle file explorer" },
+    { "<leader>nt", "<cmd>NvimTreeFindFileToggle<CR>", desc = "Toggle file explorer on current file" },
+    { "<leader>ec", "<cmd>NvimTreeCollapse<CR>", desc = "Collapse file explorer" },
+    { "<leader>er", "<cmd>NvimTreeRefresh<CR>", desc = "Refresh file explorer" },
+  },
+  init = function()
+    -- recommended settings from nvim-tree documentation (must run before netrw loads)
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
+
+    -- `nvim <dir>`: netrw is disabled, so load nvim-tree and open it for directories
+    vim.api.nvim_create_autocmd("VimEnter", {
+      once = true,
+      callback = function(data)
+        if vim.fn.isdirectory(data.file) == 1 then
+          vim.cmd.cd(data.file)
+          require("lazy").load({ plugins = { "nvim-tree.lua" } })
+          require("nvim-tree.api").tree.open()
+        end
+      end,
+    })
+  end,
+  config = function()
+    local nvimtree = require("nvim-tree")
 
     -- 🧼 Remove invalid autocommand (FileExplorer) if it exists
     vim.api.nvim_create_autocmd("VimEnter", {
@@ -103,13 +123,5 @@ return {
         end, opts)
       end,
     })
-
-    -- set keymaps
-    local keymap = vim.keymap -- for conciseness
-
-    keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
-    keymap.set("n", "<leader>nt", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file
-    keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
-    keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) -- refresh file explorer
   end,
 }

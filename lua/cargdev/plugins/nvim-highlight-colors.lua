@@ -8,7 +8,11 @@
 
 return {
   "brenoprata10/nvim-highlight-colors",
-  event = { "BufReadPre", "BufNewFile" },
+  ft = {
+    "css", "scss", "sass", "less", "html", "svelte", "vue",
+    "javascript", "javascriptreact", "typescript", "typescriptreact",
+    "lua", "conf", "toml",
+  },
   opts = {
     render = "background",
     virtual_symbol = "■",
@@ -23,7 +27,7 @@ return {
     enable_named_colors = true,
     enable_tailwind = true,
     custom_colors = {},
-    exclude_filetypes = {},
+    exclude_filetypes = { "text" },
     exclude_buftypes = {},
   },
 }

@@ -17,9 +17,33 @@ end
 load_local_config()
 
 -- 0. Setup LuaRocks path for rest.nvim dependencies (Lua 5.1 - Neovim uses LuaJIT)
+-- The `luarocks path` shell call is slow, so its result is cached on disk.
+-- Delete the cache file to refresh it (e.g. after installing new rocks).
 local function setup_luarocks_path()
-  local luarocks_path = vim.fn.system("luarocks path --lr-path --lua-version=5.1 --local"):gsub("\n", "")
-  if luarocks_path and luarocks_path ~= "" then
+  local cache_file = vim.fn.stdpath("cache") .. "/luarocks_path"
+  local luarocks_path = ""
+
+  local f = io.open(cache_file, "r")
+  if f then
+    luarocks_path = f:read("*a") or ""
+    f:close()
+  end
+
+  if luarocks_path == "" then
+    luarocks_path = vim.fn.system("luarocks path --lr-path --lua-version=5.1 --local"):gsub("\n", "")
+    if vim.v.shell_error == 0 and luarocks_path ~= "" then
+      vim.fn.mkdir(vim.fn.fnamemodify(cache_file, ":h"), "p")
+      local out = io.open(cache_file, "w")
+      if out then
+        out:write(luarocks_path)
+        out:close()
+      end
+    else
+      luarocks_path = ""
+    end
+  end
+
+  if luarocks_path ~= "" then
     package.path = package.path .. ";" .. luarocks_path
   end
 end
@@ -45,27 +69,8 @@ local function load_functions()
   end
 end
 
--- 4. Fix: Force filetype detection on BufRead (fix for nvim-tree/plain text issue)
-vim.api.nvim_create_autocmd("BufRead", {
-  pattern = "*",
-  callback = function()
-    vim.cmd("filetype detect")
-  end,
-})
-
 -- 5. Load functions immediately
 load_functions()
-
--- 6. Fallback: also try to load on VimEnter if LazyDone doesn't fire
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    -- Wait a bit for plugins to load
-    vim.defer_fn(function()
-      load_functions()
-    end, 200)
-  end,
-  once = true,
-})
 
 -- lua/core/autocmds.lua
 vim.api.nvim_create_autocmd("BufWritePost", {

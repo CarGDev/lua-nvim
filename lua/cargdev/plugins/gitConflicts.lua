@@ -1,5 +1,6 @@
 return {
   "akinsho/git-conflict.nvim",
+  event = { "BufReadPre", "BufNewFile" },
   config = function()
     require("git-conflict").setup({
       default_mappings = true, -- enable buffer local mapping created by this plugin

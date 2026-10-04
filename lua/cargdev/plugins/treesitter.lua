@@ -15,9 +15,6 @@ return {
     end
     vim.cmd("TSUpdate")
   end,
-  dependencies = {
-    "windwp/nvim-ts-autotag",
-  },
   opts = {
     -- enable syntax highlighting
     highlight = {
@@ -28,10 +25,6 @@ return {
     },
     -- enable indentation
     indent = { enable = true },
-    -- enable autotagging (w/ nvim-ts-autotag plugin)
-    autotag = {
-      enable = true,
-    },
     -- ensure these language parsers are installed
     ensure_installed = {
       "json",

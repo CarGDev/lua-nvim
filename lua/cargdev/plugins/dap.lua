@@ -1,6 +1,15 @@
 return {
   "mfussenegger/nvim-dap",
   optional = true,
+  -- Loaded by nvim-jdtls on java files, or on first debug keypress/command elsewhere.
+  cmd = { "DapContinue", "DapToggleBreakpoint", "DapNew" },
+  keys = {
+    { "<leader>dc", desc = "Debug: Continue" },
+    { "<leader>db", desc = "Debug: Toggle Breakpoint" },
+    { "<leader>dB", desc = "Debug: Conditional Breakpoint" },
+    { "<leader>dr", desc = "Debug: Toggle REPL" },
+    { "<leader>dl", desc = "Debug: Run Last" },
+  },
   dependencies = {
     { "nvim-neotest/nvim-nio", lazy = false },
     "rcarriga/nvim-dap-ui",
@@ -8,24 +17,6 @@ return {
     "mfussenegger/nvim-dap-python",
     "theHamsta/nvim-dap-virtual-text",
     "Weissle/persistent-breakpoints.nvim",
-    {
-      "nvim-neotest/neotest",
-      event = "VeryLazy",
-      dependencies = {
-        "nvim-neotest/neotest-jest",
-        "nvim-neotest/neotest-python",
-        "nvim-lua/plenary.nvim",
-        "antoinemadec/FixCursorHold.nvim",
-      },
-      config = function()
-        require("neotest").setup({
-          adapters = {
-            require("neotest-jest")({}),
-            require("neotest-python")({}),
-          },
-        })
-      end,
-    },
   },
   config = function()
     local dap = require("dap")
@@ -141,17 +132,5 @@ return {
     }) do
       fn.sign_define(name, { text = icon, texthl = "DiagnosticSignInfo", linehl = "", numhl = "" })
     end
-
-    api.nvim_create_autocmd("BufWritePost", {
-      pattern = "*.ts",
-      callback = function()
-        if fn.filereadable(".nvim/project.lua") == 1 then
-          local config = loadfile(".nvim/project.lua")()
-          if config and config.run and config.run:match("nest") then
-            -- custom logic here
-          end
-        end
-      end,
-    })
   end,
 }

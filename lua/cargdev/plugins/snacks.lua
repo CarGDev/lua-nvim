@@ -41,12 +41,9 @@ return {
         },
       },
       explorer = { enabled = false },
-      image = {
-        enabled = true,
-        terminal = nil,
-      },
+      image = { enabled = false },
       input = { enabled = true },
-      lazygit = { enabled = true },
+      lazygit = { enabled = false }, -- lazygit.nvim handles this
       notifier = {
         enabled = true,
         timeout = 3000,
@@ -56,16 +53,12 @@ return {
       },
       picker = { enabled = true },
       quickfile = { enabled = true },
-      scope = { enabled = true },
+      scope = { enabled = false },
       scroll = { enabled = false },
-      statuscolumn = { enabled = true },
-      terminal = { enabled = true },
-      toggle = { enabled = true },
-      words = {
-        enabled = true,
-        lsp = { enabled = false },
-        hl = { enabled = true },
-      },
+      statuscolumn = { enabled = false },
+      terminal = { enabled = false },
+      toggle = { enabled = false },
+      words = { enabled = false },
     })
 
     vim.schedule(function()

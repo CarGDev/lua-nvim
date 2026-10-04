@@ -10,10 +10,11 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+vim.api.nvim_create_augroup("FileExplorer", { clear = false })
 
 require("lazy").setup({ { import = "cargdev.plugins" }, { import = "cargdev.plugins.lsp" } }, {
   checker = {
-    enabled = true,
+    enabled = false,
     notify = false,
   },
   change_detection = {

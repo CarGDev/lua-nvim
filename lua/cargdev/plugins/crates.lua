@@ -32,7 +32,7 @@ return {
     open_programs = { "xdg-open", "open" },
     expand_crate_moves_cursor = true,
     enable_update_available_warning = true,
-    on_attach = function(bufnr) end,
+    on_attach = function() end,
     text = {
       loading = "   Loading",
       version = "   %s",
