@@ -46,11 +46,14 @@ return {
         python = { "isort", "black" },
         rust = { "rustfmt" },
         c = { "clang-format" },
+        ocaml = { "ocamlformat" },
+        prolog = { "prolog" },
         cpp = { "clang-format" },
         arduino = { "clang-format" },
         sql = { "sqlfluff" }, -- SQL formatting
         smalltalk = { "prettier" },
-        -- java/go: prefer LSP formatting from jdtls/gopls via <leader>mm
+        go = { "goimports", "gofmt" },
+        java = { "google-java-format" },
       },
       format_on_save = function(bufnr)
         -- Disable autoformat for certain filetypes
@@ -72,25 +75,9 @@ return {
 
     vim.keymap.set({ "n", "v" }, "<leader>mm", function()
       local bufnr = vim.api.nvim_get_current_buf()
-      local filetype = vim.bo[bufnr].filetype
       local has_lsp = #vim.lsp.get_clients({ bufnr = bufnr, method = "textDocument/formatting" }) > 0
-      if vim.tbl_contains({ "java", "go" }, filetype) then
-        if not has_lsp then
-          vim.notify("Format: no LSP client available for " .. filetype, vim.log.levels.WARN)
-          return
-        end
-        vim.lsp.buf.format({
-          bufnr = bufnr,
-          async = false,
-          timeout_ms = 2000,
-        })
-        return
-      end
       if vim.tbl_isempty(conform.list_formatters_to_run(bufnr)) and not has_lsp then
-        vim.notify(
-          "Format: no formatter or LSP client available (jdtls still starting?)",
-          vim.log.levels.WARN
-        )
+        vim.notify("Format: no formatter or LSP client available (jdtls still starting?)", vim.log.levels.WARN)
         return
       end
       conform.format({

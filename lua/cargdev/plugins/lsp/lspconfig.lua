@@ -43,37 +43,78 @@ return {
 
     -- Only attach to sensible buffers
     local function should_attach_lsp(bufnr)
-      if type(bufnr) ~= "number" or bufnr == 0 then 
-        bufnr = vim.api.nvim_get_current_buf() 
+      if type(bufnr) ~= "number" or bufnr == 0 then
+        bufnr = vim.api.nvim_get_current_buf()
       end
       local ft = vim.bo[bufnr].filetype
       local name = vim.api.nvim_buf_get_name(bufnr)
 
       -- skip binaries / media
-      local exts = { 
-        "png", "jpg", "jpeg", "gif", "svg", "ico", "bmp", "webp",
-        "mp4", "avi", "mov", "wmv", "flv", "webm", "mkv",
-        "mp3", "wav", "flac", "aac", "ogg",
-        "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx",
-        "zip", "rar", "7z", "tar", "gz", "bz2", "exe", "dll", "so", "dylib", "bin" 
+      local exts = {
+        "png",
+        "jpg",
+        "jpeg",
+        "gif",
+        "svg",
+        "ico",
+        "bmp",
+        "webp",
+        "mp4",
+        "avi",
+        "mov",
+        "wmv",
+        "flv",
+        "webm",
+        "mkv",
+        "mp3",
+        "wav",
+        "flac",
+        "aac",
+        "ogg",
+        "pdf",
+        "doc",
+        "docx",
+        "xls",
+        "xlsx",
+        "ppt",
+        "pptx",
+        "zip",
+        "rar",
+        "7z",
+        "tar",
+        "gz",
+        "bz2",
+        "exe",
+        "dll",
+        "so",
+        "dylib",
+        "bin",
       }
-      for _, e in ipairs(exts) do 
-        if name:match("%." .. e .. "$") then 
-          return false 
-        end 
+      for _, e in ipairs(exts) do
+        if name:match("%." .. e .. "$") then
+          return false
+        end
       end
 
       local lines = vim.api.nvim_buf_line_count(bufnr)
-      if lines == 0 or lines > 50000 then 
-        return false 
+      if lines == 0 or lines > 50000 then
+        return false
       end
 
-      local skip_ft = { 
-        git = true, gitcommit = true, gitrebase = true, gitconfig = true,
-        help = true, man = true, qf = true, quickfix = true, terminal = true, toggleterm = true 
+      local skip_ft = {
+        git = true,
+        gitcommit = true,
+        gitrebase = true,
+        gitconfig = true,
+        help = true,
+        man = true,
+        qf = true,
+        quickfix = true,
+        terminal = true,
+        toggleterm = true,
       }
-      if skip_ft[ft] then 
-        return false 
+      if skip_ft[ft] then
+        return false
       end
 
       return true
@@ -122,36 +163,48 @@ return {
           "--cross-file-rename",
         },
       },
-      cssls = { 
-        settings = { 
-          css = { 
-            validate = true, 
-            lint = { unknownAtRules = "ignore" } 
-          } 
-        } 
+      cssls = {
+        settings = {
+          css = {
+            validate = true,
+            lint = { unknownAtRules = "ignore" },
+          },
+        },
       },
       emmet_ls = {
-        filetypes = { "html", "css", "sass", "scss", "less", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+        filetypes = {
+          "html",
+          "css",
+          "sass",
+          "scss",
+          "less",
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+          "vue",
+          "svelte",
+        },
       },
-      eslint = { 
-        settings = { workingDirectory = { mode = "auto" } } 
+      eslint = {
+        settings = { workingDirectory = { mode = "auto" } },
       },
-      gopls = { 
+      gopls = {
         cmd = { mason_bin("gopls") },
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
         root_dir = util.root_pattern("go.work", "go.mod", ".git"),
         single_file_support = true,
-        settings = { 
-          gopls = { 
-            analyses = { unusedparams = true }, 
-            staticcheck = true, 
-            usePlaceholders = true 
-          } 
-        } 
+        settings = {
+          gopls = {
+            analyses = { unusedparams = true },
+            staticcheck = true,
+            usePlaceholders = true,
+          },
+        },
       },
       graphql = {
         filetypes = { "graphql", "gql", "typescript", "javascript", "typescriptreact", "javascriptreact" },
-      }, 
+      },
       html = {
         filetypes = { "html" },
       },
@@ -159,9 +212,9 @@ return {
         settings = {
           Lua = {
             diagnostics = { globals = { "vim" } },
-            workspace = { 
-              library = vim.api.nvim_get_runtime_file("", true), 
-              checkThirdParty = false 
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
             },
             telemetry = { enable = false },
             hint = { enable = false },
@@ -172,21 +225,33 @@ return {
         filetypes = { "prisma" },
       },
       phpactor = {},
-      pyright = { 
-        settings = { 
-          python = { 
-            analysis = { 
-              typeCheckingMode = "basic", 
-              autoImportCompletions = true 
-            } 
-          } 
-        } 
+      pyright = {
+        settings = {
+          python = {
+            analysis = {
+              typeCheckingMode = "basic",
+              autoImportCompletions = true,
+            },
+          },
+        },
       },
       svelte = {
         filetypes = { "svelte" },
       },
       tailwindcss = {
-        filetypes = { "html", "css", "sass", "scss", "less", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+        filetypes = {
+          "html",
+          "css",
+          "sass",
+          "scss",
+          "less",
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+          "vue",
+          "svelte",
+        },
         init_options = {
           userLanguages = {
             html = "html",
@@ -259,17 +324,17 @@ return {
           ),
         },
       }
-      
+
       -- Add settings if present
       if cfg.settings then
         server_config.settings = cfg.settings
       end
-      
+
       -- Add filetypes if present
       if cfg.filetypes then
         server_config.filetypes = cfg.filetypes
       end
-      
+
       -- Add init_options if present
       if cfg.init_options then
         server_config.init_options = cfg.init_options
@@ -288,7 +353,7 @@ return {
       if cfg.single_file_support ~= nil then
         server_config.single_file_support = cfg.single_file_support
       end
-       
+
       lspconfig[name].setup(server_config)
     end
 
@@ -302,19 +367,14 @@ return {
     })
 
     -- Global LSP error handling
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-      vim.lsp.handlers.hover,
-      { border = "rounded" }
-    )
-    
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-      vim.lsp.handlers.signature_help,
-      { border = "rounded" }
-    )
-    
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+
+    vim.lsp.handlers["textDocument/signatureHelp"] =
+      vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+
     -- Handle LSP errors gracefully
     vim.lsp.set_log_level("warn") -- Reduce log verbosity
-    
+
     -- Add autocmd to handle LSP errors
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(args)
@@ -324,7 +384,7 @@ return {
           client.notify("workspace/didChangeConfiguration", {
             settings = {
               -- Add any client-specific error handling settings here
-            }
+            },
           })
         end
       end,
