@@ -129,7 +129,7 @@ g.loaded_perl_provider = 0 -- Disable Perl provider
 g.loaded_ruby_provider = 0 -- Disable Ruby provider (optional)
 
 -- Python provider configuration
-g.python3_host_prog = "/opt/homebrew/bin/python3.12" -- Explicit Python path
+g.python3_host_prog = vim.fn.expand("~/.local/share/nvim/pyenv/bin/python")
 
 -- Lua specific settings
 opt.runtimepath:append(vim.fn.stdpath("config") .. "/lua")
@@ -202,7 +202,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
     -- Text/documentation files
     if vim.tbl_contains({ "text", "markdown", "gitcommit", "mail", "help", "man" }, filetype) then
-      opt.textwidth = filetype == "help" or filetype == "man" and 78 or 80
+      opt.textwidth = (filetype == "help" or filetype == "man") and 78 or 80
       opt.wrap = true
       opt.linebreak = true
       opt.formatoptions:append("t") -- Auto-wrap text
@@ -226,4 +226,3 @@ vim.api.nvim_create_autocmd("FileType", {
     end
   end,
 })
-

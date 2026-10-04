@@ -1,3 +1,10 @@
+-- ============================================================================
+-- NVIM-DAP: Debugger for Java and other languages
+-- ============================================================================
+-- Step through code with breakpoints, a variables/stack/watch sidebar, a REPL and
+-- inline values. Adapters are installed through Mason; Java debugging works together
+-- with nvim-jdtls. Example: <leader>db sets a breakpoint, <leader>dc starts or continues.
+-- ============================================================================
 return {
   "mfussenegger/nvim-dap",
   optional = true,

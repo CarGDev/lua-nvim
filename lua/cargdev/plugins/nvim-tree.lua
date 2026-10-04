@@ -1,3 +1,10 @@
+-- ============================================================================
+-- NVIM-TREE: File explorer
+-- ============================================================================
+-- Sidebar file tree that replaces netrw. Create, rename, delete, cut, copy and paste
+-- files, and open them in splits. The tree closes after a file is opened.
+-- Example: <leader>ee toggles the tree, <leader>nt reveals the current file in it.
+-- ============================================================================
 return {
   "nvim-tree/nvim-tree.lua",
   dependencies = "nvim-tree/nvim-web-devicons",

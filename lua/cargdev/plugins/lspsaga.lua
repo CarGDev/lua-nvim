@@ -63,9 +63,10 @@ return {
       },
     },
     lightbulb = {
-      enable = false, -- Using nvim-lightbulb instead
-      sign = false,
+      enable = true, -- code-action hint (nvim-lightbulb was removed)
+      sign = true, -- show in the sign column
       virtual_text = false,
+      enable_in_insert = false,
     },
     scroll_preview = {
       scroll_down = "<C-f>",

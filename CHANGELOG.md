@@ -6,6 +6,59 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2026-10-03] - Startup Performance Audit
+
+Startup time (`:Lazy profile`, UIEnter) went from 107.9ms to 66.8ms after the first round of changes; the later ones below (luarocks cache, lazy `nvim-tree`, lazy `dap`) were not re-profiled. At last check 12 of 75 plugins load at startup.
+
+### Removed - Plugins
+- **hlchunk.nvim** — scope/indent guides (indent-blankline covers it)
+- **nvim-lightbulb** — code-action hint (replaced by lspsaga's lightbulb, enabled below)
+- **nvim-ufo** + **statuscol.nvim** — folding UI and custom statuscolumn
+- **overseer.nvim** — task runner
+- **ssr.nvim**, **substitute.nvim**, **treesj** — niche editing tools
+- **codetyper.nvim**, **dropbar.nvim**, **ideaMap**, **inc-rename.nvim**
+- **neotest** (+ `neotest-jest`, `neotest-python`) — dropped from the dap dependencies; unused and had no Java adapter
+
+### Removed - Core
+- `core/function/notification_manager.lua` and `core/function/performance_monitor.lua` — overlapped with noice/snacks notifier and were only needed for debugging
+- `core/function/project_commands.lua` — the `:RunProject` / `:DebugProject` commands and `.nvim/project.lua`
+- `lua/overseer/` (custom overseer component), left over after removing overseer.nvim
+- Stale keymap files for removed plugins: `core/keymaps/leet.lua` (leetcode.nvim), `core/keymaps/database.lua` (vim-dadbod) and `core/keymaps/project.lua` (`:RunProject`/`:DebugProject`); the `substitute.nvim` keymaps (`<leader>sub`, `<leader>sl`, `<leader>S`) in `core/keymaps/plugins.lua`
+- Stray files `kkk` and `keybind.json` (old nvim-tree backup and VS Code keybindings)
+
+### Changed - Startup
+- **core/init.lua**: the `luarocks path` result is cached in `stdpath("cache")/luarocks_path` instead of shelling out on every launch. Delete the file to refresh it. Removed the duplicate `load_functions` call on `VimEnter` and the redundant `BufRead` `filetype detect` autocmd.
+- **lazy.lua**: update checker disabled (`checker.enabled = false`); use `:Lazy check` manually.
+
+### Changed - Filetype Plugins
+- **ftplugin/c.lua** and **ftplugin/arduino.lua**: build/run keymaps (`<leader>cc`, `<leader>cr`, `<leader>ac`, `<leader>au`, `<leader>am`) no longer depend on overseer.nvim (which was removed and broke them). They now run in a terminal split through the new `core/term_run.lua` helper. C still auto-detects a Makefile and falls back to clang. Arduino board/port/baud default to an Uno on `/dev/cu.usbmodem3112401` and can be overridden with `vim.g.arduino_fqbn`, `vim.g.arduino_port` and `vim.g.arduino_baud`.
+
+### Changed - Core
+- **core/options.lua**: `g.python3_host_prog` now points to a dedicated venv (`~/.local/share/nvim/pyenv/bin/python`, with `pynvim` installed) instead of the system Homebrew Python, which cannot `pip install` system-wide. Fixes the `import neovim` error in `:checkhealth vim.provider`.
+
+### Added - Core
+- `core/term_run.lua`: small helper that saves the buffer and runs a command in a bottom terminal split.
+
+### Changed - Plugins
+- **snacks.nvim**: disabled unused modules `image`, `lazygit`, `scope`, `statuscolumn`, `terminal`, `toggle`, `words`. Kept `dashboard`, `bufdelete`, `picker`, `input`, `notifier`, `quickfile`, `bigfile`.
+- **nvim-tree**: now lazy (`cmd` + `keys`); netrw is disabled in `init` and a `VimEnter` autocmd opens the tree for `nvim <dir>`.
+- **nvim-dap**: now lazy (`keys`/`cmd`, and loaded by `nvim-jdtls` on Java files). Removed a no-op `BufWritePost *.ts` autocmd. Persistent breakpoints are restored only for buffers opened after dap loads.
+- **lspsaga**: re-enabled the code-action lightbulb (sign column only, not in insert mode). It had been disabled in favour of `nvim-lightbulb`, which was removed, so there was no code-action indicator.
+- **nvim-highlight-colors**: loads by filetype (css, scss, sass, less, html, svelte, vue, js/ts/jsx/tsx, lua, conf, toml) instead of every buffer.
+- **nvim-ts-autotag**: loads by filetype and is no longer also a dependency of treesitter; removed the obsolete `autotag` option from treesitter opts.
+- **git-conflict**: loads on `BufReadPre`/`BufNewFile`.
+- **log-highlight** (`termcolor.lua`): loads on `ft = "log"`.
+- **wakatime**: loads on `VeryLazy` (it previously never loaded: `lazy = true` with no trigger). The status bar is enabled via `status_bar_enabled = true` in `~/.wakatime.cfg`.
+
+### Added - Documentation
+- Header documentation blocks (purpose, short description and a usage example, in the same banner style as the other plugins) added to the plugin files that had none: `dap.lua`, `gitConflicts.lua`, `nvim-tree.lua`, `rest.lua`, `smalltalk.lua`, and `wakatime.lua` (replacing a loose comment). Every file under `plugins/` now starts with one.
+
+### Fixed
+- **core/options.lua**: `textwidth` for help/man buffers was set with `filetype == "help" or filetype == "man" and 78 or 80`, which evaluates to `true` in help buffers and raised `Error in BufReadPost Autocommands` ("Invalid value for option 'textwidth'") on `:help`. Added the missing parentheses.
+- **rest.nvim**: the `opts` that adds the `http` treesitter parser was nested inside `dependencies` and never ran; moved to its own `nvim-treesitter` spec.
+
+---
+
 ## [2026-07-11] - Java Debugging Documentation & Verification
 
 ### Added
@@ -283,4 +336,4 @@ Added minimal plugin configuration stubs for better organization (each plugin in
 
 ---
 
-*Last Updated: July 10, 2026*
+*Last Updated: October 3, 2026*

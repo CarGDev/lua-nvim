@@ -59,11 +59,6 @@ keymap.set("n", "<leader>Sr", "<cmd>SessionRestore<cr>", { desc = "Session: Rest
 --- TODO: add format buffer keymap
 --- keymap.set("n", "<leader>f", "<cmd>lua vim.lsp.buf.format()<cr>", { desc = "Format buffer" })
 
---- Substitute.nvim — operator, line, and end-of-line substitution.
-keymap.set("n", "<leader>sub", "<cmd>lua require('substitute').operator()<cr>", { desc = "Substitute: With motion" })
-keymap.set("n", "<leader>sl", "<cmd>lua require('substitute').line()<cr>", { desc = "Substitute: Line" })
-keymap.set("n", "<leader>S", "<cmd>lua require('substitute').eol()<cr>", { desc = "Substitute: To end of line" })
-
 --- nvim-surround — add, delete, and replace surrounding pairs.
 keymap.set("n", "<leader>sa", "<cmd>lua require('nvim-surround').surround_add()<cr>", { desc = "Add surrounding" })
 keymap.set(

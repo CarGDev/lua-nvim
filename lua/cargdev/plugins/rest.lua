@@ -1,3 +1,10 @@
+-- ============================================================================
+-- REST.NVIM: HTTP client
+-- ============================================================================
+-- Send HTTP requests straight from .http files and read the formatted response,
+-- with cookie and .env variable support. Needs the treesitter `http` parser.
+-- Example: write `GET https://example.com/api` in a .http file and run the request.
+-- ============================================================================
 return {
   -- Add the "http" parser (previously nested by mistake inside rest.nvim's `dependencies`)
   {
