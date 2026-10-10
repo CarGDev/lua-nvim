@@ -15,18 +15,16 @@ return {
     end
     vim.cmd("TSUpdate")
   end,
-  opts = {
-    -- enable syntax highlighting
-    highlight = {
-      enable = true,
-      -- Performance optimizations
-      use_languagetree = true,
-      additional_vim_regex_highlighting = false,
-    },
-    -- enable indentation
-    indent = { enable = true },
-    -- ensure these language parsers are installed
-    ensure_installed = {
+  -- nvim-treesitter `main` branch: it no longer reads `opts.ensure_installed`
+  -- or `highlight.enable`. Parsers must be installed with `.install()` and
+  -- highlighting started per buffer with `vim.treesitter.start()`.
+  config = function()
+    local ts = require("nvim-treesitter")
+    ts.setup({})
+
+    -- Parsers to install (already-installed ones are skipped; compiled async
+    -- with the tree-sitter CLI from mason).
+    local parsers = {
       "json",
       "javascript",
       "typescript",
@@ -53,25 +51,31 @@ return {
       "c",
       "python",
       "cpp",
+      "go",
+      "gomod",
+      "gosum",
+      "gowork",
+      "rust",
+      "prolog",
+      "toml",
       "latex",
       "norg",
       "typst",
-    },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "<C-space>",
-        node_incremental = "<C-space>",
-        scope_incremental = false,
-        node_decremental = "<bs>",
-      },
-    },
-    -- Performance optimizations
-    playground = {
-      enable = false, -- Disable playground for better performance
-    },
-    query_linter = {
-      enable = false, -- Disable query linter for better performance
-    },
-  },
+    }
+    local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+    if not vim.env.PATH:find(mason_bin, 1, true) then
+      vim.env.PATH = mason_bin .. ":" .. vim.env.PATH -- so `tree-sitter` CLI is found
+    end
+    ts.install(parsers)
+
+    -- Treesitter highlighting only for these filetypes, so Java/JS/TS keep
+    -- their current colors. Others fall back to Vim regex syntax.
+    vim.api.nvim_create_autocmd("FileType", {
+      group = vim.api.nvim_create_augroup("cargdev_ts_highlight", { clear = true }),
+      pattern = { "go", "gomod", "gosum", "gowork", "rust", "python", "c", "cpp", "toml", "prolog" },
+      callback = function(args)
+        pcall(vim.treesitter.start, args.buf)
+      end,
+    })
+  end,
 }

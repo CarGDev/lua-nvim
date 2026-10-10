@@ -62,19 +62,68 @@ return {
       end,
     }
 
+    -- Prolog: swipl itself reports syntax errors and warnings (singletons,
+    -- discontiguous clauses) while loading. NOTE: loading runs the file's
+    -- directives, same as consulting it by hand.
+    lint.linters.swipl = {
+      cmd = "swipl",
+      args = { "-q", "-t", "halt" },
+      stdin = false,
+      append_fname = true,
+      stream = "stderr",
+      ignore_exitcode = true,
+      parser = function(output, bufnr)
+        local diagnostics = {}
+        local cur -- last "Warning: file:line:" header, followed by message lines
+        for line in output:gmatch("[^\r\n]+") do
+          local sev, lnum, col, msg = line:match("^(%a+): [^:]+:(%d+):(%d*):?%s*(.*)$")
+          if sev and (sev == "ERROR" or sev == "Warning") then
+            local severity = sev == "ERROR" and vim.diagnostic.severity.ERROR or vim.diagnostic.severity.WARN
+            if msg ~= "" then
+              table.insert(diagnostics, {
+                bufnr = bufnr,
+                lnum = tonumber(lnum) - 1,
+                col = tonumber(col) and tonumber(col) - 1 or 0,
+                message = msg,
+                severity = severity,
+                source = "swipl",
+              })
+              cur = nil
+            else
+              cur = { lnum = tonumber(lnum) - 1, severity = severity }
+            end
+          elseif cur then
+            local detail = line:match("^Warning:%s+(.*)$") or line:match("^ERROR:%s+(.*)$")
+            if detail then
+              table.insert(diagnostics, {
+                bufnr = bufnr,
+                lnum = cur.lnum,
+                col = 0,
+                message = detail,
+                severity = cur.severity,
+                source = "swipl",
+              })
+              cur = nil
+            end
+          end
+        end
+        return diagnostics
+      end,
+    }
+
+    -- JS/TS/Svelte are linted by the eslint LSP (lspconfig.lua), which uses the
+    -- project's own eslint + config. eslint_d here ran from nvim's cwd with
+    -- its own resolution and ignored project rules, and duplicated diagnostics.
     lint.linters_by_ft = {
-      javascript = { "eslint_d" },
-      typescript = { "eslint_d" },
-      javascriptreact = { "eslint_d" },
-      typescriptreact = { "eslint_d" },
-      svelte = { "eslint_d" },
       python = { "ruff" },
-      c = { "cppcheck" },
+      -- cppcheck is optional (brew install cppcheck); clangd covers C diagnostics
+      c = vim.fn.executable("cppcheck") == 1 and { "cppcheck" } or {},
       dbml = { "dbml" },
       sql = { "sqlfluff" },
       html = { "htmlhint" },
       java = { "checkstyle" },
       tex = { "chktex" },
+      prolog = vim.fn.executable("swipl") == 1 and { "swipl" } or {},
     }
 
     -- Set full path for chktex (TeX binaries may not be in Neovim's PATH)

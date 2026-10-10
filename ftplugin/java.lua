@@ -1,7 +1,5 @@
 local home = os.getenv("HOME")
 local workspace_path = home .. "/.local/share/nvim/jdtls-workspace/"
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-local workspace_dir = workspace_path .. project_name
 local keymap = vim.keymap.set
 
 local status, jdtls = pcall(require, "jdtls")
@@ -10,6 +8,26 @@ local dap_ok, dap = pcall(require, "dap")
 if not status then
   return
 end
+
+-- Project root: build-file markers first, then the cwd. Without a fallback a
+-- plain folder of .java files has no root, jdtls treats each file's own
+-- directory as the source root and reports 'declared package "x.y" does not
+-- match the expected package ""'.
+local root_dir = require("jdtls.setup").find_root({
+  ".git",
+  "mvnw",
+  "gradlew",
+  "pom.xml",
+  "build.gradle",
+  "build.gradle.kts",
+  "settings.gradle",
+  ".project",
+}) or vim.fn.getcwd()
+-- One workspace per project root (was per cwd name, so two projects opened
+-- from the same directory name shared and corrupted each other's index).
+local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t") .. "-" .. vim.fn.sha256(root_dir):sub(1, 8)
+local workspace_dir = workspace_path .. project_name
+
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 
 local bundles = {
@@ -49,7 +67,7 @@ local config = {
     "-data",
     workspace_dir,
   },
-  root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
+  root_dir = root_dir,
 
   settings = {
     java = {

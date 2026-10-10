@@ -50,6 +50,8 @@ return {
         "phpactor",
         "prismals",
         "pyright",
+        "ruff", -- python organize imports
+        "rust_analyzer",
         "svelte",
         "tailwindcss",
         "vtsls", -- VSCode TypeScript Language Server

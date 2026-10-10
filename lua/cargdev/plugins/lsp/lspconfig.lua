@@ -199,6 +199,7 @@ return {
             analyses = { unusedparams = true },
             staticcheck = true,
             usePlaceholders = true,
+            completeUnimported = true, -- accepting a completion for an unimported package adds the import
           },
         },
       },
@@ -232,6 +233,28 @@ return {
               typeCheckingMode = "basic",
               autoImportCompletions = true,
             },
+          },
+        },
+      },
+      -- ruff: only used for `source.organizeImports` (sorting); diagnostics
+      -- come from nvim-lint and types/auto-import from pyright.
+      ruff = {
+        filetypes = { "python" },
+        init_options = { settings = { lint = { enable = false } } },
+      },
+      -- rust-analyzer: completion.autoimport adds `use` lines when accepting an
+      -- unimported item; the "Import `X`" quick fix covers the rest. It has no
+      -- organizeImports action (rustfmt sorts `use` on save via conform).
+      rust_analyzer = {
+        settings = {
+          ["rust-analyzer"] = {
+            completion = { autoimport = { enable = true } },
+            imports = {
+              granularity = { group = "module" },
+              prefix = "self",
+            },
+            cargo = { allFeatures = true },
+            check = { command = "clippy" },
           },
         },
       },
@@ -280,6 +303,7 @@ return {
             },
             suggest = {
               completeFunctionCalls = true,
+              autoImports = true,
             },
             updateImportsOnFileMove = { enabled = "always" },
           },
@@ -294,6 +318,7 @@ return {
             },
             suggest = {
               completeFunctionCalls = true,
+              autoImports = true,
             },
             updateImportsOnFileMove = { enabled = "always" },
           },
@@ -366,6 +391,17 @@ return {
       capabilities = capabilities,
     })
 
+    -- Prolog: lsp_server pack for SWI-Prolog (not on mason). Only enabled when
+    -- swipl is installed: `brew install swi-prolog`, then in swipl run
+    -- `?- pack_install(lsp_server).`
+    local function prolog_lsp_installed()
+      vim.fn.system({ "swipl", "-g", "use_module(library(lsp_server))", "-t", "halt" })
+      return vim.v.shell_error == 0
+    end
+    if vim.fn.executable("swipl") == 1 and prolog_lsp_installed() then
+      lspconfig.prolog_ls.setup({ capabilities = capabilities })
+    end
+
     -- Global LSP error handling
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
 
@@ -380,6 +416,22 @@ return {
       callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if client then
+          if client.name == "ruff" then
+            client.server_capabilities.hoverProvider = false -- pyright owns hover
+          end
+
+          -- Import helpers (work with any server that offers the code action)
+          local function code_action(kind)
+            return function()
+              vim.lsp.buf.code_action({ context = { only = { kind }, diagnostics = {} }, apply = true })
+            end
+          end
+          local map_opts = function(desc)
+            return { buffer = args.buf, desc = desc }
+          end
+          vim.keymap.set("n", "<leader>ci", code_action("source.addMissingImports"), map_opts("LSP: Add missing imports"))
+          vim.keymap.set("n", "<leader>co", code_action("source.organizeImports"), map_opts("LSP: Organize imports"))
+
           -- Add error handling for this client
           client.notify("workspace/didChangeConfiguration", {
             settings = {

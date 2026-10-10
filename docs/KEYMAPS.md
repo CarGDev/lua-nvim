@@ -311,12 +311,21 @@ Inside nvim-tree:
 
 ---
 
+## Imports (LSP, buffer-local)
+| Key | Mode | Action |
+|-----|------|--------|
+| `<leader>ci` | n | Add missing imports (`source.addMissingImports`) |
+| `<leader>co` | n | Organize imports (`source.organizeImports`) |
+
+Java also keeps `<leader>jo` (jdtls organize imports).
+
+---
+
 ## Codetyper & AI
 
 ### Codetyper (custom multi-provider AI assistant)
 | Key | Mode | Action |
 |-----|------|--------|
-| `<leader>co` | n | Open Coder view |
 | `<leader>ct` | n | Toggle Coder view |
 | `<leader>cp` | n | Process prompt |
 | `<leader>cs` | n | Show status |

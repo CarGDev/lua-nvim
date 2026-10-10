@@ -6,6 +6,38 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2026-10-10] - Prolog support and Fix cppcheck ENOENT on C/H files
+
+### Added
+- **Treesitter** (`plugins/treesitter.lua`): `prolog` parser installed and highlighting enabled for the `prolog` filetype.
+- **LSP** (`plugins/lsp/lspconfig.lua`): `prolog_ls` is set up only when `swipl` is on PATH. Install with `brew install swi-prolog`, then `?- pack_install(lsp_server).` inside `swipl`.
+- **Linter** (`plugins/linting.lua`): custom `swipl` nvim-lint linter for `prolog` (syntax errors, singleton/discontiguous warnings), enabled only when `swipl` is on PATH. Note it loads the file, so directives run.
+- **Keymap** (`ftplugin/prolog.lua`): `<leader>pl` (buffer-local) saves and loads the file in an `swipl` terminal split.
+- **Keymap** (`ftplugin/prolog.lua`): `<leader>mm` (buffer-local) saves and lints the file with `swipl`. It shadows the global `<leader>mm` format key in Prolog buffers only.
+- Note: `.pl` files may be detected as Perl; use `:set ft=prolog` or the `.pro`/`.prolog` extensions.
+
+### Fixed
+- **nvim-lint** (`plugins/linting.lua`): the `c` linter (`cppcheck`) is only enabled when the binary is on PATH, so opening `.c`/`.h` files no longer errors with `ENOENT`. Install with `brew install cppcheck` to re-enable it.
+
+## [2026-10-06] - Auto-import support
+
+### Added
+- **LSP import keymaps** (`plugins/lsp/lspconfig.lua`, LspAttach): `<leader>ci` adds missing imports and `<leader>co` organizes imports, for any server that offers the code action (vtsls, gopls, jdtls, pyright/ruff).
+- **ruff** language server (mason + lspconfig), used only for Python organize imports; lint diagnostics disabled (nvim-lint covers them) and hover disabled (pyright owns it).
+
+- **rust-analyzer** (mason + lspconfig): there was no Rust LSP configured. Auto-import on completion, clippy on check; rustfmt (conform) sorts `use` on save. rust-analyzer has no organizeImports action, so `<leader>co` does nothing in Rust; use the code action quick fix ("Import `X`").
+
+### Fixed
+- **Java "declared package does not match expected package \"\""** (`ftplugin/java.lua`): jdtls `root_dir` now falls back to the cwd when no build-file marker is found (previously `nil`, so each file's folder became its own source root). Added `build.gradle.kts`, `settings.gradle`, `.project` markers. The jdtls workspace dir is now keyed by project root (name + path hash) instead of cwd name. If errors persist on an already-opened project, run `:JdtWipeDataAndRestart`.
+- **ESLint ignoring project rules** (`plugins/linting.lua`): removed `eslint_d` from nvim-lint for JS/TS/Svelte; it ran from nvim's cwd, ignored the project config and duplicated diagnostics. The eslint LSP (project-local eslint + config) is the single source.
+
+### Changed
+- **gopls**: `completeUnimported = true`, so accepting a completion for an unimported package adds the import.
+- **vtsls**: `suggest.autoImports = true` for TypeScript and JavaScript.
+- `docs/KEYMAPS.md`: new Imports section; removed the stale `<leader>co` "Open Coder view" row (codetyper was removed).
+
+---
+
 ## [2026-10-03] - Startup Performance Audit
 
 Startup time (`:Lazy profile`, UIEnter) went from 107.9ms to 66.8ms after the first round of changes; the later ones below (luarocks cache, lazy `nvim-tree`, lazy `dap`) were not re-profiled. At last check 12 of 75 plugins load at startup.
